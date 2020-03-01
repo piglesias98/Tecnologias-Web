@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="author" content="Paula Iglesias Ahualli">
+    <title>Macondo</title>
+  </head>
+  <body>
+    <header>
+      <img src="images/logo.png" alt="Logo">
+      <h1>Macondo</h1>
+      <h2>Los libros de Macondo</h2>
+    </header>
+    <nav>
+      <ul>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="catalogo.html">Catálogo</a></li>
+        <li><a href="busqueda.html">Búsqueda</a></li>
+      </ul>
+    </nav>
+    <aside class="lateral">
+      <h3>Próximos Lanzamientos</h3>
+      <ul>
+        <li>
+          <p>Y Julia retó a los dioses</p>
+          <p>Santiago Posteguillo</p>
+        </li>
+        <li>
+          <p>A corazón abierto</p>
+          <p>Elvira Lindo</p>
+        </li>
+        <li>
+          <p>Los árboles que te enseñarán a ver el bosque</p>
+          <p>Joaquín Araújo Ponciano</p>
+        </li>
+      </ul>
+      <h3>Nuestros clientes nos preguntan por...</h3>
+      <ol>
+        <li>
+          <p>La madre de Frankenstein</p>
+          <p>Almudena Grandes</p>
+        </li>
+        <li>
+          <p>La cara norte del corazón</p>
+          <p>Dolores Redondo</p>
+        </li>
+        <li>
+          <p>Tierra</p>
+          <p>Eloy Moreno</p>
+        </li>
+      </ol>
+    </aside>
+    <article class="busqueda">
+      <h3>Busca tu libro</h3>
+      <form class="busqueda" action="index.html" method="post">
+        <ul>
+          <li>
+            <label for="autor">Autor:</label>
+            <input type="text" name="autor" id="autor" placeholder="JK Rowling">
+          </li>
+          <li>
+            <label for="titulo">Título:</label>
+            <input type="text" name="titulo" id="titulo" placeholder="Harry Potter">
+          </li>
+          <li>
+            <label for="isbn">ISBN:</label>
+            <input type="number" name="isbn" id="isbn" placeholder="12345678">
+          </li>
+          <li>
+            Precio
+            <label for="precio_min"> entre </label>
+            <input type="number" name="precio_min" id="precio_min" placeholder="0">
+            <label for="precio_max"> y </label>
+            <input type="number" name="precio_max" id="precio_max" placeholder="50">
+          </li>
+          <li>
+            <select name="genero">
+              Género
+              <option>Aventuras</option>
+              <option>Ciencia Ficción</option>
+              <option>Romance</option>
+              <option>Novela Negra</option>
+              <option>Novela histórica</option>
+              <option>Terror</option>
+              <option>Biográfica</option>
+              <option>Infantil</option>
+            </select>
+          </li>
+          <li>
+            Encuadernación:
+            <ul>
+              <li>
+                <input type="radio" name="encuadernacion" value="dura">
+                Tapa dura
+              </li>
+              <li>
+                <input type="radio" name="encuadernacion" value="blanda">
+                Tapa blanda
+              </li>
+              <li>
+                <input type="radio" name="encuadernacion" value="cualquiera" checked>
+                Cualquiera
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </form>
+    </article>
+    <footer>
+      <section>
+        <h5>Macondo Granada</h5>
+        <p>Calle Melancolía, 7</p>
+        <p>18002, Granada</p>
+        <p>Teléfono 958943142</p>
+      </section>
+      <section>
+        <address class="contacto">
+          <h5>Contacto</h5>
+          Escríbenos <a href="mailto:contacto@macondo.com?subject=feedback">email</a>
+          <a href="https://twitter.com/macondo"><img src="images/twitter.png" alt=""></a>
+          <a href="https://www.instagram.com/macondo"><img src="images/instagram.png" alt=""></a>
+          <a href="https://es-es.facebook.com/macondo"><img src="images/facebook.png" alt=""></a>
+        </address>
+      </section>
+      <section>
+        <h5>Enlaces interesantes</h5>
+        <p><a href="https://www.elespectador.com/noticias/cultura/macondo-el-lugar-de-todas-cosas-articulo-556347">¿Por qué Macondo? </a></p>
+        <p><a href="https://www.ideal.es/culturas/libros/libreria-mas-antigua-espana-dia-internacional-librerias-20181116015920-ntrc.html?ref=https%3A%2F%2Fwww.google.com%2F">Artículo del ideal sobre la librería</a></p>
+      </section>
+  </footer>
+  </body>
+</html>
