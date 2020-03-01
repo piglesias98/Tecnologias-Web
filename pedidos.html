@@ -50,61 +50,62 @@
         </li>
       </ol>
     </aside>
-    <article class="busqueda">
-      <h3>Busca tu libro</h3>
-      <form class="busqueda" action="procesar.php" method="get">
+    <article class="pedidos">
+      <h3>Pedido</h3>
+      <img src="images/soledad.jpg" alt="Portada Cien Años de Soledad">
+      <ul>
+        <li>Título: Cien Años de Soledad</li>
+        <li>Autor: Gabriel García Márquez</li>
+        <li>ISNB: 8420471836</li>
+        <li>Editorial: RAE, 2017</li>
+        <li>
+          Sinopsis
+          <p>Mito por derecho propio, saludada por sus lectores como la obra en español más importante después de la Biblia, Cien años de soledad cuenta la saga de la familia Buendía y su maldición, que castiga el matrimonio entre parientes dándoles hijos con cola de cerdo. Como un río desbordante, a lo largo de un siglo se entretejerán sus destinos por medio de sucesos maravillosos en el fantástico pueblo de Macondo, en una narración que es la cumbre indiscutible del realismo mágico y la literatura del boom. Alegoría universal, es también una visión de Latinoamérica y una parábola sobre la historia humana.</p>
+        </li>
+        <li>Precio: 13,20€</li>
+      </ul>
+      <h4>Rellena el Formulario:</h4>
+      <form class="pedido" action="procesar.php" method="post">
         <ul>
           <li>
-            <label for="autor">Autor:</label>
-            <input type="text" name="autor" id="autor" placeholder="JK Rowling">
+            <label for="nombre">Nombre y apellidos</label>
+            <input type="text" name="nombre" id="nombre">
           </li>
           <li>
-            <label for="titulo">Título:</label>
-            <input type="text" name="titulo" id="titulo" placeholder="Harry Potter">
+            <label for="direccion">Dirección de envío</label>
+            <textarea name="direccion" rows="8" cols="80" id="direccion"></textarea>
           </li>
           <li>
-            <label for="isbn">ISBN:</label>
-            <input type="text" name="isbn" id="isbn" placeholder="12345678">
+            <label for="tarjeta">Nº de tarjeta</label>
+            <input type="number" name="tarjeta" id="tarjeta">
           </li>
           <li>
-            Precio
-            <label for="precio_min"> entre </label>
-            <input type="number" name="precio_min" id="precio_min" placeholder="0">
-            <label for="precio_max"> y </label>
-            <input type="number" name="precio_max" id="precio_max" placeholder="50">
+            <label for="fecha">Fecha de caducidad</label>
+            <input type="date" name="fecha" id="fecha">
           </li>
           <li>
-            <select name="genero">
-              Género
-              <option>Aventuras</option>
-              <option>Ciencia Ficción</option>
-              <option>Romance</option>
-              <option>Novela Negra</option>
-              <option>Novela histórica</option>
-              <option>Terror</option>
-              <option>Biográfica</option>
-              <option>Infantil</option>
-            </select>
+            <label for="cvc">CVC</label>
+            <input type="text" name="cvc" id="cvc">
           </li>
           <li>
-            Encuadernación:
+            Marque si procede:
             <ul>
               <li>
-                <input type="radio" name="encuadernacion" value="dura">
-                Tapa dura
+                <input type="checkbox" name="acepto">
+                He leído y acepto las condiciones de compra
               </li>
               <li>
-                <input type="radio" name="encuadernacion" value="blanda">
-                Tapa blanda
+                <input type="checkbox" name="acepto">
+                Deseo recibir información sobre novedades
               </li>
               <li>
-                <input type="radio" name="encuadernacion" value="cualquiera" checked>
-                Cualquiera
+                <input type="checkbox" name="acepto">
+                Deseo el envío envuelto para regalo
               </li>
             </ul>
           </li>
         </ul>
-        <input type="submit" value="Buscar">
+        <input type="submit" value="Hacer pedido">
       </form>
     </article>
     <footer>
