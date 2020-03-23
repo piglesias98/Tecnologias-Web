@@ -7,7 +7,7 @@
   </head>
   <body>
     <header>
-      <img src="images/logo.png" alt="Logo">
+      <img src="images/logo.jpg" alt="Logo">
       <h1>Macondo</h1>
       <h2>Los libros de Macondo</h2>
     </header>
@@ -52,63 +52,44 @@
         </li>
       </ol>
     </aside>
-    <article class="pedidos">
-      <h3>Pedido</h3>
-      <img src="images/soledad.jpg" alt="Portada Cien Años de Soledad">
-      <ul>
-        <li>Título: Cien Años de Soledad</li>
-        <li>Autor: Gabriel García Márquez</li>
-        <li>ISNB: 8420471836</li>
-        <li>Editorial: RAE, 2017</li>
-        <li>
-          Sinopsis
-          <p>Mito por derecho propio, saludada por sus lectores como la obra en español más importante después de la Biblia, Cien años de soledad cuenta la saga de la familia Buendía y su maldición, que castiga el matrimonio entre parientes dándoles hijos con cola de cerdo. Como un río desbordante, a lo largo de un siglo se entretejerán sus destinos por medio de sucesos maravillosos en el fantástico pueblo de Macondo, en una narración que es la cumbre indiscutible del realismo mágico y la literatura del boom. Alegoría universal, es también una visión de Latinoamérica y una parábola sobre la historia humana.</p>
-        </li>
-        <li>Precio: 13,20€</li>
-      </ul>
-      <h4>Rellena el Formulario:</h4>
-      <form class="pedido" action="procesar.php" method="post">
-        <ul>
-          <li>
-            <label for="nombre">Nombre y apellidos</label>
-            <input type="text" name="nombre" id="nombre">
-          </li>
-          <li>
-            <label for="direccion">Dirección de envío</label>
-            <textarea name="direccion" rows="8" cols="80" id="direccion"></textarea>
-          </li>
-          <li>
-            <label for="tarjeta">Nº de tarjeta</label>
-            <input type="number" name="tarjeta" id="tarjeta">
-          </li>
-          <li>
-            <label for="fecha">Fecha de caducidad</label>
-            <input type="date" name="fecha" id="fecha">
-          </li>
-          <li>
-            <label for="cvc">CVC</label>
-            <input type="text" name="cvc" id="cvc">
-          </li>
-          <li>
-            Marque si procede:
-            <ul>
-              <li>
-                <input type="checkbox" name="acepto">
-                He leído y acepto las condiciones de compra
-              </li>
-              <li>
-                <input type="checkbox" name="acepto">
-                Deseo recibir información sobre novedades
-              </li>
-              <li>
-                <input type="checkbox" name="acepto">
-                Deseo el envío envuelto para regalo
-              </li>
-            </ul>
-          </li>
-        </ul>
-        <input type="submit" value="Hacer pedido">
-      </form>
+    <article class="inicio">
+      <h3>Próximos eventos</h3>
+      <section class="evento">
+        <h4>Firma de Isabel Allende</h4>
+        <div class="fecha">
+          <p>5</p>
+          <p>Marzo</p>
+        </div>
+        <img src="images/allende.jpg" alt="Evento Isabel Allende">
+        <div class="descripcion">
+            <p>El evento más esperado del año: La escritora que más libros en español ha vendido en el mundo aterriza en Macondo para presentar su último libro "Largo pétalo de Mar". No pierdas la oportunidad de conocer a la feminista y filántropa chilena, escritora cuyas novelas han sido traducidas a 30 idiomas. </p>
+            <p>Ven con tiempo el 5 de marzo a las 17:00, pues se espera una gran cola, ¡no todos los días se tiene la oportunidad de conocer a la cara detrás de La Casa de los Espíritus!</p>
+        </div>
+      </section>
+      <section class="evento">
+        <h4>Taller de Escritura Creativa</h4>
+        <div class="fecha">
+          <p>20</p>
+          <p>Marzo</p>
+        </div>
+        <img src="images/taller.jpg" alt="Evento Escritura Creativa">
+        <div class="descripcion">
+          <p>Participa en este taller literario impartido por el catedrático de la UGR Antonio Sánchez Trigueros</p>
+          <p>¿Siempre has pensado en empezar a escribir pero no sabías cómo? ¿Tienes una buena idea pero desconoces los primeros pasos? Apúntate al taller de escritura creativa: de 18:00 a 20:30 este reconocido profesor e influyente en las letras de Granada te ayudará a superar el miedo a la hoja en blanco, y quién sabe, quizás salgas con el manuscrito del próximo bestseller internacional.</p>
+          <p>Inscríbete <a href="inscripcion.html">aquí</a>. ¡Plazas limitadas!</p>
+        </div>
+      </section>
+      <section>
+        <h4>Poetry Slam Internacional</h4>
+        <div class="fecha">
+          <p>26</p>
+          <p>Marzo</p>
+        </div>
+        <img src="images/idiomas.jpg" alt="Intercambio idiomas literario">
+        <p>Ven a nuestra poetry slam internacional, para escuchar poemas de distintas partes del mundo</p>
+        <p>Dirigido a la comunidad erasmus de Granada, y a todo aquel que quiera descubrir poesía en otros idiomas</p>
+        <p>Nos vemos a las 17:30. Trae una comida o un dulce típico de tu pais, y por supuesto un poema, ¡la participación es obligatoria!</p>
+      </section>
     </article>
     <footer>
       <section>
