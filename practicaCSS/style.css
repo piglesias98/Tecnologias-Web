@@ -48,6 +48,7 @@ nav {
 nav p {
   padding-right: 5%;
   font-weight: bold;
+  width: auto;
 }
 
 aside, .receta {
@@ -112,6 +113,7 @@ aside, .receta {
 
 .descripcion img {
   width: 40%;
+  margin-left: px;
 }
 
 .ingredientes {
@@ -220,4 +222,22 @@ aside form * {
 footer {
   margin-top: 5px;
   padding: 10px;
+}
+
+.logo {
+  display: none;
+}
+
+
+@media (max-width: 800px) {
+  .logos {
+    display: none;
+  }
+  .logo {
+    display: block;
+  }
+  .logo img{
+    width : 33%;
+    padding: 3%;
+  }
 }
