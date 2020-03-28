@@ -10,12 +10,12 @@
   <body>
     <header>
       <div class="logos">
-        <img src="images/logo.jpg" alt="Logo">
-        <img src="images/logo.jpg" alt="Logo">
-        <img src="images/logo.jpg" alt="Logo">
+        <img src="images/logo.jpg">
+        <img src="images/logo.jpg">
+        <img src="images/logo.jpg">
       </div>
       <div class="logo">
-        <img src="images/logo.jpg" alt="Logo">
+        <img src="images/logo.jpg">
       </div>
       <h1>Delicias Sencillas</h1>
     </header>
@@ -28,12 +28,12 @@
       <div class="lateral">
         <aside class="login">
           <h3>Login</h3>
-          <form class="login" action="procesar.php" method="post">
+          <form class="login_form" action="procesar.php" method="post">
             <div class="field">
               <label for="usuario">Usuario:</label>
               <input type="text" name="usuario" id="usuario" placeholder="Escribe tu usuario">
             </div>
-            <div class="">
+            <div class="field">
               <label for="clave">Clave:</label>
               <input type="text" name="clave" id="clave" placeholder="Escribe tu constraseña">
             </div>
@@ -54,13 +54,15 @@
         </aside>
       </div>
       <article class="receta">
-        <div class="nombre_receta">
-          <h1>Tarta de queso</h1>
-          <img src="images/estrellas.png" alt="estrellas">
-        </div>
-        <div class="detalles">
-          <p>Tarta, Queso, Dulce</p>
-          <p>Autor: El cocinillas</p>
+        <div class="superior">
+          <div class="nombre_receta">
+            <h1>Tarta de queso</h1>
+            <img src="images/estrellas.png" alt="estrellas">
+          </div>
+          <div class="detalles">
+            <p>Tarta, Queso, Dulce</p>
+            <p>Autor: El cocinillas</p>
+          </div>
         </div>
         <section class="descripcion">
           <div class="texto">
@@ -82,6 +84,16 @@
             <li>Si queremos sacar la tarta por completo del molde, colocaremos un papel del hornear en la base del mismo tamaño que la  base recortaremos con unas tijeras. Colocaremos la masa creada con las galletas y la mantequilla en la base del molde, cubriendo toda la base de forma homogénea, nos ayudaremos de una espátula de silicona o con la palma de la mano y los dedos iremos cubriendo toda la base del molde. Yo emplee otra base mas pequeña para aplastar bien la base y que quedara del todo nivelada.</li>
             <li>Dejaremos enfriar en la nevera hasta que este lo suficientemente resistente como para soportar el peso de nuestra tarta de queso. Unos 15/20 minutos serán suficientes para conseguir una base estable y firme</li>
           </ol>
+        </section>
+        <section class="pasos">
+          <img src="images/paso1.jpg">
+          <img src="images/paso2.jpg">
+          <img src="images/paso3.jpg">
+          <img src="images/paso4.jpg">
+          <img src="images/paso5.jpg">
+          <img src="images/paso6.jpg">
+          <img src="images/paso7.jpg">
+          <img src="images/paso8.jpg">
         </section>
         <section class="comentarios">
           <div class="comentario">
@@ -107,14 +119,18 @@
             <div>3</div>
             <div>4</div>
             <div>5</div>
-          <img src="images/x.jpg">
-          <img src="images/comment.png">
           <img src="images/edit.png">
+          <img src="images/comment.png">
+          <img src="images/x.jpg">
         </section>
       </article>
     </div>
     <footer>
-      © 2020 Tecnologías Web  |  Mapa del sitio  |  Contacto
+      <p>  © 2020 Tecnologías Web</p>
+      <p class="divisor">|</p>
+      <p>Mapa del sitio</p>
+      <p class="divisor">|</p>
+      <p>Contacto</p>
     </footer>
   </body>
 </html>
