@@ -50,19 +50,19 @@ nav p {
   width: 200px;
 }
 
-aside, .receta {
+aside, .contenido {
   border: solid;
   border-width: 2px;
   border-color: #cfe660;
 }
 
-.content {
+.pagina {
   display: flex;
   flex-direction: row-reverse;
   margin-top: 0.5%;
 }
 
-.receta {
+.contenido {
   width: 80%;
   background-color: #f3ffc9;
 }
@@ -282,7 +282,7 @@ footer p {
     display: none;
   }
 
-  .content {
+  .pagina {
     display: flex;
     flex-direction: column;
     justify-content: center;
