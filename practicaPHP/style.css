@@ -45,9 +45,13 @@ nav {
   margin-top: 0.5px;
 }
 
-nav p {
+nav a {
   font-weight: bold;
   width: 200px;
+}
+
+.activo:link {
+  color: yellow;
 }
 
 aside, .contenido {
