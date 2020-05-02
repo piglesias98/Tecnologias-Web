@@ -54,25 +54,33 @@ nav a {
   color: yellow;
 }
 
-aside, .contenido {
+div, .contenido {
   border: solid;
   border-width: 2px;
   border-color: #cfe660;
 }
 
 .pagina {
-  display: flex;
-  flex-direction: row-reverse;
+  display: grid;
   margin-top: 0.5%;
+  grid-template-columns: 80% 20%;
+  grid-template-rows: auto;
+  grid-template-areas:
+  "menu menu"
+  "contenido lateral"
+}
+
+.menu {
+  grid-area: menu;
 }
 
 .contenido {
-  width: 80%;
+  grid-area: contenido;
   background-color: #f3ffc9;
 }
 
 .lateral {
-  width: 20%;
+  grid-area: lateral;
 }
 
 .nombre_receta {

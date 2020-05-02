@@ -1,6 +1,7 @@
 <?php
 function HTMLnav($activo){
 echo <<<HTML
+  <div class="menu">
   <nav>
 HTML;
 
@@ -13,6 +14,7 @@ foreach ($items as $key => $value)
   " href=index.php?p=".($key).">".$value."</a>";
 echo <<< HTML
 </nav>
+</div>
 HTML;
 }
 

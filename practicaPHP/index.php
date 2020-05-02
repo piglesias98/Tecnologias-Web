@@ -13,12 +13,12 @@ $opc = $_GET['p'];
 
 $identificado = False;
 
-//Según el query string resaltamos el menú
-HTMLnav($opc);
-
 //Identificación de los usuarios
 
 HTMLwidgets($identificado);
+
+//Según el query string resaltamos el menú
+HTMLnav($opc);
 
 //Según el query string insertamos el código HTML correspondiente
 if ($identificado){
