@@ -12,7 +12,13 @@ if (isset($_POST['usuario']) or isset($_POST['clave'])){
 }
 // Si el forumlario enviado y datos correctos
 if ($GLOBALS['identificado']){
-  echo "<p> Ya estás identificado en el sistema</p>";
+?>
+  <aside class="login">
+    <h3>Login</h3>
+    <p>!Ya estás logeado!</p>
+    <p><a href="<?php echo $_SERVER['SCRIPT_NAME']?>">Click aquí para deslogearte</a></p>
+  </aside>
+<?php
 // Hay errores o no se ha enviado el formulario
 }else {
 ?>
