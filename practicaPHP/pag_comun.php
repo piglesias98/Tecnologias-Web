@@ -12,4 +12,20 @@ echo <<< HTML
 </nav>
 HTML;
 }
+
+function HTMLwidgets($identificado){
+echo <<<HTML
+  <div class="pagina">
+    <div class="lateral">
+HTML;
+if($identificado){
+  include 'login.html';
+}
+include 'fixed_widgets.html';
+
+echo <<<HTML
+  </div>
+HTML;
+}
+
 ?>
