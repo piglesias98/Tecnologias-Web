@@ -2,7 +2,7 @@
 $host="localhost";
 $port=3306;
 $socket="";
-$user="paula";
+$user="root";
 $password="paula";
 $dbname="receta";
 
