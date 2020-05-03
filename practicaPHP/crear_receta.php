@@ -7,7 +7,7 @@ $params = getParams($_POST, $FILES);
 if ($params['enviado']==true && $params['err_titulo']=='' && $params['err_autor']==''
     && $params['err_categoria']=='' && $params['err_descripcion'] ==''
     && $params['err_ingredientes']=='' && $params['err_preparacion']==''){
-  showResults($params);
+  solicitarConfirmacion($params);
 }else{
   //Si no se han recibido parámetros o son incorrectos
   showForm($params);
@@ -29,7 +29,6 @@ function getParams($p, $f){
     $result['err_autor'] = '';
     if (empty($p['autor'])){
       $result['err_autor'] = 'El autor no puede estar vacío';
-    }
     }else{
       $result['autor'] = $p['autor'];
     }
@@ -37,8 +36,8 @@ function getParams($p, $f){
     $result['err_categoria'] = '';
     if (empty($p['categoria'])){
       $result['err_categoria'] = 'La categoría no puede estar vacía';
-      }else{
-        $result['categoria'] = $p['categoria'];
+    }else{
+      $result['categoria'] = $p['categoria'];
     }
     // -> descripcion
     $result['err_descripcion'] = '';
@@ -77,7 +76,14 @@ function getParams($p, $f){
     }else if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"){
       $result['err_fotografia'] = 'Lo siento, solo se permiten archivos PNG, JPG o JPEG';
     }
+  } else {
+    //El formulario aún no ha sido enviado
+    $result['enviado'] = false;
   }
+  return $result;
+}
+
+
 
 function showForm($params){
   ?>
