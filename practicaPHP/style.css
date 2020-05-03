@@ -54,6 +54,11 @@ nav a {
   color: yellow;
 }
 
+p .error{
+  color: red;
+  font-weight: bold;
+}
+
 div, .contenido {
   border: solid;
   border-width: 2px;

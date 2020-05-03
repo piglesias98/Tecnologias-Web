@@ -7,11 +7,12 @@ if (isset($_POST['usuario']) or isset($_POST['clave'])){
   if ($_POST['usuario'] == 'admin' and $_POST['clave'] == 'clave'){
     $_SESSION['identificado'] = true;
   }
+  else {
+    $error = true;
+  }
 }else if (isset($_POST['logout'])) {
     // Acceso desde formulario de logout
     acabarSesion();
-}else{
-    $error = true;
 }
 // Si el forumlario enviado y datos correctos
 if (isset($_SESSION['identificado'])){

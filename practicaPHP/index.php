@@ -21,7 +21,7 @@ HTMLwidgets();
 HTMLnav($opc);
 
 //Según el query string insertamos el código HTML correspondiente
-if ($_SESSION['identificado']){
+if (isset($_SESSION['identificado'])){
   switch($opc) {
     case 0: include "inicio.html"; break;
     case 1: include "listado.html"; break;
