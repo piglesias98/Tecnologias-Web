@@ -88,7 +88,14 @@ function showForm($params){
 function showResults($params){
   ?>
   <p>Muchas gracias, <?php echo $params['nombre'] ?></p>
-  <p>Contactaremos contigo con la mayor brevedad</p>
+  <p>Contactaremos contigo a la mayor brevedad</p>
+  <p>Estos son los datos que hemos recibido:</p>
+  <ul>
+    <li>Nombre: <?php echo $params['nombre'] ?></li>
+    <li>Correo electrónico: <?php echo $params['email'] ?></li>
+    <li>Teléfono: <?php echo $params['telefono'] ?></li>
+    <li>Comentario: <?php echo $params['comentario'] ?></li>
+  </ul>
 <?php
 }
 

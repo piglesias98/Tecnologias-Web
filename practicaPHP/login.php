@@ -39,7 +39,7 @@ if (isset($_SESSION['identificado'])){
       </div>
       <div class="field">
         <label for="clave">Clave:</label>
-        <input type="text" name="clave" id="clave" placeholder="Escribe tu constraseña">
+        <input type="password" name="clave" id="clave" placeholder="Escribe tu constraseña">
       </div>
       <?php if ($error){
         echo "<p class='error'> Nombre de usuario o clave no son correctos, prueba otra vez</p>";
