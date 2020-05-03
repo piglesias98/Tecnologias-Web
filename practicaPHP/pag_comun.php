@@ -5,7 +5,7 @@ echo <<<HTML
   <nav>
 HTML;
 
-if ($GLOBALS['identificado'])
+if (isset($_SESSION['identificado']))
   $items = ['Inicio', 'Listado de recetas', 'Página de contacto', 'Página nueva'];
 else
   $items = ['Inicio', 'Listado de recetas', 'Página de contacto'];
@@ -18,14 +18,12 @@ echo <<< HTML
 HTML;
 }
 
-function HTMLwidgets($identificado){
+function HTMLwidgets(){
 echo <<<HTML
   <div class="pagina">
     <div class="lateral">
 HTML;
-if(! $identificado){
-  include 'login.php';
-}
+include 'login.php';
 include 'fixed_widgets.html';
 
 echo <<<HTML

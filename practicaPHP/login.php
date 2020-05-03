@@ -5,18 +5,25 @@ $error = false;
 if (isset($_POST['usuario']) or isset($_POST['clave'])){
   // Comprobar el valor de usuario
   if ($_POST['usuario'] == 'admin' and $_POST['clave'] == 'clave'){
-    $GLOBALS['identificado'] = true;
-  }else{
-    $error = true;
+    $_SESSION['identificado'] = true;
   }
+}else if (isset($_POST['logout'])) {
+    // Acceso desde formulario de logout
+    acabarSesion();
+}else{
+    $error = true;
 }
 // Si el forumlario enviado y datos correctos
-if ($GLOBALS['identificado']){
+if (isset($_SESSION['identificado'])){
 ?>
   <aside class="login">
     <h3>Login</h3>
     <p>!Ya estás logeado!</p>
-    <p><a href="<?php echo $_SERVER['SCRIPT_NAME']?>">Click aquí para deslogearte</a></p>
+    <form class="login_form" action="<?php echo $_SERVER['SCRIPT_NAME']?>" method="post">
+      <div class="field">
+        <input type="submit" name="logout" value="logout">
+      </div>
+    </form>
   </aside>
 <?php
 // Hay errores o no se ha enviado el formulario
@@ -41,4 +48,26 @@ if ($GLOBALS['identificado']){
   </aside>
 <?php
 }
+
+function acabarSesion(){
+  //La sesion debe estar iniciada
+  if (session_status()==PHP_SESSION_NONE){
+    session_start();
+  }
+  //Borrar variables de sesión
+  //$_SESSION = array()
+  session_unset();
+
+  //Obtener parámetros cookies de sesión
+  $param = session_get_cookie_params();
+
+  //Borrar cookie de sesión
+  setcookie(session_name(), $_COOKIE[session_name()], time()-2592000,
+            $param['path'], $param['domain'], $param['secure'], $param['httponly']);
+
+  //Destruir sesión
+  session_destroy();
+}
+
+
 ?>
