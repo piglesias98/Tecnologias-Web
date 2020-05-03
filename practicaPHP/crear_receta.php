@@ -1,25 +1,26 @@
 <div class="contenido">
 <h3>Crear una receta</h3>
 <?php
+
 //Obtener y validar parámetros
 $params = getParams($_POST, $_FILES);
+
+//Si ya tenemos la confirmación
+if (isset($params['confirmar'])){
+  enviarFormulario($params);
 //Si se han recibido los datos y son correctos
-if ($params['enviado']==true && $params['err_titulo']=='' && $params['err_autor']==''
+}else if ($params['enviado']==true && $params['err_titulo']=='' && $params['err_autor']==''
     && $params['err_categoria']=='' && $params['err_descripcion'] ==''
     && $params['err_ingredientes']=='' && $params['err_preparacion']==''
     && $params['err_preparacion']=='' && $params['err_fotografia'] == ''){
   solicitarConfirmacion($params);
-}else if (isset($params['confirmacion'])){
-  enviarFormulario($params);
 }else{
   //Si no se han recibido parámetros o son incorrectos
   showForm($params);
 }
 
 function getParams($p, $f){
-  if (isset($p['confirmar'])){
-    $result['confirmar'] = true;
-  }else if (isset($p['titulo']) or isset($p['autor']) or isset($p['categoria']) or isset($p['descripcion'])
+  if (isset($p['titulo']) or isset($p['autor']) or isset($p['categoria']) or isset($p['descripcion'])
       or isset($p['ingredientes']) or isset($p['preparacion']) or isset($f['fotografia'])){
     $result['enviado'] = true;
     // Validación de resultados
@@ -83,9 +84,12 @@ function getParams($p, $f){
       }else if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"){
         $result['err_fotografia'] = 'Lo siento, solo se permiten archivos PNG, JPG o JPEG';
       }else{
-        $result['fotografia'] = $f['fotografia'];
+        $result['fotografia'] = $f['fotografia']['tmp_name'];
         $result['fotografia_temp'] = file_get_contents($f['fotografia']['tmp_name']);
       }
+    }
+    if(isset($p['confirmar'])){
+      $result['confirmar'] = true;
     }
   } else {
     //El formulario aún no ha sido enviado
@@ -156,28 +160,37 @@ function enviarFormulario($params){
 
 function solicitarConfirmacion($params){
 ?>
-<form class="login_form" action="index.php?p=3" method="post">
-  <label for="titulo">Título de la receta:
-    <p><?php echo $params['titulo'];?></p>
+<form class="login_form" action="index.php?p=3" enctype="multipart/form-data" method="post">
+  <label for="nombre">Título de la receta:
+    <input type="text" name="titulo"
+    <?php echo " value='".$params['titulo']."'";?> readonly/><br>
   </label>
   <label for="autor">Autor:
-    <p><?php echo $params['autor'];?></p>
+    <input type="text" name="autor"
+    <?php echo " value='".$params['autor']."'";?> readonly/><br>
   </label>
-  <label for="email">Categoría:
-    <p><?php echo $params['categoria'];?></p>
-  <label for="comentario">Descripción:
-    <p><?php echo $params['descripcion'];?></p>
+  <label for="categoria">Categoría:
+    <input type="text" name="categoria"
+    <?php echo " value='".$params['categoria']."'";?> readonly/><br>
+  </label>
+  <label for="descripcion">Descripción:
+    <input type="text" name="descripcion"
+    <?php echo " value='".$params['descripcion']."'";?> readonly/><br>
   </label>
   <label for="ingredientes">Ingredientes:
-    <p><?php echo $params['ingredientes'];?></p>
+    <input type="text" name="ingredientes"
+    <?php echo " value='".$params['ingredientes']."'";?> readonly/><br>
   </label>
   <label for="preparacion">Preparación:
-    <p><?php echo $params['preparacion'];?></p>
+    <input type="text" name="preparacion"
+    <?php echo " value='".$params['preparacion']."'";?> readonly/><br>
   </label>
   <label for="imagen">Selecciona una imagen:
-    <?php echo "<img src='data:image/png;base64,".base64_encode($params['fotografia_temp'])."'";?>/>
+    <input type="file" name="fotografia"
+    <?php echo " value='".$params['fotografia']."'";?> readonly/><br>
+    <?php echo "<img src='data:image/png;base64,".base64_encode($params['fotografia_temp'])."' ";?>/>
   </label>
-  <input type="submit" value="Confirmar">
+  <input type="submit" value="Confirmar" name="confirmar">
 </form>
 <?php
 }
