@@ -58,31 +58,33 @@ function getParams($p){
 
 function showForm($params){
   ?>
-  <form class="login_form" action="<?php echo $_SERVER['SCRIPT_NAME']?>" method="post">
+  <form class="login_form" action="index.php?p=2" method="post">
     <label for="nombre">Nombre:
       <input type="text" name="nombre"
-      <?php if (isset($params['nombre'])) echo "value='".$params['nombre']."'";?>/>
-      <?php if (isset($params['err_nombre'])) echo "<p class = 'error'>".$params['err_nombre'];?>"</p>"
+      <?php if (isset($params['nombre'])) echo " value='".$params['nombre']."'";?>/>
+      <?php if (isset($params['err_nombre'])) echo "<p class = 'error'>".$params['err_nombre'];?></p>
     </label>
     <label for="email">Correo Electrónico:
       <input type="text" name="email"
-      <?php if (isset($params['email'])) echo "value='".$params['email']."'";?>/>
-      <?php if (isset($params['err_email'])) echo "<p class = 'error'>".$params['err_email'];?>"</p>"
+      <?php if (isset($params['email'])) echo " value='".$params['email']."'";?>/>
+      <?php if (isset($params['err_email'])) echo "<p class = 'error'>".$params['err_email'];?></p>
     </label>
     <label for="email">Teléfono:
       <input type="text" name="telefono"
-      <?php if (isset($params['telefono'])) echo "value='".$params['telefono']."'";?>/>
-      <?php if (isset($params['err_tel'])) echo "<p class = 'error'>".$params['err_tel'];?>"</p>"
+      <?php if (isset($params['telefono'])) echo " value='".$params['telefono']."'";?>/>
+      <?php if (isset($params['err_tel'])) echo "<p class = 'error'>".$params['err_tel'];?></p>
     </label>
     <label for="comentario">Comentario:
       <input type="text" name="comentario"
-      <?php if (isset($params['comentario'])) echo "value='".$params['comentario']."'";?>/>
-      <?php if (isset($params['err_com'])) echo "<p class = 'error'>".$params['err_com'];?>"</p>"
+      <?php if (isset($params['comentario'])) echo " value='".$params['comentario']."'";?>/>
+      <?php if (isset($params['err_com'])) echo "<p class = 'error'>".$params['err_com'];?></p>
     </label>
     <input type="submit" value="Enviar">
   </form>
 <?php
 }
+
+
 function showResults($params){
   ?>
   <p>Muchas gracias, <?php echo $params['nombre'] ?></p>

@@ -25,14 +25,14 @@ if (isset($_SESSION['identificado'])){
   switch($opc) {
     case 0: include "inicio.html"; break;
     case 1: include "listado.html"; break;
-    case 2: include "contacto.html"; break;
+    case 2: include "contacto.php"; break;
     case 3: include "pag_nueva.html"; break;
   }
 }else{
   switch($opc) {
     case 0: include "inicio.html"; break;
     case 1: include "listado.html"; break;
-    case 2: include "contacto.html"; break;
+    case 2: include "contacto.php"; break;
   }
 }
 
