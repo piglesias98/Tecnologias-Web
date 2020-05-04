@@ -1,3 +1,7 @@
+img.boton{
+  width: 15px;
+}
+
 header, .navegacion_inferior, .nombre_receta {
   background-color: #cfe660;
 }

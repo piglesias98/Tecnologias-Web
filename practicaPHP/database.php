@@ -1,5 +1,5 @@
 <?php
-
+require_once('dbcredenciales.php');
 function dbConnection(){
 	$db = mysqli_connect(DB_HOST, DB_USER, DB_PASSWD, DB_NAME);
 	if ($db) {
@@ -16,10 +16,10 @@ function dbDisconnection($db){
 }
 
 function dbGetRecetas($db){
-	$res = mysqli_query($db. "SELECT * FROM receta");
+	$res = mysqli_query($db, "SELECT id, titulo FROM receta");
 	if ($res){
 		if (mysqli_num_rows($res)>0){
-			$tabla = mysqli_fetch_all($res, MYSQL_ASSOC);
+			$tabla = mysqli_fetch_all($res, MYSQLI_ASSOC);
 		}else{
 			$tabla = [];
 		}
@@ -30,5 +30,4 @@ function dbGetRecetas($db){
 	}
 	return $tabla;
 }
-
 ?>

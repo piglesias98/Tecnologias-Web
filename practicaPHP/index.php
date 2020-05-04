@@ -24,14 +24,14 @@ HTMLnav($opc);
 if (isset($_SESSION['identificado'])){
   switch($opc) {
     case 0: include "inicio.html"; break;
-    case 1: include "listado.html"; break;
+    case 1: include "listado.php"; break;
     case 2: include "contacto.php"; break;
     case 3: include "crear_receta.php"; break;
   }
 }else{
   switch($opc) {
     case 0: include "inicio.html"; break;
-    case 1: include "listado.html"; break;
+    case 1: include "listado.php"; break;
     case 2: include "contacto.php"; break;
   }
 }
