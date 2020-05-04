@@ -20,7 +20,7 @@ if (isset($_SESSION['identificado'])){
   <aside class="login">
     <h3>Login</h3>
     <p>!Ya estás logeado!</p>
-    <form class="login_form" action="<?php echo $_SERVER['SCRIPT_NAME']?>" method="post">
+    <form class="login_form" action="<?php echo basename($_SERVER['REQUEST_URI'])?>" method="post">
       <div class="field">
         <input type="submit" name="logout" value="logout">
       </div>
@@ -32,7 +32,7 @@ if (isset($_SESSION['identificado'])){
 ?>
   <aside class="login">
     <h3>Login</h3>
-    <form class="login_form" action="<?php echo $_SERVER['SCRIPT_NAME']?>" method="post">
+    <form class="login_form" action="<?php echo basename($_SERVER['REQUEST_URI'])?>" method="post">
       <div class="field">
         <label for="usuario">Usuario:</label>
         <input type="text" name="usuario" id="usuario" placeholder="Escribe tu usuario">
