@@ -1,4 +1,5 @@
 <?php
+require_once('database.php');
 
 function formEditable($titulo, $receta, $accion, $editable){
   echo "<div class='contenido'>";
@@ -75,8 +76,13 @@ function getParams($p, $f){
         $result['err_fotografia'] = 'Lo siento, solo se permiten archivos PNG, JPG o JPEG';
       }else{
         $result['fotografia'] = $f['fotografia']['tmp_name'];
-        $result['fotografia_temp'] = file_get_contents($f['fotografia']['tmp_name']);
+        $result['fotografia_base64'] = base64_encode(file_get_contents($f['fotografia']['tmp_name']));
+        $result['fotografia_src_completa'] = 'data:image/'.$imageFileType.';base64,'.$result['fotografia_base64'];
       }
+    }
+    // fotografía ya convertida
+    if(isset($p['fotografia_src_completa'])){
+      $result['fotografia_src_completa'] = true;
     }
     //confirmar
     if(isset($p['confirmar'])){
@@ -92,7 +98,7 @@ function getParams($p, $f){
 
 //accion = Enviar
 function showForm($params, $accion, $editable){
-  if (isset($editable)){
+  if ($editable == false){
     $disabled = 'readonly="readonly"';
     echo "<p>Disabled activado</p>";
   }else
@@ -133,7 +139,8 @@ function showForm($params, $accion, $editable){
       <input type="file" name="fotografia" <?php echo $disabled ?>
       <?php if (isset($params['fotografia'])){
         echo " value='".$params['fotografia']."'/><br>";
-        echo "<img src='data:image/png;base64,".base64_encode($params['fotografia_temp'])."' /><br>";?>
+        echo "<input type='hidden' name='fotografia_src_completa' value='".$params['fotografia_src_completa']."'/>";
+        echo "<img src='".$params['fotografia_src_completa']."' /><br>";?>
       <?php }
       if (isset($params['err_fotografia'])) echo "<p class = 'error'>".$params['err_fotografia']."</p><br>";?>
     </label>
@@ -150,5 +157,9 @@ function enviarFormulario($params){
   <p>Tu receta <?php echo $params['titulo']?> ya está en nuestra base de datos
       y pronto podrás verla en la página web :)</p>
   <?php
+  $db = dbConnection();
+  dbCrearReceta($db, $params);
+  dbDisconnection($db);
 }
+
 ?>

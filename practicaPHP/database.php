@@ -37,8 +37,8 @@ function dbGetReceta($db, $id){
 
 function dbCrearReceta($db, $params){
 	// Comprobar que no hay una receta con el mismo nombre
-	$res = mysqli_query($db, "SELECT id, titulo FROM receta WHERE titulo='{$params['tutulo']}'");
-	$receta = mysqli_fetch_assoc($res);
+	$res = mysqli_query($db, "SELECT id, titulo FROM receta WHERE titulo='{$params['titulo']}'");
+	$num = mysqli_fetch_assoc($res);
 	mysqli_free_result($res);
 	if ($num>0)
 		$info[] = 'Ya existe una receta con ese título';
@@ -51,7 +51,7 @@ function dbCrearReceta($db, $params){
 															'{$params['descripcion']}',
 															'{$params['ingredientes']}',
 															'{$params['preparacion']}',
-															'{$params['fotografia']}')");
+															'{$params['fotografia_src_completa']}')");
 		if (!$res){
 			$info[] = "error en la creación de la receta";
 			$info[] = mysqli_error($db);
