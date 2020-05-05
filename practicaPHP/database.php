@@ -32,7 +32,14 @@ function dbGetRecetas($db){
 }
 
 function dbGetReceta($db, $id){
-
+	$res = mysqli_query($db, "SELECT id, titulo, autor, categoria, descripcion,
+														ingredientes, preparacion, fotografia_src_completa
+														FROM receta WHERE id='".mysqli_real_escape_string($db,$id)."'");
+	if ($res && mysqli_num_rows($res)==1)
+		$receta = mysqli_fetch_assoc($res);
+	else $receta = false;
+	mysqli_free_result($res);
+	return $receta;
 }
 
 function dbCrearReceta($db, $params){
@@ -44,7 +51,7 @@ function dbCrearReceta($db, $params){
 		$info[] = 'Ya existe una receta con ese título';
 	else{
 		$res = mysqli_query($db, "INSERT INTO receta (titulo, autor, categoria, descripcion,
-																									ingredientes, preparacion, fotografia)
+																									ingredientes, preparacion, fotografia_src_completa)
 															VALUES ('{$params['titulo']}',
 															'{$params['autor']}',
 															'{$params['categoria']}',
@@ -87,7 +94,7 @@ function dbModificarReceta($db, $id, $params){
 															SET descripcion = '{$params['descripcion']}',
 															SET ingredientes = '{$params['ingredientes']}',
 															SET preparacion = '{$params['preparacion']}',
-															SET fotografia = '{$params['fotografia']}'
+															SET fotografia_src_completa = '{$params['fotografia_src_completa']}'
 															");
 		if (!$res){
 			$info[]= "Error al actualizar";

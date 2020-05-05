@@ -1,5 +1,6 @@
 <?php
 require_once('database.php');
+require_once('htmlForms.php');
 if (isset($_POST['accion']) && isset($_POST['id'])){
   $accion = $_POST['accion'];
   $id = $_POST['id'];
@@ -23,7 +24,7 @@ if (isset($id)){
         $receta = dbGetReceta($db, $id);
         formEditable('Edite los datos de la receta', $receta, 'Editar', true);
         break;
-      case 'Modifcar':
+      case 'Modificar':
         $params = getParams($_POST, $_FILES);
         $msg = dbModificarReceta($db, $id, $params);
         if ($msg == true){

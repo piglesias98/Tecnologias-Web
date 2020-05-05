@@ -27,10 +27,10 @@ foreach ($datos as $v){
     echo "<td>{$v['titulo']}</td>";
     echo "<td><form action='$accion' method='POST'>
           <input type='hidden' name='id' value='{$v['id']}' />
-          <input type='image' src = 'images/show.png' width=15px name='mostrar' value='Mostrar'/>";
+          <input type='submit' name = 'accion' value='Mostrar'/>";
     if (isset($_SESSION['identificado'])){
-      echo "<input type='image' src = 'images/edit.png' width=15px name='editar' value='Editar'/>
-            <input type='image' src = 'images/delete.png' width=15px name='borrar' value='Borrar'/>";
+      echo "<input type='submit'  name = 'accion' value='Editar' />
+            <input type='submit' name = 'accion' value='Borrar'/>";
     }
     echo "</form></td>";
     echo "</tr>";
