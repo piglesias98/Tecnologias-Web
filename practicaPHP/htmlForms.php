@@ -4,7 +4,7 @@ require_once('database.php');
 function formEditable($titulo, $receta, $accion, $editable){
   echo "<div class='contenido'>";
   echo "<h3>".$titulo."</h3>";
-  showForm($receta, $accion, $editable);
+  showFormReceta($receta, $accion, $editable);
   echo "</div>";
   echo "</div>";
 }
@@ -59,12 +59,15 @@ function getParams($p, $f){
     }
     // -> fotografía
     $result['err_fotografia']='';
-    if(empty($f['fotografia']['tmp_name'])){
+    if(empty($f['fotografia']['name'])){
       $result['err_fotografia'] = 'Debe incluir una fotografía';
     }else{
+      $name = $f['fotografia']['name'];
       $target_dir = "uploads/";
       $target_file = $target_dir . basename($f['fotografia']['name']);
+      // Tipo del archivo
       $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+      $validExtensions = array('jpg', 'jpeg', 'png', 'gif');
       // Comprobar que se trata de verdad de una imagen
       if (!getimagesize($f['fotografia']['tmp_name'])){
         $result['err_fotografia'] = "El archivo no es una fotografía";
@@ -72,23 +75,24 @@ function getParams($p, $f){
       }else if ($f['fotografia']["size"] > 500000){
         $result['err_fotografia'] = 'Lo siento, el archivo es demasiado grande';
       // Sólo permitimos JPG, JPEG y PNG
-      }else if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"){
+      }else if (!in_array($imageFileType, $validExtensions)){
         $result['err_fotografia'] = 'Lo siento, solo se permiten archivos PNG, JPG o JPEG';
       }else{
+        // Guardamos la imagen
         $result['fotografia'] = $f['fotografia']['tmp_name'];
-        $result['fotografia_base64'] = base64_encode(file_get_contents($f['fotografia']['tmp_name']));
-        $result['fotografia_src_completa'] = 'data:image/'.$imageFileType.';base64,'.$result['fotografia_base64'];
+        $result['fotografia_src'] = $name;
+        move_uploaded_file($f['fotografia']['tmp_name'], $target_dir.$name);
       }
     }
-    // fotografía ya convertida
-    if(isset($p['fotografia_src_completa'])){
-      $result['fotografia_src_completa'] = true;
+    // Si ya hemos subido la imagen
+    if (isset($p['fotografia_src'])){
+      $result['fotografia_src'] = $p['fotografia_src'];
     }
     //confirmar
     if(isset($p['confirmar'])){
       $result['confirmar'] = true;
     }
-  } else {
+ }else {
     //El formulario aún no ha sido enviado
     $result['enviado'] = false;
   }
@@ -97,7 +101,7 @@ function getParams($p, $f){
 
 
 //accion = Enviar
-function showForm($params, $accion, $editable){
+function showFormReceta($params, $accion, $editable){
   if ($editable == false){
     $disabled = 'readonly="readonly"';
     echo "<p>Disabled activado</p>";
@@ -139,8 +143,8 @@ function showForm($params, $accion, $editable){
       <input type="file" name="fotografia" <?php echo $disabled ?>
       <?php if (isset($params['fotografia'])){
         echo " value='".$params['fotografia']."'/><br>";
-        echo "<input type='hidden' name='fotografia_src_completa' value='".$params['fotografia_src_completa']."'/>";
-        echo "<img src='".$params['fotografia_src_completa']."' /><br>";?>
+        echo "<input type='hidden' name='fotografia_src' value='".$params['fotografia_src']."'/>";
+        echo "<img src='uploads/".$params['fotografia_src']."' /><br>";?>
       <?php }
       if (isset($params['err_fotografia'])) echo "<p class = 'error'>".$params['err_fotografia']."</p><br>";?>
     </label>
@@ -160,6 +164,41 @@ function enviarFormulario($params){
   $db = dbConnection();
   dbCrearReceta($db, $params);
   dbDisconnection($db);
+}
+
+
+function showReceta($receta){
+  ?>
+  <div class="contenido">
+    <div class="superior">
+      <div class="nombre_receta">
+        <h1><?php echo $receta['titulo'] ?></h1>
+        <img src="images/estrellas.png" alt="estrellas">
+      </div>
+      <div class="detalles">
+        <p>Autor: <?php echo $receta['autor'] ?> El cocinillas</p>
+      </div>
+    </div>
+    <section class="descripcion">
+      <div class="texto">
+        <?php echo $receta['descripcion'] ?>
+      </div>
+      <img src="uploads/<?php echo $receta['fotografia_src'] ?>">
+    </section>
+    <section class="ingredientes">
+        <?php echo $receta['ingredientes'] ?>
+    </section>
+    <section class="preparacion">
+      <?php echo $receta['preparacion'] ?>
+    </section>
+    <section class="navegacion_inferior">
+      <img src="images/edit.png">
+      <img src="images/comment.png">
+      <img src="images/x.jpg">
+    </section>
+  </div>
+  </div>
+  <?php
 }
 
 ?>

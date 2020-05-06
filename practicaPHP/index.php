@@ -6,6 +6,7 @@ ini_set("error_reporting", E_ALL);
 require "pag_comun.php";
 include "header.html";
 
+
 // Obtener el query string
 
 if ((!isset($_GET["p"])) || ($_GET["p"]<0 || $_GET["p"]>3)){

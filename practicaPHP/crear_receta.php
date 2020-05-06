@@ -20,11 +20,11 @@ if (isset($params['confirmar'])){
   echo '<p>Pedir confirmación</>';
   $params['editable']=false;
   $accion = 'confirmar';
-  showForm($params, $accion, false);
+  showFormReceta($params, $accion, false);
 }else{
   //Si no se han recibido parámetros o son incorrectos
   echo '<p>no se han recibido parámetros o son incorrectos </>';
-  showForm($params, 'enviar', true);
+  showFormReceta($params, 'enviar', true);
 }
 
 

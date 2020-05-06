@@ -33,8 +33,10 @@ if (isset($id)){
           $info[]= "No se ha podido actualizar la receta ".$params['titulo'];
         }
         break;
-
-
+      case 'Mostrar':
+        $receta = dbGetReceta($db, $id);
+        showReceta($receta);
+        break;
         }
     }
   }else{

@@ -22,7 +22,8 @@ echo <<<HTML
       </tr>
 HTML;
 
-foreach ($datos as $v){
+// se queja en void
+foreach ((array) $datos as $v){
     echo '<tr>';
     echo "<td>{$v['titulo']}</td>";
     echo "<td><form action='$accion' method='POST'>

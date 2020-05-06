@@ -1,4 +1,5 @@
 <?php
+
 function HTMLnav($activo){
 echo <<<HTML
   <div class="menu">
@@ -6,7 +7,7 @@ echo <<<HTML
 HTML;
 
 if (isset($_SESSION['identificado']))
-  $items = ['Inicio', 'Listado de recetas', 'Página de contacto', 'Página nueva'];
+  $items = ['Inicio', 'Listado de recetas', 'Página de contacto', 'Receta nueva'];
 else
   $items = ['Inicio', 'Listado de recetas', 'Página de contacto'];
 foreach ($items as $key => $value)

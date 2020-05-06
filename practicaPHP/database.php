@@ -1,5 +1,6 @@
 <?php
 require_once('dbcredenciales.php');
+
 function dbConnection(){
 	$db = mysqli_connect(DB_HOST, DB_USER, DB_PASSWD, DB_NAME);
 	if ($db) {
@@ -10,6 +11,7 @@ function dbConnection(){
 		return "Error de conexión en la base de datos (".mysqli_connect_errno().") : ".mysqli_connect_error();
 	}
 }
+
 
 function dbDisconnection($db){
 	mysqli_close($db);
@@ -33,11 +35,15 @@ function dbGetRecetas($db){
 
 function dbGetReceta($db, $id){
 	$res = mysqli_query($db, "SELECT id, titulo, autor, categoria, descripcion,
-														ingredientes, preparacion, fotografia_src_completa
+														ingredientes, preparacion, fotografia_src
 														FROM receta WHERE id='".mysqli_real_escape_string($db,$id)."'");
-	if ($res && mysqli_num_rows($res)==1)
+	if ($res && mysqli_num_rows($res)==1){
 		$receta = mysqli_fetch_assoc($res);
-	else $receta = false;
+		echo "<p> Error en mysql_num_rows";
+	}
+	else{
+		$receta = false;
+	}
 	mysqli_free_result($res);
 	return $receta;
 }
@@ -51,15 +57,16 @@ function dbCrearReceta($db, $params){
 		$info[] = 'Ya existe una receta con ese título';
 	else{
 		$res = mysqli_query($db, "INSERT INTO receta (titulo, autor, categoria, descripcion,
-																									ingredientes, preparacion, fotografia_src_completa)
+																									ingredientes, preparacion, fotografia_src)
 															VALUES ('{$params['titulo']}',
 															'{$params['autor']}',
 															'{$params['categoria']}',
 															'{$params['descripcion']}',
 															'{$params['ingredientes']}',
 															'{$params['preparacion']}',
-															'{$params['fotografia_src_completa']}')");
+															'{$params['fotografia_src']}')");
 		if (!$res){
+			echo "<p> Error en la creacion d el areceta </p>";
 			$info[] = "error en la creación de la receta";
 			$info[] = mysqli_error($db);
 		}
@@ -94,7 +101,7 @@ function dbModificarReceta($db, $id, $params){
 															SET descripcion = '{$params['descripcion']}',
 															SET ingredientes = '{$params['ingredientes']}',
 															SET preparacion = '{$params['preparacion']}',
-															SET fotografia_src_completa = '{$params['fotografia_src_completa']}'
+															SET fotografia_src = '{$params['fotografia_src']}'
 															");
 		if (!$res){
 			$info[]= "Error al actualizar";

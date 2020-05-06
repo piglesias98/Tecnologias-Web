@@ -9,7 +9,7 @@ if ($params['enviado']==true && $params['err_nombre']=='' && $params['err_email'
   showResults($params);
 }else{
   //Si no se han recibido parámetros o son incorrectos
-  showForm($params);
+  showFormContacto($params);
 }
 
 function getParams($p){
@@ -56,7 +56,7 @@ function getParams($p){
   return $result;
 }
 
-function showForm($params){
+function showFormContacto($params){
   ?>
   <form class="login_form" action="index.php?p=2" method="post">
     <label for="nombre">Nombre:
