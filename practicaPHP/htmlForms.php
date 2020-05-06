@@ -104,9 +104,12 @@ function getParams($p, $f){
 function showFormReceta($params, $accion, $editable){
   if ($editable == false){
     $disabled = 'readonly="readonly"';
+    $disabledPic = 'disabled="disabled"';
     echo "<p>Disabled activado</p>";
-  }else
+  }else{
     $disabled = '';
+    $disabledPic = '';
+  }
   ?>
   <form class="login_form" action="<?php $_SERVER['PHP_SELF']?>" enctype="multipart/form-data" method="post">
     <label for="nombre">Título de la receta:
@@ -140,12 +143,12 @@ function showFormReceta($params, $accion, $editable){
       <?php if (isset($params['err_preparacion'])) echo "<p class = 'error'>".$params['err_preparacion']."</p>";?>
     </label>
     <label for="imagen">Selecciona una imagen:
-      <input type="file" name="fotografia" <?php echo $disabled ?>
-      <?php if (isset($params['fotografia'])){
-        echo " value='".$params['fotografia']."'/><br>";
+      <input type="file" name="fotografia" <?php echo $disabledPic ?>
+      <?php if (isset($params['fotografia_src'])){
+        echo " value='".$params['fotografia_src']."'/><br>";
         echo "<input type='hidden' name='fotografia_src' value='".$params['fotografia_src']."'/>";
         echo "<img src='uploads/".$params['fotografia_src']."' /><br>";?>
-      <?php }
+      <?php }else echo "/><br>";
       if (isset($params['err_fotografia'])) echo "<p class = 'error'>".$params['err_fotografia']."</p><br>";?>
     </label>
     <?php if (isset($params['id'])) echo "<input type='hidden' name='id' value='".$params['id']."'/>";?>
@@ -167,7 +170,7 @@ function enviarFormulario($params){
 }
 
 
-function showReceta($receta){
+function showReceta($receta, $id){
   ?>
   <div class="contenido">
     <div class="superior">
@@ -176,7 +179,7 @@ function showReceta($receta){
         <img src="images/estrellas.png" alt="estrellas">
       </div>
       <div class="detalles">
-        <p>Autor: <?php echo $receta['autor'] ?> El cocinillas</p>
+        <p>Autor: <?php echo $receta['autor'] ?></p>
       </div>
     </div>
     <section class="descripcion">
@@ -186,15 +189,20 @@ function showReceta($receta){
       <img src="uploads/<?php echo $receta['fotografia_src'] ?>">
     </section>
     <section class="ingredientes">
-        <?php echo $receta['ingredientes'] ?>
+      <p><?php echo $receta['ingredientes'] ?></p>
     </section>
     <section class="preparacion">
-      <?php echo $receta['preparacion'] ?>
+      <p><?php echo $receta['preparacion'] ?></p>
     </section>
     <section class="navegacion_inferior">
-      <img src="images/edit.png">
-      <img src="images/comment.png">
-      <img src="images/x.jpg">
+      <?php
+      if (isset($_SESSION['identificado'])){
+        echo "<form action='index?p=crud' method='POST'>
+              <input type='hidden' name='id' value='{$id}' />";
+        echo "<input type='submit'  name = 'accion' value='Editar' />
+              <input type='submit' name = 'accion' value='Borrar'/>";
+      }
+      ?>
     </section>
   </div>
   </div>

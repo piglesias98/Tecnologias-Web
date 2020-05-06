@@ -35,7 +35,7 @@ if (isset($id)){
         break;
       case 'Mostrar':
         $receta = dbGetReceta($db, $id);
-        showReceta($receta);
+        showReceta($receta, $id);
         break;
         }
     }
