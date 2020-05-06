@@ -6,7 +6,7 @@ if (!is_String($db = dbConnection())){
   $recetas = dbGetRecetas($db);
   if ($recetas == false)
     echo "<p>es false</p>";
-  ver_listado($recetas, 'crud.php');
+  ver_listado($recetas, 'index?p=crud');
   dbDisconnection($db);
 }else{
   echo "<p class='error'>No se ha podido conectar con la base de datos</p>";

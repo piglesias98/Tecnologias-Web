@@ -39,7 +39,7 @@ function dbGetReceta($db, $id){
 														FROM receta WHERE id='".mysqli_real_escape_string($db,$id)."'");
 	if ($res && mysqli_num_rows($res)==1){
 		$receta = mysqli_fetch_assoc($res);
-		echo "<p> Error en mysql_num_rows";
+		echo "<p> Todo bien mysql_num_rows";
 	}
 	else{
 		$receta = false;

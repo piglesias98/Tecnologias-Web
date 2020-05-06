@@ -7,9 +7,10 @@ echo <<<HTML
 HTML;
 
 if (isset($_SESSION['identificado']))
-  $items = ['Inicio', 'Listado de recetas', 'Página de contacto', 'Receta nueva'];
+  $items = ['index'=>'Inicio', 'listado'=>'Listado de recetas',
+            'contacto'=> 'Página de contacto', 'crear'=>'Receta nueva'];
 else
-  $items = ['Inicio', 'Listado de recetas', 'Página de contacto'];
+  $items = ['index'=>'Inicio', 'listado'=>'Listado de recetas','contacto'=> 'Página de contacto'];
 foreach ($items as $key => $value)
   echo "<a".($key==$activo?" class='activo'":"").
   " href=index.php?p=".($key).">".$value."</a>";
