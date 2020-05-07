@@ -36,6 +36,7 @@ if (isset($_SESSION['identificado'])){
     case 'listado': include "listado.php"; break;
     case 'contacto': include "contacto.php"; break;
     case 'crud': include "crud.php"; break;
+    case 'crear': include "error.html"; break;
   }
 }
 
