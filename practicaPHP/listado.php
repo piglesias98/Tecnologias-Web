@@ -33,18 +33,17 @@ if (!is_string($db=dbConnection())){
     formBuscarReceta('Datos de la búsqueda');
   if ($accion == 'Buscar'){
     $busc = dbArray2SQL($results);
-    echo "BUSC".$busc;
     $num_recetas = dbGetNumRecetas($db, $busc);
     if ($num_recetas>0){
-      $recetas = dbGetRecetas($db, $busc);
+      $orden =  strpos($results['bAscDesc'], 'Asc') !== false ? 'asc' : 'desc';
+      $recetas = dbGetRecetas($db, $busc, $orden);
       if ($recetas!==false){
-        echo "<p> Ver listado</p>";
         ver_listado($recetas, 'index?p=crud');
       }else {
-        echo "<p> Ha habido un error en la consulta a la BD</p>";
+        echo "<p class='error'> Ha habido un error en la consulta a la BD</p>";
       }
     }else{
-      echo "<p> No hay ninguna receta con ese título</p>";
+      echo "<p class = 'error'> No hay ninguna receta con ese título</p>";
     }
   }
 

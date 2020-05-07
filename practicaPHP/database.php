@@ -4,7 +4,6 @@ require_once('dbcredenciales.php');
 function dbConnection(){
 	$db = mysqli_connect(DB_HOST, DB_USER, DB_PASSWD, DB_NAME);
 	if ($db) {
-		echo "<p>Conexión con éxito</p>";
 		mysqli_set_charset($db, "utf8");
 		return $db;
 	}else{
@@ -17,10 +16,10 @@ function dbDisconnection($db){
 	mysqli_close($db);
 }
 
-function dbGetRecetas($db, $cadena=''){
+function dbGetRecetas($db, $cadena='', $orden=''){
 	$query = "SELECT id, titulo FROM receta";
 	$query = $cadena=='' ? $query : $query." WHERE ".$cadena;
-	echo "query".$query;
+	$query = $orden=='' ? $query : $query." ORDER BY titulo ".$orden;
 	$res = mysqli_query($db, $query);
 	if ($res){
 		if (mysqli_num_rows($res)>0){
@@ -42,7 +41,6 @@ function dbGetReceta($db, $id){
 														FROM receta WHERE id='".mysqli_real_escape_string($db,$id)."'");
 	if ($res && mysqli_num_rows($res)==1){
 		$receta = mysqli_fetch_assoc($res);
-		echo "<p> Todo bien mysql_num_rows";
 	}
 	else{
 		$receta = false;
@@ -56,8 +54,10 @@ function dbCrearReceta($db, $params){
 	$res = mysqli_query($db, "SELECT id, titulo FROM receta WHERE titulo='{$params['titulo']}'");
 	$num = mysqli_fetch_assoc($res);
 	mysqli_free_result($res);
-	if ($num>0)
-		$info[] = 'Ya existe una receta con ese título';
+	if ($num>0){
+		echo "<p class = 'error'> Error en la creacion d el areceta </p>";
+		$info = 'Ya existe una receta con ese título';
+	}
 	else{
 		$res = mysqli_query($db, "INSERT INTO receta (titulo, autor, categoria, descripcion,
 																									ingredientes, preparacion, fotografia_src)
@@ -69,9 +69,8 @@ function dbCrearReceta($db, $params){
 															'{$params['preparacion']}',
 															'{$params['fotografia_src']}')");
 		if (!$res){
-			echo "<p> Error en la creacion d el areceta </p>";
-			$info[] = "error en la creación de la receta";
-			$info[] = mysqli_error($db);
+			$info = "Error en la creacion d el areceta";
+			echo "<p class = 'error'> Error en la creacion d el areceta </p>".mysqli_error($db);
 		}
 	}
 	if (isset($info))
@@ -95,7 +94,8 @@ function dbModificarReceta($db, $id, $params){
 	$receta = mysqli_fetch_assoc($res);
 	mysqli_free_result($res);
 	if($receta['titulo'] == $params['titulo'] and $receta['id'] != $params['id']){
-		$info[]= 'Ya hay una receta con ese mismo título';
+		$info =  'Ya hay una receta con ese mismo título';
+		echo "<p class='error'>Ya hay una receta con ese mismo título</p>";
 	}else{
 		$res = mysqli_query($db, "UPDATE receta
 															SET titulo = '{$params['titulo']}',
@@ -107,8 +107,8 @@ function dbModificarReceta($db, $id, $params){
 															SET fotografia_src = '{$params['fotografia_src']}'
 															");
 		if (!$res){
-			$info[]= "Error al actualizar";
-			$info[] = mysqli_error($db);
+			$info =  'Error al actualizar'.mysqli_error($db);
+			echo "<p class='error'>Error al actualizar".mysqli_error($db)."</p>";
 		}
 	}
 	if (isset($info))

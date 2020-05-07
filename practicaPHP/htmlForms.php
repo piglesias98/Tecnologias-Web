@@ -212,11 +212,11 @@ function showReceta($receta, $id){
 function formBuscarReceta($titulo, $datos=false){
   $bTitulo = isset($datos['bTitulo']) ? " value='{$datos['bTitulo']}'":'bTitulo';
   if (isset($datos['bAscDesc'])){
-    $bAsc = 'bAsc' === $datos['bAscDesc'] ? " value='{$datos['bAscDesc']}'":'bAsc';
-    $bDesc = 'bDesc' === $datos['bAscDesc'] ? " value='{$datos['bAscDesc']}'":'bDesc';
+    $bAsc = 'bAsc' === $datos['bAscDesc'] ? " checked ":'bAsc';
+    $bDesc = 'bDesc' === $datos['bAscDesc'] ? " checked ":'bDesc';
   }else{
-    $bAsc = " value = 'bAsc'";
-    $bDesc = "value = 'bDesc'";
+    $bAsc = '';
+    $bDesc = '';
   }
 
   $accion =  basename($_SERVER['REQUEST_URI']);
@@ -228,10 +228,10 @@ echo <<< HTML
       <input type="text" name="bTitulo" $bTitulo>
     </label>
     <label for="bAsc">Ascendente
-      <input type="radio" name="bAscDesc" $bAsc>
+      <input type="radio" name="bAscDesc" value = "bAsc" $bAsc>
     </label>
     <label for="bDesc">Descendente
-      <input type="radio" name="bAscDesc" $bDesc>
+      <input type="radio" name="bAscDesc" value = "bDesc" $bDesc>
     </label>
     <input type="submit" name="accion" value="Buscar">
   </form>
