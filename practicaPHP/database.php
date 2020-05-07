@@ -17,8 +17,11 @@ function dbDisconnection($db){
 	mysqli_close($db);
 }
 
-function dbGetRecetas($db){
-	$res = mysqli_query($db, "SELECT id, titulo FROM receta");
+function dbGetRecetas($db, $cadena=''){
+	$query = "SELECT id, titulo FROM receta";
+	$query = $cadena=='' ? $query : $query." WHERE ".$cadena;
+	echo "query".$query;
+	$res = mysqli_query($db, $query);
 	if ($res){
 		if (mysqli_num_rows($res)>0){
 			$tabla = mysqli_fetch_all($res, MYSQLI_ASSOC);
@@ -112,6 +115,21 @@ function dbModificarReceta($db, $id, $params){
 		return $info;
 	else
 		return true;
+}
+
+function dbArray2SQL($query){
+	$cadena = '';
+	if (array_key_exists('bTitulo', $query)){
+		$cadena .= "titulo LIKE '%{$query['bTitulo']}%'";
+	}
+	return $cadena;
+}
+
+function dbGetNumRecetas($db, $cadena=''){
+	$res = mysqli_query($db, "SELECT COUNT(*) FROM receta WHERE $cadena");
+	$num = mysqli_fetch_assoc($res);
+	mysqli_free_result($res);
+	return $num;
 }
 
 ?>

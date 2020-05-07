@@ -209,4 +209,34 @@ function showReceta($receta, $id){
   <?php
 }
 
+function formBuscarReceta($titulo, $datos=false){
+  $bTitulo = isset($datos['bTitulo']) ? " value='{$datos['bTitulo']}'":'bTitulo';
+  if (isset($datos['bAscDesc'])){
+    $bAsc = 'bAsc' === $datos['bAscDesc'] ? " value='{$datos['bAscDesc']}'":'bAsc';
+    $bDesc = 'bDesc' === $datos['bAscDesc'] ? " value='{$datos['bAscDesc']}'":'bDesc';
+  }else{
+    $bAsc = " value = 'bAsc'";
+    $bDesc = "value = 'bDesc'";
+  }
+
+  $accion =  basename($_SERVER['REQUEST_URI']);
+  if (!strpos($accion, '?')) $accion = $_SERVER['SCRIPT_NAME'];
+
+echo <<< HTML
+  <form class="" action= $accion method="post">
+    <label for="bTitulo">Título:
+      <input type="text" name="bTitulo" $bTitulo>
+    </label>
+    <label for="bAsc">Ascendente
+      <input type="radio" name="bAscDesc" $bAsc>
+    </label>
+    <label for="bDesc">Descendente
+      <input type="radio" name="bAscDesc" $bDesc>
+    </label>
+    <input type="submit" name="accion" value="Buscar">
+  </form>
+HTML;
+
+}
+
 ?>

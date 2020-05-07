@@ -1,15 +1,56 @@
 <div class="contenido">
 <h3>Listado de recetas</h3>
 <?php
-require('database.php');
-if (!is_String($db = dbConnection())){
-  $recetas = dbGetRecetas($db);
-  if ($recetas == false)
-    echo "<p>es false</p>";
-  ver_listado($recetas, 'index?p=crud');
+require_once('database.php');
+require_once('htmlForms.php');
+
+
+$accion = '';
+// Argumentos POST
+if (isset($_POST['accion'])){
+  if (isset($_POST['bTitulo']) and $_POST['bTitulo']!='')
+    $results['bTitulo'] = $_POST['bTitulo'];
+  if (isset($_POST['bAscDesc']) and $_POST['bAscDesc']!='')
+    $results['bAscDesc']= $_POST['bAscDesc'];
+  if (isset($results) and count($results) > 0){
+    $accion = 'Buscar';
+  }
+//Argumentos GET de la página
+}else{
+  $results = [];
+  if (isset($_GET['bTitulo']))
+    $results['bTitulo'] = $_GET['bTitulo'];
+  if (isset($_GET['bAscDesc']))
+    $results['bAscDesc']= $_GET['bTAscDesc'];
+  if (count($results)>0)
+    $accion = 'Buscar';
+}
+
+if (!is_string($db=dbConnection())){
+  if (isset($results))
+    formBuscarReceta('Datos de la búsqueda', $results);
+  else
+    formBuscarReceta('Datos de la búsqueda');
+  if ($accion == 'Buscar'){
+    $busc = dbArray2SQL($results);
+    echo "BUSC".$busc;
+    $num_recetas = dbGetNumRecetas($db, $busc);
+    if ($num_recetas>0){
+      $recetas = dbGetRecetas($db, $busc);
+      if ($recetas!==false){
+        echo "<p> Ver listado</p>";
+        ver_listado($recetas, 'index?p=crud');
+      }else {
+        echo "<p> Ha habido un error en la consulta a la BD</p>";
+      }
+    }else{
+      echo "<p> No hay ninguna receta con ese título</p>";
+    }
+  }
+
   dbDisconnection($db);
 }else{
-  echo "<p class='error'>No se ha podido conectar con la base de datos</p>";
+  echo "<p> Error en la conexión con la db<p>";
 }
 
 
