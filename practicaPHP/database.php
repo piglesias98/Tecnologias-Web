@@ -61,13 +61,13 @@ function dbCrearReceta($db, $params){
 	else{
 		$res = mysqli_query($db, "INSERT INTO receta (titulo, autor, categoria, descripcion,
 																									ingredientes, preparacion, fotografia_src)
-															VALUES ('{$params['titulo']}',
-															'{$params['autor']}',
-															'{$params['categoria']}',
-															'{$params['descripcion']}',
-															'{$params['ingredientes']}',
-															'{$params['preparacion']}',
-															'{$params['fotografia_src']}')");
+															VALUES ('".mysqli_real_escape_string($db, $params['titulo'])."','"
+															.mysqli_real_escape_string($db, $params['autor'])."','"
+															.mysqli_real_escape_string($db, $params['categoria'])."','"
+															.mysqli_real_escape_string($db, $params['descripcion'])."','"
+															.mysqli_real_escape_string($db, $params['ingredientes'])."','"
+															.mysqli_real_escape_string($db, $params['preparacion'])."','"
+															.mysqli_real_escape_string($db, $params['fotografia_src'])."')");
 		if (!$res){
 			$info = "Error en la creacion d el areceta";
 			echo "<p class = 'error'> Error en la creacion d el areceta </p>".mysqli_error($db);
@@ -97,18 +97,21 @@ function dbModificarReceta($db, $id, $params){
 		$info =  'Ya hay una receta con ese mismo título';
 		echo "<p class='error'>Ya hay una receta con ese mismo título</p>";
 	}else{
-		$res = mysqli_query($db, "UPDATE receta
-															SET titulo = '{$params['titulo']}',
-															SET autor = '{$params['autor']}',
-															SET categoria = '{$params['categoria']}',
-															SET descripcion = '{$params['descripcion']}',
-															SET ingredientes = '{$params['ingredientes']}',
-															SET preparacion = '{$params['preparacion']}',
-															SET fotografia_src = '{$params['fotografia_src']}'
-															");
+		$query = "UPDATE receta SET titulo = '".mysqli_real_escape_string($db, $params['titulo'])."'
+													SET autor = '".mysqli_real_escape_string($db, $params['autor'])."',
+													SET categoria = '".mysqli_real_escape_string($db, $params['categoria'])."',
+					                SET descripcion = '".mysqli_real_escape_string($db, $params['descripcion'])."',
+					                SET ingredientes = '".mysqli_real_escape_string($db, $params['ingredientes'])."',
+					                SET preparacion = '".mysqli_real_escape_string($db, $params['preparacion'])."',
+													SET fotografia_src = '".mysqli_real_escape_string($db, $params['fotografia_src'])."'
+
+		";
+
+		$res = mysqli_query($db, $query );
 		if (!$res){
 			$info =  'Error al actualizar'.mysqli_error($db);
-			echo "<p class='error'>Error al actualizar".mysqli_error($db)."</p>";
+			echo "<p class='error'> Error al actualizar.mysqli_error($db)</p>";
+
 		}
 	}
 	if (isset($info))
@@ -126,8 +129,13 @@ function dbArray2SQL($query){
 }
 
 function dbGetNumRecetas($db, $cadena=''){
-	$res = mysqli_query($db, "SELECT COUNT(*) FROM receta WHERE $cadena");
-	$num = mysqli_fetch_assoc($res);
+	if ($cadena==''){
+		$query = "SELECT COUNT(*) FROM receta";
+	}else{
+		$query = "SELECT COUNT(*) FROM receta WHERE $cadena";
+	}
+	$res = mysqli_query($db, $query);
+	$num = mysqli_fetch_row($res)[0];
 	mysqli_free_result($res);
 	return $num;
 }

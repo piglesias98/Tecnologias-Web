@@ -35,10 +35,14 @@ if (!is_string($db=dbConnection())){
     $busc = dbArray2SQL($results);
     $num_recetas = dbGetNumRecetas($db, $busc);
     if ($num_recetas>0){
-      $orden =  strpos($results['bAscDesc'], 'Asc') !== false ? 'asc' : 'desc';
+      if (isset($results['bAscDesc'])){
+        $orden =  strpos($results['bAscDesc'], 'Asc') !== false ? 'asc' : 'desc';
+      }else {
+        $orden = '';
+      }
       $recetas = dbGetRecetas($db, $busc, $orden);
       if ($recetas!==false){
-        ver_listado($recetas, 'index?p=crud');
+        ver_listado($recetas, 'index.php?p=crud');
       }else {
         echo "<p class='error'> Ha habido un error en la consulta a la BD</p>";
       }

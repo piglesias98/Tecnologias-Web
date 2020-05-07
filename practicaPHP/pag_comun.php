@@ -26,6 +26,7 @@ echo <<<HTML
     <div class="lateral">
 HTML;
 include 'login.php';
+include 'count.php';
 include 'fixed_widgets.html';
 
 echo <<<HTML

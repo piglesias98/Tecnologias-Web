@@ -23,7 +23,7 @@ if (isset($params['confirmar'])){
   showFormReceta($params, $accion, false);
 }else{
   //Si no se han recibido parámetros o son incorrectos
-  echo '<p>no se han recibido parámetros o son incorrectos </>';
+  echo '<p class="error">no se han recibido parámetros o son incorrectos </>';
   showFormReceta($params, 'enviar', true);
 }
 
