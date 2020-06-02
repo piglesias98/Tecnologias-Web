@@ -10,7 +10,7 @@ if (isset($_SESSION['identificado']))
   $items = ['index'=>'Inicio', 'listado'=>'Listado de recetas',
             'contacto'=> 'Página de contacto', 'crear'=>'Receta nueva'];
 else
-  $items = ['index'=>'Inicio', 'listado'=>'Listado de recetas','contacto'=> 'Página de contacto'];
+  $items = ['index'=>'Inicio', 'listado'=>'Listado de recetas','contacto'=> 'Página de contacto', 'registro' => 'Regístrate'];
 foreach ($items as $key => $value)
   echo "<a".($key==$activo?" class='activo'":"").
   " href=index.php?p=".($key).">".$value."</a>";

@@ -29,6 +29,7 @@ if (isset($_SESSION['identificado'])){
     case 'contacto': include "contacto.php"; break;
     case 'crear': include "crear_receta.php"; break;
     case 'crud': include "crud.php"; break;
+    case 'perfil': include "perfil.php"; break;
   }
 }else{
   switch($opc) {
@@ -37,6 +38,7 @@ if (isset($_SESSION['identificado'])){
     case 'contacto': include "contacto.php"; break;
     case 'crud': include "crud.php"; break;
     case 'crear': include "error.html"; break;
+    case 'registro': include "perfil.php"; break;
   }
 }
 

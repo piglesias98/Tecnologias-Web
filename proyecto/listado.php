@@ -2,7 +2,7 @@
 <h3>Listado de recetas</h3>
 <?php
 require_once('database.php');
-require_once('htmlForms.php');
+require_once('formulario_receta.php');
 
 
 $results['accion'] = '';
@@ -28,7 +28,6 @@ if (isset($_POST['accion'])){
 
 if (!is_string($db=dbConnection())){
   if (isset($results)){
-    echo '<p>  ISSET RESULTS </p>';
     formBuscarReceta('Datos de la búsqueda', $results);
   }else
     formBuscarReceta('Datos de la búsqueda');
