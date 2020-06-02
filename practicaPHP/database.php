@@ -128,16 +128,17 @@ function dbArray2SQL($query){
 	return $cadena;
 }
 
-function dbGetNumRecetas($db, $cadena=''){
-	if ($cadena==''){
-		$query = "SELECT COUNT(*) FROM receta";
-	}else{
-		$query = "SELECT COUNT(*) FROM receta WHERE $cadena";
-	}
-	$res = mysqli_query($db, $query);
-	$num = mysqli_fetch_row($res)[0];
-	mysqli_free_result($res);
-	return $num;
-}
+// function dbGetNumRecetas($db, $cadena=''){
+// 	if ($cadena==''){
+// 		echo '<p>CADENA ES VACIA</p>';
+// 		$query = "SELECT COUNT(*) FROM receta";
+// 	}else{
+// 		$query = "SELECT COUNT(*) FROM receta WHERE $cadena";
+// 	}
+	// $res = mysqli_query($db, $query);
+	// $num = mysqli_fetch_row($res)[0];
+	// mysqli_free_result($res);
+// 	// return $num;
+// }
 
 ?>

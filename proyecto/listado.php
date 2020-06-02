@@ -5,7 +5,7 @@ require_once('database.php');
 require_once('htmlForms.php');
 
 
-$accion = '';
+$results['accion'] = '';
 // Argumentos POST
 if (isset($_POST['accion'])){
   if (isset($_POST['bTitulo']) and $_POST['bTitulo']!='')
@@ -13,7 +13,7 @@ if (isset($_POST['accion'])){
   if (isset($_POST['bAscDesc']) and $_POST['bAscDesc']!='')
     $results['bAscDesc']= $_POST['bAscDesc'];
   if (isset($results) and count($results) > 0){
-    $accion = 'Buscar';
+    $results['accion'] = 'Buscar';
   }
 //Argumentos GET de la página
 }else{
@@ -23,15 +23,17 @@ if (isset($_POST['accion'])){
   if (isset($_GET['bAscDesc']))
     $results['bAscDesc']= $_GET['bTAscDesc'];
   if (count($results)>0)
-    $accion = 'Buscar';
+    $results['accion'] = 'Buscar';
 }
 
 if (!is_string($db=dbConnection())){
-  if (isset($results))
+  if (isset($results)){
+    echo '<p>  ISSET RESULTS </p>';
     formBuscarReceta('Datos de la búsqueda', $results);
-  else
+  }else
     formBuscarReceta('Datos de la búsqueda');
-  if ($accion == 'Buscar'){
+  if (isset($results['accion']) and $results['accion'] == 'Buscar'){
+    echo implode(" ",$results);
     $busc = dbArray2SQL($results);
     $num_recetas = dbGetNumRecetas($db, $busc);
     if ($num_recetas>0){

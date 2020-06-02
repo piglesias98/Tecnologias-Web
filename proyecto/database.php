@@ -7,6 +7,7 @@ function dbConnection(){
 		mysqli_set_charset($db, "utf8");
 		return $db;
 	}else{
+		echo "<p>ERROR EN LA CONEXIÓN</p>";
 		return "Error de conexión en la base de datos (".mysqli_connect_errno().") : ".mysqli_connect_error();
 	}
 }
@@ -17,7 +18,7 @@ function dbDisconnection($db){
 }
 
 function dbGetRecetas($db, $cadena='', $orden=''){
-	$query = "SELECT id, titulo FROM receta";
+	$query = "SELECT id, titulo FROM recetas";
 	$query = $cadena=='' ? $query : $query." WHERE ".$cadena;
 	$query = $orden=='' ? $query : $query." ORDER BY titulo ".$orden;
 	$res = mysqli_query($db, $query);
@@ -130,12 +131,13 @@ function dbArray2SQL($query){
 
 function dbGetNumRecetas($db, $cadena=''){
 	if ($cadena==''){
-		$query = "SELECT COUNT(*) FROM receta";
+		$query = "SELECT COUNT(*) FROM recetas";
 	}else{
-		$query = "SELECT COUNT(*) FROM receta WHERE $cadena";
+		$query = "SELECT COUNT(*) FROM recetas WHERE $cadena";
 	}
 	$res = mysqli_query($db, $query);
 	$num = mysqli_fetch_row($res)[0];
+	$num = (int)$num;
 	mysqli_free_result($res);
 	return $num;
 }
