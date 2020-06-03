@@ -81,6 +81,8 @@ function dbCrearReceta($db, $params){
 }
 
 
+
+
 function dbBorrarReceta($db, $id){
 	mysqli_query($db, "DELETE FROM receta WHERE id='$id'");
 	if (mysqli_affected_rows($db)==1)
@@ -140,6 +142,46 @@ function dbGetNumRecetas($db, $cadena=''){
 	$num = (int)$num;
 	mysqli_free_result($res);
 	return $num;
+}
+
+function dbCrearUsuario($db, $params){
+	echo $params['foto_perfil_src'];
+	$res = mysqli_query($db, "INSERT INTO usuarios (nombre, apellidos, email, clave1,
+																								foto_perfil_src)
+														VALUES ('".mysqli_real_escape_string($db, $params['nombre'])."','"
+														.mysqli_real_escape_string($db, $params['apellidos'])."','"
+														.mysqli_real_escape_string($db, $params['email'])."','"
+														.mysqli_real_escape_string($db, $params['clave1'])."','"
+														.mysqli_real_escape_string($db, $params['foto_perfil_src'])."')");
+	if (!$res){
+		$info = "Error en la creacion del usuario";
+		echo "<p class = 'error'> Error en la creacion d el areceta </p>".mysqli_error($db);
+	}
+	if (isset($info))
+		return $info;
+	else
+		return true;
+}
+
+
+function dbModificarUsuario($db, $id, $params){
+	$query = "UPDATE usuarios SET nombre = '".mysqli_real_escape_string($db, $params['nombre'])."'
+												SET apellidos = '".mysqli_real_escape_string($db, $params['apellidos'])."',
+												SET email = '".mysqli_real_escape_string($db, $params['email'])."',
+				                SET clave1 = '".mysqli_real_escape_string($db, $params['clave1'])."',
+												SET fotografia_src = '".mysqli_real_escape_string($db, $params['foto_perfil_src'])."'
+
+	";
+
+	$res = mysqli_query($db, $query );
+	if (!$res){
+		$info =  'Error al actualizar'.mysqli_error($db);
+		echo "<p class='error'> Error al actualizar .mysqli_error($db)</p>";
+	}
+	if (isset($info))
+		return $info;
+	else
+		return true;
 }
 
 ?>

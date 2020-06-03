@@ -69,8 +69,8 @@ function getParams($p, $f){
       if (!getimagesize($f['foto_perfil']['tmp_name'])){
         $result['err_foto'] = "El archivo no es una fotografía";
       // Comprobar el tamaño del archivo
-    }else if ($f['foto_perfil']["size"] > 500000){
-        $result['err_foto'] = 'Lo siento, el archivo es demasiado grande';
+      }else if ($f['foto_perfil']["size"] > 500000){
+          $result['err_foto'] = 'Lo siento, el archivo es demasiado grande';
       // Sólo permitimos JPG, JPEG y PNG
       }else if (!in_array($imageFileType, $validExtensions)){
         $result['err_foto'] = 'Lo siento, solo se permiten archivos PNG, JPG o JPEG';
@@ -78,7 +78,7 @@ function getParams($p, $f){
         // Guardamos la imagen
         $result['foto_perfil'] = $f['foto_perfil']['tmp_name'];
         $result['foto_perfil_src'] = $name;
-        move_uploaded_file($f['foto_perfil_src']['tmp_name'], $target_dir.$name);
+        move_uploaded_file($f['foto_perfil']['tmp_name'], $target_dir.$name);
       }
     }
     // Si ya hemos subido la imagen
@@ -111,10 +111,10 @@ function showFormUsuario($params, $accion, $editable){
   <form class="login_form" action="<?php $_SERVER['PHP_SELF']?>" enctype="multipart/form-data" method="post">
     <label for="imagen">Foto de perfil:
       <input type="file" name="foto_perfil" <?php echo $disabledPic ?>
-      <?php if (isset($params['foto_perfil'])){
-        echo " value='".$params['foto_perfil']."'/><br>";
-        echo "<input type='hidden' name='foto_perfil' value='".$params['foto_perfil']."'/>";
-        echo "<img src='uploads/".$params['foto_perfil']."' /><br>";?>
+      <?php if (isset($params['foto_perfil_src'])){
+        echo " value='".$params['foto_perfil_src']."'/><br>";
+        echo "<input type='hidden' name='foto_perfil_src' value='".$params['foto_perfil_src']."'/>";
+        echo "<img src='uploads/".$params['foto_perfil_src']."' /><br>";?>
       <?php }else echo "/><br>";
       if (isset($params['err_foto'])) echo "<p class = 'error'>".$params['err_foto']."</p><br>";?>
     </label>
@@ -152,12 +152,14 @@ function showFormUsuario($params, $accion, $editable){
 
 function enviarFormulario($params){
   ?>
-  <p>Muchas gracias, <?php echo $params['autor'] ?></p>
-  <p>Tu receta <?php echo $params['titulo']?> ya está en nuestra base de datos
-      y pronto podrás verla en la página web :)</p>
+  <p>Enhorabuena, <?php echo $params['nombre'] ?>!</p>
   <?php
+  $params['editable']=false;
+  $accion = 'confirmar';
+  echo $params['foto_perfil_src'];
+  // showFormUsuario($params, $accion, false);
   $db = dbConnection();
-  dbCrearReceta($db, $params);
+  dbCrearUsuario($db, $params);
   dbDisconnection($db);
 }
 
