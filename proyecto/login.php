@@ -1,17 +1,29 @@
 <?php
 // El formulario ha sido enviado si exist
 // alguna de las dos variables usuario o contraseña
+require_once('database.php');
 
 $url =  basename($_SERVER['REQUEST_URI']);
 if (!strpos($url, '?')) $url = $_SERVER['SCRIPT_NAME'];
 $error = false;
-if (isset($_POST['usuario']) or isset($_POST['clave'])){
-  // Comprobar el valor de usuario
-  if ($_POST['usuario'] == 'admin' and $_POST['clave'] == 'clave'){
-    $_SESSION['identificado'] = true;
-  }
-  else {
+if (isset($_POST['email']) or isset($_POST['clave'])){
+  // Comprobar que exista el usuario
+  $email = $_POST['email'];
+  $db = dbConnection();
+  $id = dbCheckUsuario($db, $email);
+  if ($id === false){
     $error = true;
+  }else{
+    // Verificamos la contraseña
+    $clave = $_POST['clave'];
+    if (dbPasswordVerify($db, $clave, $id)){
+      // La contraseña es correcta así que comenzamos una nueva sesión
+      $_SESSION['identificado'] = true;
+      $_SESSION['id'] = $id;
+      $_SESSION['email'] = $email;
+    }else {
+      $error = true;
+    }
   }
 }else if (isset($_POST['logout'])) {
     // Acceso desde formulario de logout
@@ -37,8 +49,8 @@ if (isset($_SESSION['identificado'])){
     <h3>Login</h3>
     <form class="login_form" action="<?php echo $url?>" method="post">
       <div class="field">
-        <label for="usuario">Usuario:</label>
-        <input type="text" name="usuario" id="usuario" placeholder="Escribe tu usuario">
+        <label for="email">Email:</label>
+        <input type="text" name="email" id="email" placeholder="Escribe tu usuario">
       </div>
       <div class="field">
         <label for="clave">Clave:</label>
@@ -49,6 +61,8 @@ if (isset($_SESSION['identificado'])){
       } ?>
       <input type="submit" value="Login">
     </form>
+    <?php $registro_url = strval($_SERVER['PHP_SELF']) . "?p=registro";?>
+    <p>¿No tienes cuenta aún? <a href=<?php echo $registro_url?>>Regístrate</a></p>
   </aside>
 <?php
 }

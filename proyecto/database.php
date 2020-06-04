@@ -184,4 +184,22 @@ function dbModificarUsuario($db, $id, $params){
 		return true;
 }
 
+function dbCheckUsuario($db, $email){
+	$res = mysqli_query($db, "SELECT id
+														FROM usuarios WHERE email='".mysqli_real_escape_string($db,$email)."'");
+	if ($res and mysqli_num_rows($res)==1)
+		return $res;
+	else
+		return False;
+}
+
+function dbPasswordVerify($db, $clave, $id){
+	$res = mysqli_query($db, "SELECT id
+														FROM usuarios WHERE clave1='".mysqli_real_escape_string($db,$clave)."'");
+	if ($res and mysqli_num_rows($res)==1)
+		return true;
+	else
+		return false;
+}
+
 ?>

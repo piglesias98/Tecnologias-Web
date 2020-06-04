@@ -163,7 +163,32 @@ function enviarFormulario($params){
   dbDisconnection($db);
 }
 
-
+function showUsuario($usuario, $id){
+  ?>
+  <div class="contenido">
+    <div class="superior">
+      <div class="datos">
+        <h1><?php echo $usuario['nombre'] ?></h1>
+        <h2><?php echo $usuario['apellidos'] ?></h2>
+        <p>Correo electrónico: <?php echo $usuario['email'] ?></p>
+      </div>
+      <div class="foto_perfil">
+        <?php $src = 'uploads/' + $usuario['foto_perfil_src'] ?>
+        <img src=<?php echo $src?> alt="foto_de_perfil">
+      </div>
+    </div>
+    <section class="navegacion_inferior">
+      <?php
+      echo "<form action='index?p=crud' method='POST'>
+            <input type='hidden' name='id' value='{$id}' />";
+      echo "<input type='submit'  name = 'accion' value='Editar' />
+            <input type='submit' name = 'accion' value='Borrar'/>";
+      ?>
+    </section>
+  </div>
+  </div>
+  <?php
+}
 
 
 ?>

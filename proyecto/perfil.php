@@ -1,30 +1,35 @@
-<div class="contenido">
-<h3>Tu perfil</h3>
 <?php
-
+require_once('database.php');
 require_once('formulario_usuario.php');
-
-//Obtener y validar parámetros
-$params = getParams($_POST, $_FILES);
-
-//Si ya tenemos la confirmación
-if (isset($params['confirmar'])){
-  enviarFormulario($params);
-//Si se han recibido los datos y son correctos
-}else if ($params['enviado']==true && $params['err_nombre']=='' && $params['err_apellidos']=='' && $params['err_email']==''
-    && $params['err_clave1']=='' && $params['err_clave2'] ==''
-    && $params['err_foto']==''){
-  //Pedir confirmación
-  $params['editable']=false;
-  $accion = 'confirmar';
-  showFormUsuario($params, $accion, false);
-}else{
-  //Si no se han recibido parámetros o son incorrectos
-  showFormUsuario($params, 'enviar', true);
+if (isset($_POST['accion']) && isset($_POST['id'])){
+  $accion = $_POST['accion'];
+  $id = $_POST['id'];
 }
 
-
+if (isset($id)){
+  if (!is_string($db = dbConnection())){
+    switch($accion){
+      case 'Editar':
+        $usuario = dbGetUsuario($db, $id);
+        formEditable('Edite sus datos ', $usuario, 'Editar', true);
+        break;
+      case 'Modificar':
+        $params = getParams($_POST, $_FILES);
+        $msg = dbModificarUsuario($db, $id, $params);
+        if ($msg == true){
+          $info[] = "".$params['nombre'].", tus datos han sido actualizados";
+        }else{
+          $info[]= "Tus datos no se han podido actualizar ".$params['nombre'];
+        }
+        break;
+      case 'Mostrar':
+        $usuario = dbGetUsuario($db, $id);
+        showUsuario($usuario, $id);
+        break;
+        }
+    }
+  }else{
+    //Si los parámetros no son correctos volver al listado
+  }
 
 ?>
-</div>
-</div>

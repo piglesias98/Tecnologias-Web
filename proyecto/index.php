@@ -38,7 +38,7 @@ if (isset($_SESSION['identificado'])){
     case 'contacto': include "contacto.php"; break;
     case 'crud': include "crud.php"; break;
     case 'crear': include "error.html"; break;
-    case 'registro': include "perfil.php"; break;
+    case 'registro': include "registro.php"; break;
   }
 }
 

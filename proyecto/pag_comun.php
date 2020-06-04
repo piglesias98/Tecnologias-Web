@@ -8,7 +8,7 @@ HTML;
 
 if (isset($_SESSION['identificado']))
   $items = ['index'=>'Inicio', 'listado'=>'Listado de recetas',
-            'contacto'=> 'Página de contacto', 'crear'=>'Receta nueva'];
+            'contacto'=> 'Página de contacto', 'crear'=>'Receta nueva', 'perfil'=>'Mi perfil'];
 else
   $items = ['index'=>'Inicio', 'listado'=>'Listado de recetas','contacto'=> 'Página de contacto', 'registro' => 'Regístrate'];
 foreach ($items as $key => $value)
