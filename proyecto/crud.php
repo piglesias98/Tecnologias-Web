@@ -1,6 +1,6 @@
 <?php
 require_once('database.php');
-require_once('formulario_usuario.php');
+require_once('formulario_receta.php');
 if (isset($_POST['accion']) && isset($_POST['id'])){
   $accion = $_POST['accion'];
   $id = $_POST['id'];

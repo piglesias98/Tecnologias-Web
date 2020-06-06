@@ -10,7 +10,9 @@ if (isset($_POST['email']) or isset($_POST['clave'])){
   // Comprobar que exista el usuario
   $email = $_POST['email'];
   $db = dbConnection();
-  $id = dbCheckUsuario($db, $email);
+  $res = dbCheckUsuario($db, $email);
+  $id = $res['id'];
+  echo $id;
   if ($id === false){
     $error = true;
   }else{

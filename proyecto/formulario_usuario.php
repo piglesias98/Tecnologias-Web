@@ -173,13 +173,12 @@ function showUsuario($usuario, $id){
         <p>Correo electrónico: <?php echo $usuario['email'] ?></p>
       </div>
       <div class="foto_perfil">
-        <?php $src = 'uploads/' + $usuario['foto_perfil_src'] ?>
-        <img src=<?php echo $src?> alt="foto_de_perfil">
+        <?php echo "<img src='uploads/".$usuario['foto_perfil_src']."' /><br>"; ?>
       </div>
     </div>
     <section class="navegacion_inferior">
       <?php
-      echo "<form action='index?p=crud' method='POST'>
+      echo "<form action='index?p=perfil' method='POST'>
             <input type='hidden' name='id' value='{$id}' />";
       echo "<input type='submit'  name = 'accion' value='Editar' />
             <input type='submit' name = 'accion' value='Borrar'/>";

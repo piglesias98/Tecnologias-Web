@@ -188,7 +188,7 @@ function dbCheckUsuario($db, $email){
 	$res = mysqli_query($db, "SELECT id
 														FROM usuarios WHERE email='".mysqli_real_escape_string($db,$email)."'");
 	if ($res and mysqli_num_rows($res)==1)
-		return $res;
+		return mysqli_fetch_assoc($res);
 	else
 		return False;
 }
@@ -200,6 +200,20 @@ function dbPasswordVerify($db, $clave, $id){
 		return true;
 	else
 		return false;
+}
+
+function dbGetUsuario($db, $id){
+	$res = mysqli_query($db, "SELECT id, nombre, apellidos, email,
+														foto_perfil_src
+														FROM usuarios WHERE id='".mysqli_real_escape_string($db,$id)."'");
+	if ($res && mysqli_num_rows($res)==1){
+		$usuario = mysqli_fetch_assoc($res);
+	}
+	else{
+		$usuario = false;
+	}
+	mysqli_free_result($res);
+	return $usuario;
 }
 
 ?>
