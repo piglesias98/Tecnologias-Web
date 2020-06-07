@@ -177,6 +177,7 @@ function showReceta($receta, $id){
 
 function formBuscarReceta($titulo, $datos=false){
   $bTitulo = isset($datos['bTitulo']) ? " value='{$datos['bTitulo']}'":'bTitulo';
+  $bCampo = isset($datos['bCampo']) ? " value='{$datos['bCampo']}'":'bCampo';
   if (isset($datos['bAscDesc'])){
     $bAsc = 'bAsc' === $datos['bAscDesc'] ? " checked ":'bAsc';
     $bDesc = 'bDesc' === $datos['bAscDesc'] ? " checked ":'bDesc';
@@ -184,14 +185,16 @@ function formBuscarReceta($titulo, $datos=false){
     $bAsc = '';
     $bDesc = '';
   }
-
   $accion =  basename($_SERVER['REQUEST_URI']);
   if (!strpos($accion, '?')) $accion = $_SERVER['SCRIPT_NAME'];
 
-echo <<< HTML
-  <form class="" action= $accion method="post">
-    <label for="bTitulo">Título:
+?>
+  <form class="" action= <?php echo $accion;?> method="post">
+    <label for="bTitulo">Buscar en título:
       <input type="text" name="bTitulo" $bTitulo>
+    </label>
+    <label for="bTitulo">Buscar en receta:
+      <input type="text" name="bCampo" $bTitulo>
     </label>
     <label for="bAsc">Ascendente
       <input type="radio" name="bAscDesc" value = "bAsc" $bAsc>
@@ -199,10 +202,35 @@ echo <<< HTML
     <label for="bDesc">Descendente
       <input type="radio" name="bAscDesc" value = "bDesc" $bDesc>
     </label>
+    <label for="categorias">Categorías:<br>
+      Tipo de comida:
+      <input type="checkbox" name="bcategoria[]" value="carnes"
+      <?php if (isset($datos['bCategoria']) && in_array('carnes',$datos['bCategoria']))
+              echo ' checked';?>/>Carnes
+      <input type="checkbox" name="bCategoria[]" value="verduras"
+      <?php if (isset($datos['bCategoria']) && in_array('verduras',$datos['bCategoria']))
+              echo ' checked';?>/>Verduras
+      <input type="checkbox" name="bCategoria[]" value="pescado"
+      <?php if (isset($datos['bCategoria']) && in_array('pescado',$datos['bCategoria']))
+              echo ' checked';?>/>Pescado
+      <input type="checkbox" name="bCategoria[]" value="arroz"
+      <?php if (isset($datos['bCategoria']) && in_array('arroz',$datos['bCategoria']))
+              echo ' checked';?>/>Arroz
+      <input type="checkbox" name="bCategoria[]" value="sopa"
+      <?php if (isset($datos['bCategoria']) && in_array('sopa',$datos['bCategoria']))
+              echo ' checked';?>/>Sopa
+      <br>
+      Dificultad:
+      <input type="checkbox" name="bcategoria[]" value="facil"
+      <?php if (isset($datos['bCategoria']) && array_key_exists('facil',$datos['bCategoria']))
+              echo ' checked';?>/>Fácil
+      <input type="checkbox" name="bcategoria[]" value="dificil"
+      <?php if (isset($datos['bCategoria']) && array_key_exists('dificil',$datos['bCategoria']))
+              echo ' checked';?>/>Difícil
+    </label><br>
     <input type="submit" name="accion" value="Buscar">
   </form>
-HTML;
 
+<?php
 }
-
 ?>

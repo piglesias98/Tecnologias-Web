@@ -10,6 +10,10 @@ $results['accion'] = '';
 if (isset($_POST['accion'])){
   if (isset($_POST['bTitulo']) and $_POST['bTitulo']!='')
     $results['bTitulo'] = $_POST['bTitulo'];
+  if (isset($_POST['bCampo']) and $_POST['bCampo']!='')
+    $results['bCampo'] = $_POST['bCampo'];
+  if (isset($_POST['bCategoria']) and $_POST['bCategoria']!='')
+    $results['bCategoria'] = $_POST['bCategoria'];
   if (isset($_POST['bAscDesc']) and $_POST['bAscDesc']!='')
     $results['bAscDesc']= $_POST['bAscDesc'];
   if (isset($results) and count($results) > 0){
@@ -26,9 +30,7 @@ if (isset($_GET['p']) and $_GET['p'] == 'mis_recetas'){
 if (!is_string($db=dbConnection())){
   $busc = '';
   $orden = '';
-  echo "isset results";
   formBuscarReceta('Datos de la búsqueda', $results);
-  echo implode(" ",$results);
   $busc = dbArray2SQL($results);
   if (isset($results['bAscDesc'])){
     $orden =  strpos($results['bAscDesc'], 'Asc') !== false ? 'asc' : 'desc';

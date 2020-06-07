@@ -120,6 +120,24 @@ function dbArray2SQL($query){
 		}
 		$cadena .= "idautor LIKE '%{$query['id']}%'";
 	}
+	if (array_key_exists('bCampo', $query)){
+		if ($cadena != ''){
+			$cadena .= " AND ";
+		}
+		$cadena .= " (titulo LIKE '%{$query['bCampo']}%'
+								OR descripcion LIKE '%{$query['bCampo']}%'
+								OR ingredientes LIKE '%{$query['bCampo']}%'
+								OR preparacion LIKE '%{$query['bCampo']}%') ";
+	}
+	if (array_key_exists('bCategoria', $query)){
+		if ($cadena != ''){
+			$cadena .= " AND ";
+		}
+		foreach ($query['bCategoria'] as $value) {
+			$cadena .= " categoria LIKE '%{$value}%' AND ";
+		}
+		$cadena = substr($cadena, 0, -4);
+	}
 	return $cadena;
 }
 
