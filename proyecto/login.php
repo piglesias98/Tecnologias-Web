@@ -2,13 +2,14 @@
 // El formulario ha sido enviado si exist
 // alguna de las dos variables usuario o contraseña
 require_once('database.php');
+require_once('database_usuario.php');
 
 $url =  basename($_SERVER['REQUEST_URI']);
 if (!strpos($url, '?')) $url = $_SERVER['SCRIPT_NAME'];
 $error = false;
-if (isset($_POST['email']) or isset($_POST['clave'])){
+if (isset($_POST['email_login']) or isset($_POST['clave_login'])){
   // Comprobar que exista el usuario
-  $email = $_POST['email'];
+  $email = $_POST['email_login'];
   $db = dbConnection();
   $res = dbCheckUsuario($db, $email);
   $id = $res['id'];
@@ -17,7 +18,7 @@ if (isset($_POST['email']) or isset($_POST['clave'])){
     $error = true;
   }else{
     // Verificamos la contraseña
-    $clave = $_POST['clave'];
+    $clave = $_POST['clave_login'];
     if (dbPasswordVerify($db, $clave, $id)){
       // La contraseña es correcta así que comenzamos una nueva sesión
       $_SESSION['identificado'] = true;
@@ -52,11 +53,11 @@ if (isset($_SESSION['identificado'])){
     <form class="login_form" action="<?php echo $url?>" method="post">
       <div class="field">
         <label for="email">Email:</label>
-        <input type="text" name="email" id="email" placeholder="Escribe tu usuario">
+        <input type="text" name="email_login" id="email_login" placeholder="Escribe tu usuario">
       </div>
       <div class="field">
         <label for="clave">Clave:</label>
-        <input type="password" name="clave" id="clave" placeholder="Escribe tu constraseña">
+        <input type="password" name="clave_login" id="clave_login" placeholder="Escribe tu constraseña">
       </div>
       <?php if ($error){
         echo "<p class='error'> Nombre de usuario o clave no son correctos, prueba otra vez</p>";

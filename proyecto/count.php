@@ -1,5 +1,6 @@
 <?php
 require_once 'database.php';
+require_once 'database_receta.php';
 $db = dbConnection();
 $num_recetas = dbGetNumRecetas($db)
 ?>

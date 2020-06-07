@@ -4,6 +4,7 @@ require_once('database.php');
 function formEditable($titulo, $usuario, $accion, $editable){
   echo "<div class='contenido'>";
   echo "<h3>".$titulo."</h3>";
+  echo "<h3>".$accion."</h3>";
   showFormUsuario($usuario, $accion, $editable);
   echo "</div>";
   echo "</div>";
@@ -11,9 +12,12 @@ function formEditable($titulo, $usuario, $accion, $editable){
 
 function getParams($p, $f){
   if (isset($p['nombre']) or isset($p['apellidos']) or isset($p['email']) or isset($p['clave1'])
-      or isset($p['clave2']) or isset($p['foto_perfil'])){
+      or isset($p['clave2']) or isset($p['foto_perfil']) or isset($p['accion'])){
     $result['enviado'] = true;
     // Validación de resultados
+    if(!empty($p['accion'])){
+      $result['accion']=$p['accion'];
+    }
     // -> nombre
     $result['err_nombre'] = '';
     if (empty($p['nombre'])){
@@ -56,7 +60,11 @@ function getParams($p, $f){
     }
     // -> fotografía
     $result['err_foto']='';
-    if(empty($f['foto_perfil']['name'])){
+    // Si ya hemos subido la imagen
+    if (isset($p['foto_perfil_src'])){
+      $result['foto_perfil_src'] = $p['foto_perfil_src'];
+    // Si no hemos subido ninguna imagen
+    }else if(empty($f['foto_perfil']['name'])){
       $result['err_foto'] = 'Debe incluir una fotografía';
     }else{
       $name = $f['foto_perfil']['name'];
@@ -81,10 +89,7 @@ function getParams($p, $f){
         move_uploaded_file($f['foto_perfil']['tmp_name'], $target_dir.$name);
       }
     }
-    // Si ya hemos subido la imagen
-    if (isset($p['foto_perfil_src'])){
-      $result['foto_perfil_src'] = $p['foto_perfil_src'];
-    }
+
     //confirmar
     if(isset($p['confirmar'])){
       $result['confirmar'] = true;
@@ -102,7 +107,6 @@ function showFormUsuario($params, $accion, $editable){
   if ($editable == false){
     $disabled = 'readonly="readonly"';
     $disabledPic = 'disabled="disabled"';
-    echo "<p>Disabled activado</p>";
   }else{
     $disabled = '';
     $disabledPic = '';
@@ -114,7 +118,8 @@ function showFormUsuario($params, $accion, $editable){
       <?php if (isset($params['foto_perfil_src'])){
         echo " value='".$params['foto_perfil_src']."'/><br>";
         echo "<input type='hidden' name='foto_perfil_src' value='".$params['foto_perfil_src']."'/>";
-        echo "<img src='uploads/".$params['foto_perfil_src']."' /><br>";?>
+        echo "<img src='uploads/".$params['foto_perfil_src']."' /><br>";
+        echo "<p> ESTA FOTO PERFIL SRC</p>";?>
       <?php }else echo "/><br>";
       if (isset($params['err_foto'])) echo "<p class = 'error'>".$params['err_foto']."</p><br>";?>
     </label>
@@ -156,7 +161,6 @@ function enviarFormulario($params){
   <?php
   $params['editable']=false;
   $accion = 'confirmar';
-  echo $params['foto_perfil_src'];
   // showFormUsuario($params, $accion, false);
   $db = dbConnection();
   dbCrearUsuario($db, $params);
@@ -180,8 +184,7 @@ function showUsuario($usuario, $id){
       <?php
       echo "<form action='index?p=perfil' method='POST'>
             <input type='hidden' name='id' value='{$id}' />";
-      echo "<input type='submit'  name = 'accion' value='Editar' />
-            <input type='submit' name = 'accion' value='Borrar'/>";
+      echo "<input type='submit' name = 'accion' value='Editar'/>";
       ?>
     </section>
   </div>
