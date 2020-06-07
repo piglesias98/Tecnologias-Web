@@ -11,6 +11,12 @@ function formEditable($titulo, $receta, $accion, $editable){
 
 
 function getParams($p, $f){
+  if(isset($p['id'])){
+    $result['id'] = $p['id'];
+  }
+  if(isset($p['accion'])){
+    $result['accion']=$p['accion'];
+  }
   if (isset($p['titulo']) or isset($p['autor']) or isset($p['categoria']) or isset($p['descripcion'])
       or isset($p['ingredientes']) or isset($p['preparacion']) or isset($f['fotografia'])){
     $result['enviado'] = true;
@@ -152,7 +158,7 @@ function showReceta($receta, $id){
       <div class="texto">
         <?php echo $receta['descripcion'] ?>
       </div>
-      <img src="uploads/<?php echo $receta['fotografia_src'] ?>">
+      <!-- <img src="uploads/<?php echo $receta['fotografia_src'] ?>"> -->
     </section>
     <section class="ingredientes">
       <p><?php echo $receta['ingredientes'] ?></p>

@@ -1,46 +1,56 @@
 <?php
-require_once('database.php');
-require_once('formulario_receta.php');
-if (isset($_POST['accion']) && isset($_POST['id'])){
-  $accion = $_POST['accion'];
-  $id = $_POST['id'];
+require_once('database/database.php');
+require_once('recetas/database_receta.php');
+require_once('recetas/formulario_receta.php');
+
+//Obtener y validar parámetros
+$params = getParams($_POST, $_FILES);
+
+
+if (isset($params['id'])){
+  $db = dbConnection();
+  $receta = dbGetReceta($db, $params['id']);
+  //Obtenemos el usuario porque necesitaremos el autor
+  $autor = 'Anonimo';
+  if (isset($receta['idautor'])){
+    $usuario = dbGetUsuario($db, $receta['idautor']);
+    $autor = $usuario['nombre']." ".$usuario['apellidos'];
+  }
+  $receta['autor']=$autor;
+  //Si ya tenemos la confirmación modificar usuario y mostrar final
+  if (isset($params['confirmar'])){
+    $msg = dbModificarReceta($db, $params['id'], $params);
+    if ($msg == true){
+      echo "<p>La receta ".$params['titulo']." ha sido atualizada</p>";
+    }else{
+      echo "<p class='error'> La receta no se ha podido actualizar </p>";
+    }
+    // hay que obtener de nuevo la receta porque ha sido actualizada
+    $receta = dbGetReceta($db, $params['id']);
+    // El autor no cambia
+    $receta['autor']=$autor;
+    showReceta($receta, $params['id']);
+  //Si le hemos pulsado el botón de editar recuperamos los datos de $usuario
+  //y ponemos un form editable
+  }else if(isset($params['accion']) && $params['accion']=='Editar'){
+    showFormReceta($receta, 'enviar', true);
+  //Si ya hemos editado y todos los valores son correctos
+  }else if (isset($params['enviado']) && $params['enviado']==true && $params['err_titulo']=='' && $params['err_descripcion']==''
+        && $params['err_ingredientes']=='' && $params['err_preparacion'] ==''){
+      //Pedir confirmación
+      $params['editable']=false;
+      $accion = 'confirmar';
+      showFormReceta($params, $accion, false);
+  // Si hemos editado pero hay algunos errores
+  }else if(isset($params['enviado']) && $params['enviado']==true){
+    showFormReceta($params, 'enviar', true);
+  }else{
+    //Si no se han recibido parámetros
+    showReceta($receta, $params['id']);
+  }
+}else{
+  echo "NO está set";
 }
 
-if (isset($id)){
-  if (!is_string($db = dbConnection())){
-    switch($accion){
-      case 'Borrar':
-        $receta = dbGetReceta($db, $id);
-        formEditable('Borrado de la receta', $receta, 'Confirmar borrado', false);
-        break;
-      case 'BorrarOK':
-        if (dbBorrarReceta($db, $id)){
-          $info[] = 'La receta '.$_POST['titulo'].' ha sido borrada.';
-        }else {
-          $info[] = 'No se ha podido borrar la receta '.$_POST['titulo'];
-        }
-      break;
-      case 'Editar':
-        $receta = dbGetReceta($db, $id);
-        formEditable('Edite los datos de la receta', $receta, 'Editar', true);
-        break;
-      case 'Modificar':
-        $params = getParams($_POST, $_FILES);
-        $msg = dbModificarReceta($db, $id, $params);
-        if ($msg == true){
-          $info[] = "La receta".$params['titulo']." ha sido actualizada";
-        }else{
-          $info[]= "No se ha podido actualizar la receta ".$params['titulo'];
-        }
-        break;
-      case 'Mostrar':
-        $receta = dbGetReceta($db, $id);
-        showReceta($receta, $id);
-        break;
-        }
-    }
-  }else{
-    //Si los parámetros no son correctos volver al listado
-  }
 
 ?>

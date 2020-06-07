@@ -13,7 +13,7 @@ if (isset($params['confirmar'])){
 //Si se han recibido los datos y son correctos
 }else if ($params['enviado']==true && $params['err_titulo']==''
      && $params['err_descripcion'] ==''
-    && $params['err_ingredientes']=='' && $params['err_preparacion']==''
+    && $params['err_ingredientes']=='' 
     && $params['err_preparacion']==''){
   //Pedir confirmación
   $params['editable']=false;

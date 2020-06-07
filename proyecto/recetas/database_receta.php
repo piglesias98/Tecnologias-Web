@@ -20,9 +20,9 @@ function dbGetRecetas($db, $cadena='', $orden=''){
 }
 
 function dbGetReceta($db, $id){
-	$res = mysqli_query($db, "SELECT id, titulo, autor, categoria, descripcion,
-														ingredientes, preparacion, fotografia_src
-														FROM receta WHERE id='".mysqli_real_escape_string($db,$id)."'");
+	$res = mysqli_query($db, "SELECT id, titulo, idautor, categoria, descripcion,
+														ingredientes, preparacion
+														FROM recetas WHERE id='".mysqli_real_escape_string($db,$id)."'");
 	if ($res && mysqli_num_rows($res)==1){
 		$receta = mysqli_fetch_assoc($res);
 	}
