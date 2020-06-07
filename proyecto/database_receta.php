@@ -35,26 +35,29 @@ function dbGetReceta($db, $id){
 
 function dbCrearReceta($db, $params){
 	// Comprobar que no hay una receta con el mismo nombre
-	$res = mysqli_query($db, "SELECT id, titulo FROM receta WHERE titulo='{$params['titulo']}'");
+	$res = mysqli_query($db, "SELECT id, titulo FROM recetas WHERE titulo='{$params['titulo']}'");
 	$num = mysqli_fetch_assoc($res);
 	mysqli_free_result($res);
 	if ($num>0){
-		echo "<p class = 'error'> Error en la creacion d el areceta </p>";
-		$info = 'Ya existe una receta con ese título';
+		echo "<p class = 'error'> Ya existe una receta con ese título </p>";
 	}
 	else{
-		$res = mysqli_query($db, "INSERT INTO receta (titulo, autor, categoria, descripcion,
-																									ingredientes, preparacion, fotografia_src)
+		$idautor = $_SESSION['id'];
+	  $categorias = '';
+	  foreach ($params['categoria'] as $value) {
+	    $categorias = $categorias.$value.',';
+	  }
+		$res = mysqli_query($db, "INSERT INTO recetas (titulo, idautor, categoria, descripcion,
+																									ingredientes, preparacion)
 															VALUES ('".mysqli_real_escape_string($db, $params['titulo'])."','"
-															.mysqli_real_escape_string($db, $params['autor'])."','"
-															.mysqli_real_escape_string($db, $params['categoria'])."','"
+															.mysqli_real_escape_string($db, $idautor)."','"
+															.mysqli_real_escape_string($db, $categorias)."','"
 															.mysqli_real_escape_string($db, $params['descripcion'])."','"
 															.mysqli_real_escape_string($db, $params['ingredientes'])."','"
-															.mysqli_real_escape_string($db, $params['preparacion'])."','"
-															.mysqli_real_escape_string($db, $params['fotografia_src'])."')");
+															.mysqli_real_escape_string($db, $params['preparacion'])."')");
 		if (!$res){
-			$info = "Error en la creacion d el areceta";
-			echo "<p class = 'error'> Error en la creacion d el areceta </p>".mysqli_error($db);
+			$info = " Error en la creacion de la receta";
+			echo "<p class = 'error'> Error en la creacion de la receta </p>".mysqli_error($db);
 		}
 	}
 	if (isset($info))

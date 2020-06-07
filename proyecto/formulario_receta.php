@@ -24,14 +24,6 @@ function getParams($p, $f){
     }
     // -> categoría
     $result['categoria'] = $p['categoria'];
-    // if (!empty($p['categoria'])){
-    //   $categorias = '';
-    //   foreach ($p['categoria'] as $value) {
-    //     $categorias = $categorias.$value.',';
-    //   }
-    //   $result['categoria'] = $categorias;
-    // }
-    // -> descripcion
     $result['err_descripcion'] = '';
     if (empty($p['descripcion'])){
       $result['err_descripcion'] = 'La descripción no puede estar vacía';
@@ -134,7 +126,7 @@ function showFormReceta($params, $accion, $editable){
 
 function enviarFormulario($params){
   ?>
-  <p>Muchas gracias, <?php echo $params['autor'] ?></p>
+  <p>Muchas gracias, <?php echo $_SESSION['nombre'] ?></p>
   <p>Tu receta <?php echo $params['titulo']?> ya está en nuestra base de datos
       y pronto podrás verla en la página web :)</p>
   <?php

@@ -12,11 +12,11 @@ if (isset($_POST['email_login']) or isset($_POST['clave_login'])){
   $email = $_POST['email_login'];
   $db = dbConnection();
   $res = dbCheckUsuario($db, $email);
-  $id = $res['id'];
-  echo $id;
-  if ($id === false){
+  if ($res === false){
     $error = true;
   }else{
+    $id = $res['id'];
+    $nombre = $res['nombre'];
     // Verificamos la contraseña
     $clave = $_POST['clave_login'];
     if (dbPasswordVerify($db, $clave, $id)){
@@ -24,6 +24,7 @@ if (isset($_POST['email_login']) or isset($_POST['clave_login'])){
       $_SESSION['identificado'] = true;
       $_SESSION['id'] = $id;
       $_SESSION['email'] = $email;
+      $_SESSION['nombre'] = $nombre;
     }else {
       $error = true;
     }
@@ -37,7 +38,7 @@ if (isset($_SESSION['identificado'])){
 ?>
   <aside class="login">
     <h3>Login</h3>
-    <p>!Ya estás logeado!</p>
+    <p><?php echo $_SESSION['nombre'] ?>, estás logead@</p>
     <form class="login_form" action="<?php echo $url?>" method="post">
       <div class="field">
         <input type="submit" name="logout" value="logout">

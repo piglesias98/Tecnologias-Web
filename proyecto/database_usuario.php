@@ -39,7 +39,7 @@ function dbModificarUsuario($db, $id, $params){
 }
 
 function dbCheckUsuario($db, $email){
-	$res = mysqli_query($db, "SELECT id
+	$res = mysqli_query($db, "SELECT id, nombre
 														FROM usuarios WHERE email='".mysqli_real_escape_string($db,$email)."'");
 	if ($res and mysqli_num_rows($res)==1)
 		return mysqli_fetch_assoc($res);
