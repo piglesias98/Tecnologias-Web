@@ -1,8 +1,8 @@
 <div class="contenido">
 <h3>Listado de recetas</h3>
 <?php
-require_once('database.php');
-require_once('formulario_receta.php');
+require_once('database/database.php');
+require_once('recetas/formulario_receta.php');
 
 
 $results['accion'] = '';
@@ -15,43 +15,35 @@ if (isset($_POST['accion'])){
   if (isset($results) and count($results) > 0){
     $results['accion'] = 'Buscar';
   }
-//Argumentos GET de la página
-}else{
-  $results = [];
-  if (isset($_GET['bTitulo']))
-    $results['bTitulo'] = $_GET['bTitulo'];
-  if (isset($_GET['bAscDesc']))
-    $results['bAscDesc']= $_GET['bTAscDesc'];
-  if (count($results)>0)
-    $results['accion'] = 'Buscar';
 }
 
-if (!is_string($db=dbConnection())){
-  if (isset($results)){
-    formBuscarReceta('Datos de la búsqueda', $results);
-  }else
-    formBuscarReceta('Datos de la búsqueda');
-  if (isset($results['accion']) and $results['accion'] == 'Buscar'){
-    echo implode(" ",$results);
-    $busc = dbArray2SQL($results);
-    $num_recetas = dbGetNumRecetas($db, $busc);
-    if ($num_recetas>0){
-      if (isset($results['bAscDesc'])){
-        $orden =  strpos($results['bAscDesc'], 'Asc') !== false ? 'asc' : 'desc';
-      }else {
-        $orden = '';
-      }
-      $recetas = dbGetRecetas($db, $busc, $orden);
-      if ($recetas!==false){
-        ver_listado($recetas, 'index.php?p=crud');
-      }else {
-        echo "<p class='error'> Ha habido un error en la consulta a la BD</p>";
-      }
-    }else{
-      echo "<p class = 'error'> No hay ninguna receta con ese título</p>";
-    }
-  }
+if (isset($_GET['p']) and $_GET['p'] == 'mis_recetas'){
+  $results['id']=$_SESSION['id'];
+  echo $results['id'];
+}
 
+
+if (!is_string($db=dbConnection())){
+  $busc = '';
+  $orden = '';
+  echo "isset results";
+  formBuscarReceta('Datos de la búsqueda', $results);
+  echo implode(" ",$results);
+  $busc = dbArray2SQL($results);
+  if (isset($results['bAscDesc'])){
+    $orden =  strpos($results['bAscDesc'], 'Asc') !== false ? 'asc' : 'desc';
+  }
+  $num_recetas = dbGetNumRecetas($db, $busc);
+  if ($num_recetas>0){
+    $recetas = dbGetRecetas($db, $busc, $orden);
+    if ($recetas!==false){
+      ver_listado($recetas, 'index.php?p=crud');
+    }else {
+      echo "<p class='error'> Ha habido un error en la consulta a la BD</p>";
+    }
+  }else{
+    echo "<p class='error'> No hay ninguna receta que cumpla estas condiciones</p>";
+  }
   dbDisconnection($db);
 }else{
   echo "<p> Error en la conexión con la db<p>";

@@ -1,8 +1,8 @@
 <?php
 // El formulario ha sido enviado si exist
 // alguna de las dos variables usuario o contraseña
-require_once('database.php');
-require_once('database_usuario.php');
+require_once('database/database.php');
+require_once('usuarios/database_usuario.php');
 
 $url =  basename($_SERVER['REQUEST_URI']);
 if (!strpos($url, '?')) $url = $_SERVER['SCRIPT_NAME'];

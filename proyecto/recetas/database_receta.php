@@ -114,6 +114,12 @@ function dbArray2SQL($query){
 	if (array_key_exists('bTitulo', $query)){
 		$cadena .= "titulo LIKE '%{$query['bTitulo']}%'";
 	}
+	if (array_key_exists('id', $query)){
+		if ($cadena != ''){
+			$cadena .= " AND ";
+		}
+		$cadena .= "idautor LIKE '%{$query['id']}%'";
+	}
 	return $cadena;
 }
 
