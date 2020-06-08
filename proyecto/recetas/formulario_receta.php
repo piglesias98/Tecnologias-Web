@@ -64,14 +64,14 @@ function getParams($p, $f){
     // FORMULARIO FOTOS
     }else if($p['form']=='fotos'){
       $result['form'] = 'fotos';
+      $result['err_fotografia']='';
       if (!isset($f['fotografia']) or empty($f['fotografia']['name'])){
         $result['err_fotografia']='No ha incluido ninguna fotografía';
       }else{
-        $result['err_fotografia']='';
         echo "fotografia isset";
         $name = uniqid();
         $target_dir = "uploads/";
-        $target_file = $target_dir .$name ;
+        $target_file = $target_dir . basename($f['fotografia']['name']); ;
         // Tipo del archivo
         $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
         $validExtensions = array('jpg', 'jpeg', 'png', 'gif');
@@ -297,7 +297,7 @@ function formFotos($params, $accion){
     </label>
     <?php if (isset($params['id'])) echo "<input type='hidden' name='id' value='".$params['id']."'/>";?>
     <input type="hidden" name = 'form' value='fotos'/>
-    <input type="hidden" name="accion" value='<?php echo $accion ?>'>
+    <input type="hidden" name="accion" value='Editar'>
     <input type="submit" name = 'enviar' value= 'Añadir fotografía' >
   </form>
 <?php

@@ -56,6 +56,7 @@ if (isset($params['form'])){
             }
             break;
           case 'fotos':
+            formEditable('Edita la receta',$receta, 'Editar', true);
             formFotos($params, 'Añadir fotografía');
             break;
           default:
