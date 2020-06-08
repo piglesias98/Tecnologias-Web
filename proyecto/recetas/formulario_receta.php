@@ -5,7 +5,6 @@ function formEditable($titulo, $receta, $accion, $editable){
   echo "<div class='contenido'>";
   echo "<h3>".$titulo."</h3>";
   showFormReceta($receta, $accion, $editable);
-  formFotos($receta, 'Añadir fotografia');
   echo "</div>";
   echo "</div>";
 }
@@ -18,75 +17,83 @@ function getParams($p, $f){
   if(isset($p['accion'])){
     $result['accion']=$p['accion'];
   }
-  if (isset($p['titulo']) or isset($p['autor']) or isset($p['categoria']) or isset($p['descripcion'])
-      or isset($p['ingredientes']) or isset($p['preparacion']) or isset($f['fotografia'])){
-    echo 'Estra en el isset';
-    $result['enviado'] = true;
-    // Validación de resultados
-    // -> titulo
-    $result['err_titulo'] = '';
-    if (empty($p['titulo'])){
-      $result['err_titulo'] = 'El título no puede estar vacío';
-    }else{
-      $result['titulo'] = $p['titulo'];
-    }
-    // -> categoría
-    if (isset($p['categoria']) and !empty($p['categoria'])){
-      $result['categoria'] = $p['categoria'] ;
-    }
+  //confirmar
+  if(isset($p['confirmar'])){
+    $result['confirmar'] = true;
+  }
+  if (isset($p['form'])){
 
-    $result['err_descripcion'] = '';
-    if (empty($p['descripcion'])){
-      $result['err_descripcion'] = 'La descripción no puede estar vacía';
-    }else{
-      $result['descripcion'] = $p['descripcion'];
-    }
-    // -> ingredientes
-    $result['err_ingredientes'] = '';
-    if (empty($p['ingredientes'])){
-      $result['err_ingredientes'] = 'Los ingredientes no pueden estar vacíos';
-    }else{
-      $result['ingredientes'] = $p['ingredientes'];
-    }
-    // -> preparacion
-    $result['err_preparacion'] = '';
-    if (empty($p['preparacion'])){
-      $result['err_preparacion'] = 'La preparación no puede estar vacía';
-    }else{
-      $result['preparacion'] = $p['preparacion'];
-    }
-    //confirmar
-    if(isset($p['confirmar'])){
-      $result['confirmar'] = true;
-    }
-    if(isset($f['fotografia'])){
-      echo "fotografia isset";
-      $result['err_fotografia']='';
-      $name = uniqid();
-      $target_dir = "uploads/";
-      $target_file = $target_dir .$name ;
-      // Tipo del archivo
-      $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-      $validExtensions = array('jpg', 'jpeg', 'png', 'gif');
-      // Comprobar que se trata de verdad de una imagen
-      if (!getimagesize($f['fotografia']['tmp_name'])){
-        $result['err_fotografia'] = "El archivo no es una fotografía";
-      // Comprobar el tamaño del archivo
-      }else if ($f['fotografia']["size"] > 500000){
-        $result['err_fotografia'] = 'Lo siento, el archivo es demasiado grande';
-      // Sólo permitimos JPG, JPEG y PNG
-      }else if (!in_array($imageFileType, $validExtensions)){
-        $result['err_fotografia'] = 'Lo siento, solo se permiten archivos PNG, JPG o JPEG';
+    // FORMULARIO RECETA
+    if ($p['form'] == 'receta'){
+      $result['form'] = 'receta';
+      // Validación de resultados
+      // -> titulo
+      $result['err_titulo'] = '';
+      if (empty($p['titulo'])){
+        $result['err_titulo'] = 'El título no puede estar vacío';
       }else{
-        // Guardamos la imagen
-        $result['fotografia'] = $name;
-        move_uploaded_file($f['fotografia']['tmp_name'], $target_dir.$name);
+        $result['titulo'] = $p['titulo'];
+      }
+      // -> categoría
+      if (isset($p['categoria']) and !empty($p['categoria'])){
+        $result['categoria'] = $p['categoria'] ;
+      }
+
+      $result['err_descripcion'] = '';
+      if (empty($p['descripcion'])){
+        $result['err_descripcion'] = 'La descripción no puede estar vacía';
+      }else{
+        $result['descripcion'] = $p['descripcion'];
+      }
+      // -> ingredientes
+      $result['err_ingredientes'] = '';
+      if (empty($p['ingredientes'])){
+        $result['err_ingredientes'] = 'Los ingredientes no pueden estar vacíos';
+      }else{
+        $result['ingredientes'] = $p['ingredientes'];
+      }
+      // -> preparacion
+      $result['err_preparacion'] = '';
+      if (empty($p['preparacion'])){
+        $result['err_preparacion'] = 'La preparación no puede estar vacía';
+      }else{
+        $result['preparacion'] = $p['preparacion'];
+      }
+
+
+    // FORMULARIO FOTOS
+    }else if($p['form']=='fotos'){
+      $result['form'] = 'fotos';
+      if (!isset($f['fotografia']) or empty($f['fotografia']['name'])){
+        $result['err_fotografia']='No ha incluido ninguna fotografía';
+      }else{
+        $result['err_fotografia']='';
+        echo "fotografia isset";
+        $name = uniqid();
+        $target_dir = "uploads/";
+        $target_file = $target_dir .$name ;
+        // Tipo del archivo
+        $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+        $validExtensions = array('jpg', 'jpeg', 'png', 'gif');
+        // Comprobar que se trata de verdad de una imagen
+        if (!getimagesize($f['fotografia']['tmp_name'])){
+          $result['err_fotografia'] = "El archivo no es una fotografía";
+        // Comprobar el tamaño del archivo
+        }else if ($f['fotografia']["size"] > 500000){
+          $result['err_fotografia'] = 'Lo siento, el archivo es demasiado grande';
+        // Sólo permitimos JPG, JPEG y PNG
+        }else if (!in_array($imageFileType, $validExtensions)){
+          $result['err_fotografia'] = 'Lo siento, solo se permiten archivos PNG, JPG o JPEG';
+        }else{
+          // Guardamos la imagen
+          $result['fotografia'] = $name;
+          move_uploaded_file($f['fotografia']['tmp_name'], $target_dir.$name);
+        }
       }
     }
   }else {
     //El formulario aún no ha sido enviado
-    $result['enviado'] = false;
-    echo "no entra en el isset";
+    $result['form'] = 'nada';
   }
   return $result;
 }
@@ -160,7 +167,8 @@ function showFormReceta($params, $accion, $editable){
               echo ' checked';?>/>Difícil
     </label><br>
     <?php if (isset($params['id'])) echo "<input type='hidden' name='id' value='".$params['id']."'/>";?>
-    <input type="submit" name = <?php echo $accion ?> value=<?php echo $accion ?> >
+    <input type="hidden" name = 'form' value='receta'/>
+    <input type="submit" name = 'accion' value='<?php echo $accion ?>' >
   </form>
 
 <?php
@@ -278,17 +286,20 @@ function formBuscarReceta($titulo, $datos=false){
 }
 
 
-function formFotos($receta, $accion){
-  $id = $receta['id'];
+function formFotos($params, $accion){
+  $id = $params['id'];
   ?>
   <h3>Fotografías adjuntas</h3>
   <form class="login_form" action="<?php $_SERVER['PHP_SELF']?>" enctype="multipart/form-data" method="post">
-    <label for="imagen">Añade una imagen:
+    <label for="fotografia">Añade una imagen:
       <input type="file" name="fotografia">
+      <?php if (isset($params['err_fotografia'])) echo "<p class = 'error'>".$params['err_fotografia']."</p>";?>
     </label>
+    <?php if (isset($params['id'])) echo "<input type='hidden' name='id' value='".$params['id']."'/>";?>
+    <input type="hidden" name = 'form' value='fotos'/>
+    <input type="hidden" name="accion" value='<?php echo $accion ?>'>
+    <input type="submit" name = 'enviar' value= 'Añadir fotografía' >
   </form>
-  <?php if (isset($params['id'])) echo "<input type='hidden' name='id' value='".$params['id']."'/>";?>
-  <input type="submit" name = <?php echo $accion ?> value=<?php echo $accion ?> >
 <?php
 }
 

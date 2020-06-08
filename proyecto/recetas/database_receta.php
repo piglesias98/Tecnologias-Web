@@ -100,7 +100,6 @@ function dbModificarReceta($db, $id, $params){
 					                ingredientes = '".mysqli_real_escape_string($db, $params['ingredientes'])."',
 					                preparacion = '".mysqli_real_escape_string($db, $params['preparacion'])."'
 							WHERE id = '".mysqli_real_escape_string($db, $id)."'";
-		echo $query;
 		$res = mysqli_query($db, $query );
 		if (!$res){
 			$info =  'Error al actualizar'.mysqli_error($db);
