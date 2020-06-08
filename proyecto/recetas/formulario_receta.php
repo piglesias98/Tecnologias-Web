@@ -88,6 +88,9 @@ function getParams($p, $f){
           // Guardamos la imagen
           $result['fotografia'] = $name;
           move_uploaded_file($f['fotografia']['tmp_name'], $target_dir.$name);
+          // Upload to the database
+          $db = dbConnection();
+          dbInsertPicture($db, $result['id'], $name);
         }
       }
     }

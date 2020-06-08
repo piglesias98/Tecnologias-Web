@@ -158,5 +158,15 @@ function dbGetNumRecetas($db, $cadena=''){
 	return $num;
 }
 
+function dbInsertPicture($db, $id, $nombre){
+	$res = mysqli_query($db, "INSERT INTO fotos (id_receta, ubicacion)
+														VALUES ('".mysqli_real_escape_string($db, $id)."','"
+														.mysqli_real_escape_string($db, $nombre)."')");
+	if (!$res){
+		$info = " Error en la subida de imagen";
+		echo "<p class = 'error'> Error en la subida de imagen </p>".mysqli_error($db);
+	}
+}
+
 
  ?>
