@@ -214,6 +214,19 @@ function showReceta($receta, $id){
     <section class="preparacion">
       <p><?php echo $receta['preparacion'] ?></p>
     </section>
+    <section class='pasos'>
+      <?php
+      $db = dbConnection();
+      $fotos = dbGetPictures($db, $id);
+      ?>
+      <?php if(is_array($fotos)){
+        echo print_r($fotos);
+        foreach ((array) $fotos as $value) {
+          echo "<img src='uploads/".$value."'/><br>";
+        }
+      }
+      ?>
+    </section>
     <section class="navegacion_inferior">
       <?php
       if (isset($_SESSION['identificado'])){
@@ -291,8 +304,19 @@ function formBuscarReceta($titulo, $datos=false){
 
 function formFotos($params, $accion){
   $id = $params['id'];
+  $db = dbConnection();
+  $fotos = dbGetPictures($db, $id);
   ?>
   <h3>Fotografías adjuntas</h3>
+  <?php if(is_array($fotos)){
+    echo print_r($fotos);
+    foreach ((array) $fotos as $value) {
+      echo "<img src='uploads/".$value."'/><br>";
+      echo "hola";
+    }
+
+  }
+  ?>
   <form class="login_form" action="<?php $_SERVER['PHP_SELF']?>" enctype="multipart/form-data" method="post">
     <label for="fotografia">Añade una imagen:
       <input type="file" name="fotografia">

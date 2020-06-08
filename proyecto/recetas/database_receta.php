@@ -168,5 +168,19 @@ function dbInsertPicture($db, $id, $nombre){
 	}
 }
 
+function dbGetPictures($db, $id){
+	$res = mysqli_query($db, "SELECT ubicacion
+		 												FROM fotos
+														WHERE id_receta = '".mysqli_real_escape_string($db, $id)."'");
+	if ($res && mysqli_num_rows($res)>0){
+		$fotos = mysqli_fetch_array($res);
+	}
+	else{
+		$fotos = false;
+	}
+	mysqli_free_result($res);
+	return $fotos;
+}
+
 
  ?>
