@@ -1,5 +1,5 @@
 <?php
-require_once('database.php');
+require_once('database/database.php');
 
 function formEditable($titulo, $usuario, $accion, $editable){
   echo "<div class='contenido'>";

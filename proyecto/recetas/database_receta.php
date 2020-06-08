@@ -43,10 +43,12 @@ function dbCrearReceta($db, $params){
 	}
 	else{
 		$idautor = $_SESSION['id'];
-	  $categorias = '';
-	  foreach ($params['categoria'] as $value) {
-	    $categorias = $categorias.$value.',';
-	  }
+		$categorias='';
+		if (isset($params['categoria'])){
+			foreach ($params['categoria'] as $value) {
+				$categorias = $categorias.$value.',';
+			}
+		}
 		$res = mysqli_query($db, "INSERT INTO recetas (titulo, idautor, categoria, descripcion,
 																									ingredientes, preparacion)
 															VALUES ('".mysqli_real_escape_string($db, $params['titulo'])."','"
@@ -79,27 +81,30 @@ function dbBorrarReceta($db, $id){
 
 function dbModificarReceta($db, $id, $params){
 	// Comprobar que no hay una receta con el mismo nombre
-	$res = mysqli_query($db, "SELECT id, titulo FROM receta WHERE titulo='{$params['tutulo']}'");
+	$res = mysqli_query($db, "SELECT id, titulo FROM recetas WHERE titulo='{$params['titulo']}'");
 	$receta = mysqli_fetch_assoc($res);
 	mysqli_free_result($res);
 	if($receta['titulo'] == $params['titulo'] and $receta['id'] != $params['id']){
 		$info =  'Ya hay una receta con ese mismo título';
 		echo "<p class='error'>Ya hay una receta con ese mismo título</p>";
 	}else{
-		$query = "UPDATE receta SET titulo = '".mysqli_real_escape_string($db, $params['titulo'])."'
-													SET autor = '".mysqli_real_escape_string($db, $params['autor'])."',
-													SET categoria = '".mysqli_real_escape_string($db, $params['categoria'])."',
-					                SET descripcion = '".mysqli_real_escape_string($db, $params['descripcion'])."',
-					                SET ingredientes = '".mysqli_real_escape_string($db, $params['ingredientes'])."',
-					                SET preparacion = '".mysqli_real_escape_string($db, $params['preparacion'])."',
-													SET fotografia_src = '".mysqli_real_escape_string($db, $params['fotografia_src'])."'
-
-		";
-
+		$categorias = '';
+		if (isset($params['categoria'])){
+			foreach ($params['categoria'] as $value) {
+		    $categorias = $categorias.$value.',';
+		  }
+		}
+		$query = "UPDATE recetas SET titulo = '".mysqli_real_escape_string($db, $params['titulo'])."',
+													categoria = '".mysqli_real_escape_string($db, $categorias)."',
+					                descripcion = '".mysqli_real_escape_string($db, $params['descripcion'])."',
+					                ingredientes = '".mysqli_real_escape_string($db, $params['ingredientes'])."',
+					                preparacion = '".mysqli_real_escape_string($db, $params['preparacion'])."'
+							WHERE id = '".mysqli_real_escape_string($db, $id)."'";
+		echo $query;
 		$res = mysqli_query($db, $query );
 		if (!$res){
 			$info =  'Error al actualizar'.mysqli_error($db);
-			echo "<p class='error'> Error al actualizar.mysqli_error($db)</p>";
+			echo "<p class='error'> Error al actualizar".mysqli_error($db)."</p>";
 
 		}
 	}

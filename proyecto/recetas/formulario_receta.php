@@ -5,6 +5,7 @@ function formEditable($titulo, $receta, $accion, $editable){
   echo "<div class='contenido'>";
   echo "<h3>".$titulo."</h3>";
   showFormReceta($receta, $accion, $editable);
+  formFotos($receta, 'Añadir fotografia');
   echo "</div>";
   echo "</div>";
 }
@@ -19,6 +20,7 @@ function getParams($p, $f){
   }
   if (isset($p['titulo']) or isset($p['autor']) or isset($p['categoria']) or isset($p['descripcion'])
       or isset($p['ingredientes']) or isset($p['preparacion']) or isset($f['fotografia'])){
+    echo 'Estra en el isset';
     $result['enviado'] = true;
     // Validación de resultados
     // -> titulo
@@ -29,7 +31,10 @@ function getParams($p, $f){
       $result['titulo'] = $p['titulo'];
     }
     // -> categoría
-    $result['categoria'] = $p['categoria'];
+    if (isset($p['categoria']) and !empty($p['categoria'])){
+      $result['categoria'] = $p['categoria'] ;
+    }
+
     $result['err_descripcion'] = '';
     if (empty($p['descripcion'])){
       $result['err_descripcion'] = 'La descripción no puede estar vacía';
@@ -54,9 +59,34 @@ function getParams($p, $f){
     if(isset($p['confirmar'])){
       $result['confirmar'] = true;
     }
- }else {
+    if(isset($f['fotografia'])){
+      echo "fotografia isset";
+      $result['err_fotografia']='';
+      $name = uniqid();
+      $target_dir = "uploads/";
+      $target_file = $target_dir .$name ;
+      // Tipo del archivo
+      $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+      $validExtensions = array('jpg', 'jpeg', 'png', 'gif');
+      // Comprobar que se trata de verdad de una imagen
+      if (!getimagesize($f['fotografia']['tmp_name'])){
+        $result['err_fotografia'] = "El archivo no es una fotografía";
+      // Comprobar el tamaño del archivo
+      }else if ($f['fotografia']["size"] > 500000){
+        $result['err_fotografia'] = 'Lo siento, el archivo es demasiado grande';
+      // Sólo permitimos JPG, JPEG y PNG
+      }else if (!in_array($imageFileType, $validExtensions)){
+        $result['err_fotografia'] = 'Lo siento, solo se permiten archivos PNG, JPG o JPEG';
+      }else{
+        // Guardamos la imagen
+        $result['fotografia'] = $name;
+        move_uploaded_file($f['fotografia']['tmp_name'], $target_dir.$name);
+      }
+    }
+  }else {
     //El formulario aún no ha sido enviado
     $result['enviado'] = false;
+    echo "no entra en el isset";
   }
   return $result;
 }
@@ -71,8 +101,15 @@ function showFormReceta($params, $accion, $editable){
     $disabled = '';
     $disabledPic = '';
   }
+  if (isset($params['categoria'])){
+    $categorias = $params['categoria'];
+    if (is_string($params['categoria'])){
+      #convert to array
+      $categorias = explode(',',$params['categoria']);
+    }
+  }
   ?>
-  <form class="form" action="<?php $_SERVER['PHP_SELF']?>" enctype="multipart/form-data" method="post">
+  <form class="login_form" action="<?php $_SERVER['PHP_SELF']?>" enctype="multipart/form-data" method="post">
     <label for="titulo">Título de la receta:
       <input type="text" name="titulo" <?php echo $disabled ?>
       <?php if (isset($params['titulo'])) echo " value='".$params['titulo']."'";?>><br>
@@ -99,27 +136,27 @@ function showFormReceta($params, $accion, $editable){
     <label for="categorias">Categorías:<br>
       Tipo de comida:
       <input type="checkbox" name="categoria[]" value="carnes"
-      <?php if (isset($params['categoria']) && in_array('carnes',$params['categoria']))
+      <?php if (isset($params['categoria']) && in_array('carnes',$categorias))
               echo ' checked';?>/>Carnes
       <input type="checkbox" name="categoria[]" value="verduras"
-      <?php if (isset($params['categoria']) && in_array('verduras',$params['categoria']))
+      <?php if (isset($params['categoria']) && in_array('verduras',$categorias))
               echo ' checked';?>/>Verduras
       <input type="checkbox" name="categoria[]" value="pescado"
-      <?php if (isset($params['categoria']) && in_array('pescado',$params['categoria']))
+      <?php if (isset($params['categoria']) && in_array('pescado',$categorias))
               echo ' checked';?>/>Pescado
       <input type="checkbox" name="categoria[]" value="arroz"
-      <?php if (isset($params['categoria']) && in_array('arroz',$params['categoria']))
+      <?php if (isset($params['categoria']) && in_array('arroz',$categorias))
               echo ' checked';?>/>Arroz
       <input type="checkbox" name="categoria[]" value="sopa"
-      <?php if (isset($params['categoria']) && in_array('sopa',$params['categoria']))
+      <?php if (isset($params['categoria']) && in_array('sopa',$categorias))
               echo ' checked';?>/>Sopa
       <br>
       Dificultad:
       <input type="checkbox" name="categoria[]" value="facil"
-      <?php if (isset($params['categoria']) && array_key_exists('facil',$params['categoria']))
+      <?php if (isset($params['categoria']) && in_array('facil',$categorias))
               echo ' checked';?>/>Fácil
       <input type="checkbox" name="categoria[]" value="dificil"
-      <?php if (isset($params['categoria']) && array_key_exists('dificil',$params['categoria']))
+      <?php if (isset($params['categoria']) && in_array('dificil',$categorias))
               echo ' checked';?>/>Difícil
     </label><br>
     <?php if (isset($params['id'])) echo "<input type='hidden' name='id' value='".$params['id']."'/>";?>
@@ -239,4 +276,20 @@ function formBuscarReceta($titulo, $datos=false){
 
 <?php
 }
+
+
+function formFotos($receta, $accion){
+  $id = $receta['id'];
+  ?>
+  <h3>Fotografías adjuntas</h3>
+  <form class="login_form" action="<?php $_SERVER['PHP_SELF']?>" enctype="multipart/form-data" method="post">
+    <label for="imagen">Añade una imagen:
+      <input type="file" name="fotografia">
+    </label>
+  </form>
+  <?php if (isset($params['id'])) echo "<input type='hidden' name='id' value='".$params['id']."'/>";?>
+  <input type="submit" name = <?php echo $accion ?> value=<?php echo $accion ?> >
+<?php
+}
+
 ?>
