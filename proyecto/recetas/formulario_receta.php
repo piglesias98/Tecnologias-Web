@@ -236,10 +236,36 @@ function showReceta($receta, $id){
       }
       ?>
     </section>
+    <section class="comentarios">
+      <?php
+      $db = dbConnection();
+      echo $id;
+      $comentarios = dbGetComments($db, $id);
+      ?>
+      <?php if(is_array($comentarios)){
+        foreach ($comentarios as $value) {
+          $autor = 'Anonimo';
+          if (isset($value['id_usuario'])){
+            $db = dbConnection();
+            $usuario = dbGetUsuario($db, $value['id_usuario']);
+            $autor = $usuario['nombre']." ".$usuario['apellidos'];
+          }
+          echo "<p>".$value['fecha']."</p><br>";
+          echo "<p>".$autor."</p><br>";
+          echo "<p>".$value['comentario']."</p><br>";
+        }
+      }
+      ?>
+    </section>
+    <section class="comenarios">
+      <form action="index.html" method="post">
+
+      </form>
+    </section>
     <section class="navegacion_inferior">
       <?php
       if (isset($_SESSION['identificado'])){
-        echo "<form action='index?p=crud' method='POST'>
+        echo "<form action='index.php?p=crud&id=$id' method='POST'>
               <input type='hidden' name='id' value='{$id}' />";
         echo "<input type='submit'  name = 'accion' value='Editar' />
               <input type='submit' name = 'accion' value='Borrar'/>";

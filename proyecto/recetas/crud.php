@@ -54,6 +54,7 @@ echo print_r($_GET);
               formFotos($params, 'Añadir fotografía');
               break;
             default:
+              echo "entra en default";
               formEditable('Edita la receta',$receta, 'Editar', true);
               formFotos($receta, 'Editar');
             break;

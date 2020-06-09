@@ -184,5 +184,21 @@ function dbGetPictures($db, $id){
 	return $fotos;
 }
 
+function dbGetComments($db, $id){
+	$query =   "SELECT comentario, fecha, id_usuario
+		 					FROM comentarios
+							WHERE id_receta = ".mysqli_real_escape_string($db, $id);
+	echo $query;
+	$res = mysqli_query($db, $query);
+	if ($res && mysqli_num_rows($res)>0){
+		$comentarios = mysqli_fetch_all($res, MYSQLI_ASSOC);
+	}
+	else{
+		$comentarios = false;
+	}
+	mysqli_free_result($res);
+	return $comentarios;
+}
+
 
  ?>
