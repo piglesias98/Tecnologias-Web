@@ -172,7 +172,6 @@ function dbGetPictures($db, $id){
 	$query =   "SELECT ubicacion
 		 					FROM fotos
 							WHERE id_receta = ".mysqli_real_escape_string($db, $id);
-	echo $query;
 	$res = mysqli_query($db, $query);
 	if ($res && mysqli_num_rows($res)>0){
 		$fotos = mysqli_fetch_all($res, MYSQLI_ASSOC);
@@ -188,7 +187,6 @@ function dbGetComments($db, $id){
 	$query =   "SELECT comentario, fecha, id_usuario
 		 					FROM comentarios
 							WHERE id_receta = ".mysqli_real_escape_string($db, $id);
-	echo $query;
 	$res = mysqli_query($db, $query);
 	if ($res && mysqli_num_rows($res)>0){
 		$comentarios = mysqli_fetch_all($res, MYSQLI_ASSOC);
@@ -202,7 +200,6 @@ function dbGetComments($db, $id){
 
 function dbInsertComment($db, $id, $comentario){
 	$date = date('Y-m-d');
-	echo $comentario;
 	$query = "INSERT INTO comentarios (id_receta, comentario, fecha)
 														VALUES ($id, '$comentario', '$date')";
 	$res = mysqli_query($db, $query);
@@ -224,8 +221,54 @@ function dbInsertComment($db, $id, $comentario){
 			echo "<p class = 'error'> Error en la asignación del autor </p>".mysqli_error($db);
 		}
 	}
+	return $res;
 
 }
+
+
+function dbInsertValoracion($db, $id, $valoracion){
+	echo $valoracion;
+	$query = "INSERT INTO valoraciones (id_receta, valoracion)
+														VALUES ($id, $valoracion)";
+	$res = mysqli_query($db, $query);
+
+
+	if (!$res){
+		$info = " Error en la subida de la valoracion";
+		echo "<p class = 'error'> Error en la subida de la valoracion </p>".mysqli_error($db);
+
+
+	}else if (isset($_SESSION['identificado'])){
+		$id_valoracion = mysqli_insert_id($db);
+		$idautor = $_SESSION['id'];
+		$query = "UPDATE valoraciones SET id_usuario=$idautor WHERE id = $id_valoracion ";
+		$res = mysqli_query($db, $query);
+
+		if (!$res){
+			$info = " Error en la asignación del autor";
+			echo "<p class = 'error'> Error en la asignación del autor </p>".mysqli_error($db);
+		}
+	}
+
+	return $res;
+
+}
+
+function dbGetValoracion($db, $id){
+	$query =   "SELECT AVG(valoracion)
+		 					FROM valoraciones
+							WHERE id_receta = ".mysqli_real_escape_string($db, $id);
+	$res = mysqli_query($db, $query);
+	if ($res && mysqli_num_rows($res)>0){
+		$valoraciones = mysqli_fetch_row($res);
+	}
+	else{
+		$valoraciones = 0;
+	}
+	mysqli_free_result($res);
+	return $valoraciones;
+}
+
 
 
  ?>

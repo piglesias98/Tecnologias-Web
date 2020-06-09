@@ -106,7 +106,23 @@ function getParams($p, $f){
         $db = dbConnection();
         dbInsertComment($db, $result['id'], $result['comentario']);
       }
+
+    // FORMULARIO VALORACIÓN
+  }else if($p['form']=='valoracion'){
+    echo "formvaloracionnnnnnnnnnnn";
+    $result['form']='valoracion';
+    $result['err_valoracion']='';
+    if (!isset($p['valoracion']) or empty($p['valoracion'])){
+      $result['err_valoracion']='Debe seleccionar una puntuación';
+    }else{
+      $result['valoracion']=$p['valoracion'];
+      echo "VALORACION";
+      echo $result['valoracion'];
+      $db = dbConnection();
+      dbInsertValoracion($db, $result['id'], $result['valoracion']);
     }
+  }
+
     }else {
     //El formulario aún no ha sido enviado
     $result['form'] = 'nada';
@@ -249,6 +265,8 @@ function showReceta($receta, $id){
       }
       ?>
     </section>
+
+    <!-- COMENTARIOS- -->
     <section class="comentarios">
       <?php
       $db = dbConnection();
@@ -279,6 +297,37 @@ function showReceta($receta, $id){
         <input type="submit" name="accion" value="Comenta">
       </form>
     </section>
+
+    <!-- // PUNTUACIÓN  -->
+    <section>
+      <?php
+      $db = dbConnection();
+      echo $id;
+      $valoraciones = dbGetValoracion($db, $id);
+      if ($valoraciones != 0){
+        echo $valoraciones[0];
+      }
+      echo "<form action='index.php?p=crud&id=$id' method='POST'>";
+      echo "<input type='hidden' name='id' value='{$id}' />";
+      ?>
+        <p class="clasificacion">
+          <input id="radio1" type="radio" name="valoracion" value="5">
+            <label for="radio1">★</label>
+            <input id="radio2" type="radio" name="valoracion" value="4">
+            <label for="radio2">★</label>
+            <input id="radio3" type="radio" name="valoracion" value="3">
+            <label for="radio3">★</label>
+            <input id="radio4" type="radio" name="valoracion" value="2">
+            <label for="radio4">★</label>
+            <input id="radio5" type="radio" name="valoracion" value="1">
+            <label for="radio5">★</label>
+        </p>
+        <input type="hidden" name="form" value="valoracion">
+        <input type="submit" name="accion" value="Califica">
+  </form>
+    </section>
+
+
     <section class="navegacion_inferior">
       <?php
       if (isset($_SESSION['identificado'])){
@@ -293,6 +342,10 @@ function showReceta($receta, $id){
   </div>
   <?php
 }
+
+
+
+
 
 function formBuscarReceta($titulo, $datos=false){
   $bTitulo = isset($datos['bTitulo']) ? " value='{$datos['bTitulo']}'":'bTitulo';

@@ -6,8 +6,6 @@ require_once('recetas/formulario_receta.php');
 //Obtener y validar parámetros
 $params = getParams($_POST, $_FILES);
 $params['id'] = $_GET['id'];
-echo 'get';
-echo print_r($_GET);
 
   // Conexión con DB y obtención de receta y id
   $db = dbConnection();
@@ -64,6 +62,11 @@ echo print_r($_GET);
         showReceta($receta, $params['id']);
       break;
       case 'Comenta':
+        showReceta($receta, $params['id']);
+      break;
+      case 'Califica':
+        echo "califica";
+        // echo $receta['valoracion'];
         showReceta($receta, $params['id']);
       break;
     }
