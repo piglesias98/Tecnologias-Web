@@ -60,10 +60,10 @@ echo print_r($_GET);
             break;
           }
         break;
-      case 'Comenta':
-        
-      break;
       case 'Mostrar':
+        showReceta($receta, $params['id']);
+      break;
+      case 'Comenta':
         showReceta($receta, $params['id']);
       break;
     }
