@@ -93,8 +93,21 @@ function getParams($p, $f){
           dbInsertPicture($db, $result['id'], $name);
         }
       }
+
+
+      // FORMULARIO COMENTARIO
+    }else if($p['form']=='comentario'){
+      $result['form']='comentario';
+      $result['err_comentario']='';
+      if (!isset($p['comentario']) or empty($p['comentario'])){
+        $result['err_comentario']='No ha escrito ningún comentario';
+      }else{
+        $result['comentario']=$p['comentario'];
+        $db = dbConnection();
+        dbInsertComment($db, $result['id'], $result['comentario']);
+      }
     }
-  }else {
+    }else {
     //El formulario aún no ha sido enviado
     $result['form'] = 'nada';
   }
@@ -256,10 +269,14 @@ function showReceta($receta, $id){
         }
       }
       ?>
-    </section>
-    <section class="comenarios">
-      <form action="index.html" method="post">
-
+      <h4>Añade un comentario</h4>
+      <?php
+      echo "<form action='index.php?p=crud&id=$id' method='POST'>";
+      echo "<input type='hidden' name='id' value='{$id}' />";
+        ?>
+        <textarea name="comentario" rows="2" cols="70" placeholder="Mmm... qué rica!"></textarea>
+        <input type="hidden" name="form" value="comentario">
+        <input type="submit" name="accion" value="Comenta">
       </form>
     </section>
     <section class="navegacion_inferior">

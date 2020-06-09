@@ -200,5 +200,32 @@ function dbGetComments($db, $id){
 	return $comentarios;
 }
 
+function dbInsertComment($db, $id, $comentario){
+	$date = date('Y-m-d');
+	echo $comentario;
+	$query = "INSERT INTO comentarios (id_receta, comentario, fecha)
+														VALUES ($id, '$comentario', '$date')";
+	$res = mysqli_query($db, $query);
+
+
+	if (!$res){
+		$info = " Error en la subida del comentario";
+		echo "<p class = 'error'> Error en la subida del comentario </p>".mysqli_error($db);
+
+
+	}else if (isset($_SESSION['identificado'])){
+		$id_comentario = mysqli_insert_id($db);
+		$idautor = $_SESSION['id'];
+		$query = "UPDATE comentarios SET id_usuario=$idautor WHERE id = $id_comentario ";
+		$res = mysqli_query($db, $query);
+
+		if (!$res){
+			$info = " Error en la asignación del autor";
+			echo "<p class = 'error'> Error en la asignación del autor </p>".mysqli_error($db);
+		}
+	}
+
+}
+
 
  ?>
