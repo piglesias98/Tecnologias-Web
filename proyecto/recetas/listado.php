@@ -22,7 +22,12 @@ if (isset($_POST['accion'])){
 }
 
 if (isset($_GET['p']) and $_GET['p'] == 'mis_recetas'){
-  $results['id']=$_SESSION['id'];
+  $results['autor_id']=$_SESSION['autor_id'];
+  echo $results['autor_id'];
+}
+
+if (isset($_GET['id'])){
+  $results['id']=$_GET['id'];
   echo $results['id'];
 }
 
@@ -65,8 +70,7 @@ HTML;
 foreach ((array) $datos as $v){
     echo '<tr>';
     echo "<td>{$v['titulo']}</td>";
-    echo "<td><form action='$accion' method='POST'>
-          <input type='hidden' name='id' value='{$v['id']}' />
+    echo "<td><form action='".$accion.'&id='.$v['id']."' method='POST'>
           <input type='submit' name = 'accion' value='Mostrar'/>";
     if (isset($_SESSION['identificado'])){
       echo "<input type='submit'  name = 'accion' value='Editar' />

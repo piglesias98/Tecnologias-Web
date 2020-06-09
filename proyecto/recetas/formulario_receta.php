@@ -217,12 +217,12 @@ function showReceta($receta, $id){
     <section class='pasos'>
       <?php
       $db = dbConnection();
+      echo $id;
       $fotos = dbGetPictures($db, $id);
       ?>
       <?php if(is_array($fotos)){
-        echo print_r($fotos);
-        foreach ((array) $fotos as $value) {
-          echo "<img src='uploads/".$value."'/><br>";
+        foreach ($fotos as $value) {
+          echo "<img src='uploads/".$value['ubicacion']."'/><br>";
         }
       }
       ?>
@@ -311,7 +311,7 @@ function formFotos($params, $accion){
   <?php if(is_array($fotos)){
     echo print_r($fotos);
     foreach ((array) $fotos as $value) {
-      echo "<img src='uploads/".$value."'/><br>";
+      echo "<img src='uploads/".$value['ubicacion']."'/><br>";
       echo "hola";
     }
 

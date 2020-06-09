@@ -5,7 +5,9 @@ require_once('recetas/formulario_receta.php');
 
 //Obtener y validar parámetros
 $params = getParams($_POST, $_FILES);
-
+$params['id'] = $_GET['id'];
+echo 'get';
+echo print_r($_GET);
 
 if (isset($params['form'])){
 

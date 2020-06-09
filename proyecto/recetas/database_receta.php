@@ -169,11 +169,13 @@ function dbInsertPicture($db, $id, $nombre){
 }
 
 function dbGetPictures($db, $id){
-	$res = mysqli_query($db, "SELECT ubicacion
-		 												FROM fotos
-														WHERE id_receta = '".mysqli_real_escape_string($db, $id)."'");
+	$query =   "SELECT ubicacion
+		 					FROM fotos
+							WHERE id_receta = ".mysqli_real_escape_string($db, $id);
+	echo $query;
+	$res = mysqli_query($db, $query);
 	if ($res && mysqli_num_rows($res)>0){
-		$fotos = mysqli_fetch_array($res);
+		$fotos = mysqli_fetch_all($res, MYSQLI_ASSOC);
 	}
 	else{
 		$fotos = false;
