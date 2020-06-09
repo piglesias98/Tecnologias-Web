@@ -191,6 +191,15 @@ function enviarFormulario($params){
 
 
 function showReceta($receta, $id){
+  setcookie('ultima_receta', strval($id),time()+ 9999999999);
+  //Obtenemos el usuario porque necesitaremos el autor
+  $autor = 'Anonimo';
+  if (isset($receta['idautor'])){
+    $db = dbConnection();
+    $usuario = dbGetUsuario($db, $receta['idautor']);
+    $autor = $usuario['nombre']." ".$usuario['apellidos'];
+  }
+  $receta['autor']=$autor;
   ?>
   <div class="contenido">
     <div class="superior">

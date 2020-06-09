@@ -24,7 +24,7 @@ HTMLnav($opc);
 //Según el query string insertamos el código HTML correspondiente
 if (isset($_SESSION['identificado'])){
   switch($opc) {
-    case 'index': include "inicio.html"; break;
+    case 'index': include "inicio.php"; break;
     case 'listado': include "recetas/listado.php"; break;
     case 'contacto': include "contacto.php"; break;
     case 'crear': include "recetas/crear_receta.php"; break;

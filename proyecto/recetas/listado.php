@@ -22,7 +22,7 @@ if (isset($_POST['accion'])){
 }
 
 if (isset($_GET['p']) and $_GET['p'] == 'mis_recetas'){
-  $results['autor_id']=$_SESSION['autor_id'];
+  $results['autor_id']=$_SESSION['id'];
   echo $results['autor_id'];
 }
 
