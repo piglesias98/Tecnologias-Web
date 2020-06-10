@@ -17,6 +17,7 @@ if (isset($_POST['email_login']) or isset($_POST['clave_login'])){
   }else{
     $id = $res['id'];
     $nombre = $res['nombre'];
+    $rol = $res['tipo'];
     // Verificamos la contraseña
     $clave = $_POST['clave_login'];
     if (dbPasswordVerify($db, $clave, $id)){
@@ -25,6 +26,10 @@ if (isset($_POST['email_login']) or isset($_POST['clave_login'])){
       $_SESSION['id'] = $id;
       $_SESSION['email'] = $email;
       $_SESSION['nombre'] = $nombre;
+      if($rol == 'admin'){
+        echo 'es admin';
+        $_SESSION['admin'] = true;
+      }
     }else {
       $error = true;
     }

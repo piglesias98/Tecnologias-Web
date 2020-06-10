@@ -6,11 +6,21 @@ echo <<<HTML
   <nav>
 HTML;
 
-if (isset($_SESSION['identificado']))
+if (isset($_SESSION['admin'])){
   $items = ['index'=>'Inicio', 'listado'=>'Listado de recetas',
-            'contacto'=> 'Página de contacto', 'crear'=>'Receta nueva', 'perfil'=>'Mi perfil', 'mis_recetas' =>'Mis recetas'];
-else
-  $items = ['index'=>'Inicio', 'listado'=>'Listado de recetas','contacto'=> 'Página de contacto', 'registro' => 'Regístrate'];
+            'contacto'=> 'Página de contacto', 'crear'=>'Receta nueva',
+            'perfil'=>'Mi perfil', 'mis_recetas' =>'Mis recetas',
+            'gestion'=>'Gestión de Usuarios', 'log'=>'Log',
+            'bbdd' => 'Gestión de la BD'];
+}else if (isset($_SESSION['identificado'])){
+  $items = ['index'=>'Inicio', 'listado'=>'Listado de recetas',
+            'contacto'=> 'Página de contacto', 'crear'=>'Receta nueva',
+            'perfil'=>'Mi perfil', 'mis_recetas' =>'Mis recetas'];
+}else{
+  $items = ['index'=>'Inicio', 'listado'=>'Listado de recetas',
+            'contacto'=> 'Página de contacto', 'registro' => 'Regístrate'];
+}
+
 foreach ($items as $key => $value)
   echo "<a".($key==$activo?" class='activo'":"").
   " href=index.php?p=".($key).">".$value."</a>";

@@ -11,7 +11,6 @@ function dbCrearUsuario($db, $params){
 														.mysqli_real_escape_string($db, $params['clave1'])."','"
 														.$rol."','"
 														.mysqli_real_escape_string($db, $params['foto_perfil_src'])."')";
-	echo $query;
 	$res = mysqli_query($db, $query);
 	if (!$res){
 		$info = "Error en la creacion del usuario";
@@ -43,7 +42,7 @@ function dbModificarUsuario($db, $id, $params){
 }
 
 function dbCheckUsuario($db, $email){
-	$res = mysqli_query($db, "SELECT id, nombre
+	$res = mysqli_query($db, "SELECT id, nombre, tipo
 														FROM usuarios WHERE email='".mysqli_real_escape_string($db,$email)."'");
 	if ($res and mysqli_num_rows($res)==1)
 		return mysqli_fetch_assoc($res);
@@ -74,5 +73,37 @@ function dbGetUsuario($db, $id){
 	return $usuario;
 }
 
+
+function dbGetNumUsuarios($db, $cadena=''){
+	if ($cadena==''){
+		$query = "SELECT COUNT(*) FROM usuarios";
+	}else{
+		$query = "SELECT COUNT(*) FROM usuarios WHERE $cadena";
+	}
+	$res = mysqli_query($db, $query);
+	$num = mysqli_fetch_row($res)[0];
+	$num = (int)$num;
+	mysqli_free_result($res);
+	return $num;
+}
+
+function dbGetUsuarios($db, $cadena='', $orden=''){
+	$query = "SELECT id, nombre, apellidos FROM usuarios";
+	$query = $cadena=='' ? $query : $query." WHERE ".$cadena;
+	$query = $orden=='' ? $query : $query." ORDER BY titulo ".$orden;
+	$res = mysqli_query($db, $query);
+	if ($res){
+		if (mysqli_num_rows($res)>0){
+			$tabla = mysqli_fetch_all($res, MYSQLI_ASSOC);
+		}else{
+			$tabla = [];
+		}
+		// Libero la memoria de la consulta
+		mysqli_free_result($res);
+	}else{
+		$tabla = false;
+	}
+	return $tabla;
+}
 
  ?>

@@ -22,7 +22,7 @@ HTMLwidgets();
 HTMLnav($opc);
 
 //Según el query string insertamos el código HTML correspondiente
-if (isset($_SESSION['identificado'])){
+if (isset($_SESSION['admin'])){
   switch($opc) {
     case 'index': include "inicio.php"; break;
     case 'listado': include "recetas/listado.php"; break;
@@ -31,25 +31,25 @@ if (isset($_SESSION['identificado'])){
     case 'crud': include "recetas/crud.php"; break;
     case 'perfil': include "usuarios/perfil.php"; break;
     case 'mis_recetas': include "recetas/listado.php"; break;
-  }
-}else if (isset($_SESSION['admin'])){
-  switch($opc) {
-    case 'index': include "inicio.php"; break;
-    case 'listado': include "recetas/listado.php"; break;
-    case 'contacto': include "contacto.php"; break;
-    case 'crear': include "recetas/crear_receta.php"; break;
-    case 'crud': include "recetas/crud.php"; break;
-    case 'perfil': include "usuarios/perfil.php"; break;
-    case 'mis_recetas': include "recetas/listado.php"; break;
-    case 'gestion_usuarios': include "usuarios/gestion.php"; break;
+    case 'gestion': include "usuarios/gestion.php"; break;
     case 'log': include "log.php"; break;
     case 'bbdd': include "bbdd.php"; break;
+  }
+}else if (isset($_SESSION['identificado'])){
+  switch($opc) {
+    case 'index': include "inicio.php"; break;
+    case 'listado': include "recetas/listado.php"; break;
+    case 'contacto': include "contacto.php"; break;
+    case 'crear': include "recetas/crear_receta.php"; break;
+    case 'crud': include "recetas/crud.php"; break;
+    case 'perfil': include "usuarios/perfil.php"; break;
+    case 'mis_recetas': include "recetas/listado.php"; break;
   }
 }else{
   switch($opc) {
     case 'index': include "inicio.php"; break;
     case 'listado': include "recetas/listado.php"; break;
-    case 'contacto': include "usuario/contacto.php"; break;
+    case 'contacto': include "usuarios/contacto.php"; break;
     case 'crud': include "recetas/crud.php"; break;
     case 'crear': include "error.html"; break;
     case 'registro': include "usuarios/registro.php"; break;
