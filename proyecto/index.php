@@ -32,9 +32,22 @@ if (isset($_SESSION['identificado'])){
     case 'perfil': include "usuarios/perfil.php"; break;
     case 'mis_recetas': include "recetas/listado.php"; break;
   }
+}else if (isset($_SESSION['admin'])){
+  switch($opc) {
+    case 'index': include "inicio.php"; break;
+    case 'listado': include "recetas/listado.php"; break;
+    case 'contacto': include "contacto.php"; break;
+    case 'crear': include "recetas/crear_receta.php"; break;
+    case 'crud': include "recetas/crud.php"; break;
+    case 'perfil': include "usuarios/perfil.php"; break;
+    case 'mis_recetas': include "recetas/listado.php"; break;
+    case 'gestion_usuarios': include "usuarios/gestion.php"; break;
+    case 'log': include "log.php"; break;
+    case 'bbdd': include "bbdd.php"; break;
+  }
 }else{
   switch($opc) {
-    case 'index': include "inicio.html"; break;
+    case 'index': include "inicio.php"; break;
     case 'listado': include "recetas/listado.php"; break;
     case 'contacto': include "usuario/contacto.php"; break;
     case 'crud': include "recetas/crud.php"; break;

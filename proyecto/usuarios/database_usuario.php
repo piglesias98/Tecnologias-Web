@@ -2,13 +2,17 @@
 
 function dbCrearUsuario($db, $params){
 	echo $params['foto_perfil_src'];
-	$res = mysqli_query($db, "INSERT INTO usuarios (nombre, apellidos, email, clave1,
+	$rol = 'colaborador';
+	$query = "INSERT INTO usuarios (nombre, apellidos, email, clave1, tipo,
 																								foto_perfil_src)
 														VALUES ('".mysqli_real_escape_string($db, $params['nombre'])."','"
 														.mysqli_real_escape_string($db, $params['apellidos'])."','"
 														.mysqli_real_escape_string($db, $params['email'])."','"
 														.mysqli_real_escape_string($db, $params['clave1'])."','"
-														.mysqli_real_escape_string($db, $params['foto_perfil_src'])."')");
+														.$rol."','"
+														.mysqli_real_escape_string($db, $params['foto_perfil_src'])."')";
+	echo $query;
+	$res = mysqli_query($db, $query);
 	if (!$res){
 		$info = "Error en la creacion del usuario";
 		echo "<p class = 'error'> Error en la creacion d el areceta </p>".mysqli_error($db);
