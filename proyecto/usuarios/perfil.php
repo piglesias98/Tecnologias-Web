@@ -2,6 +2,7 @@
 require_once('database/database.php');
 require_once('usuarios/database_usuario.php');
 require_once('usuarios/formulario_usuario.php');
+
 if (isset($_SESSION['identificado']) and $_SESSION['identificado'] == true){
   $id = $_SESSION['id'];
   $email = $_SESSION['email'];

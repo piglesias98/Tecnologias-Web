@@ -15,6 +15,8 @@ $params['id'] = $_GET['id'];
   // Según el formulario que estemos editando
   if (isset($params['accion'])){
     switch ($params['accion']) {
+
+      // Confirmar edición
       case 'Confirmar':
         //Si ya tenemos la confirmación modificar usuario y mostrar final
         $msg = dbModificarReceta($db, $params['id'], $params);
@@ -58,6 +60,19 @@ $params['id'] = $_GET['id'];
             break;
           }
         break;
+      case 'Borrar':
+        formEditable('Borrar receta',$receta, 'Confirmar borrado', false);
+        break;
+      case 'Confirmar borrado':
+        echo $params['id'];
+        $msg = dbBorrarReceta($db, $params['id']);
+        if ($msg == true){
+          $message = "<p>La receta ".$params['titulo']." ha sido borrada</p>";
+        }else{
+          $message= "<p class='error'> La receta no se ha podido borrar </p>";
+        }
+        showMessage($message);
+        break;
       case 'Mostrar':
         showReceta($receta, $params['id']);
       break;
@@ -75,6 +90,13 @@ $params['id'] = $_GET['id'];
     showReceta($receta, $params['id']);
   }
 
+
+function showMessage($message){
+  echo "<div class='contenido'>";
+  echo "<h3>".$message."</h3>";
+  echo "</div>";
+  echo "</div>";
+}
 
 
 ?>

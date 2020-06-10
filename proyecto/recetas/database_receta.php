@@ -72,7 +72,9 @@ function dbCrearReceta($db, $params){
 
 
 function dbBorrarReceta($db, $id){
-	mysqli_query($db, "DELETE FROM receta WHERE id='$id'");
+	$query = "DELETE FROM recetas WHERE id=$id";
+	echo $query;
+	mysqli_query($db, $query);
 	if (mysqli_affected_rows($db)==1)
 		return true;
 	else
