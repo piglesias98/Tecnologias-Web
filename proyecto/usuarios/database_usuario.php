@@ -8,7 +8,7 @@ function dbCrearUsuario($db, $params){
 														VALUES ('".mysqli_real_escape_string($db, $params['nombre'])."','"
 														.mysqli_real_escape_string($db, $params['apellidos'])."','"
 														.mysqli_real_escape_string($db, $params['email'])."','"
-														.mysqli_real_escape_string($db, $params['clave1'])."','"
+														.mysqli_real_escape_string($db, password_hash($params['clave1'], PASSWORD_DEFAULT))."','"
 														.$rol."','"
 														.mysqli_real_escape_string($db, $params['foto_perfil_src'])."')";
 	$res = mysqli_query($db, $query);
@@ -26,10 +26,12 @@ function dbCrearUsuario($db, $params){
 function dbModificarUsuario($db, $id, $params){
 	$query = "UPDATE usuarios SET nombre = '".mysqli_real_escape_string($db, $params['nombre'])."',
 												apellidos = '".mysqli_real_escape_string($db, $params['apellidos'])."',
-												email = '".mysqli_real_escape_string($db, $params['email'])."',
-				                clave1 = '".mysqli_real_escape_string($db, $params['clave1'])."',
-												foto_perfil_src = '".mysqli_real_escape_string($db, $params['foto_perfil_src'])."'
-            WHERE id = '".mysqli_real_escape_string($db, $id)."'";
+												email = '".mysqli_real_escape_string($db, $params['email'])."',";
+	if (isset($params['clave1'])){
+		$query = $query."clave1 = '".mysqli_real_escape_string($db, password_hash($params['clave1'], PASSWORD_DEFAULT))."',";
+	}
+	$query = $query."foto_perfil_src = '".mysqli_real_escape_string($db, $params['foto_perfil_src'])."'
+									WHERE id = '".mysqli_real_escape_string($db, $id)."'";
 	$res = mysqli_query($db, $query );
 	if (!$res){
 		$info =  'Error al actualizar'.mysqli_error($db);
@@ -51,10 +53,13 @@ function dbCheckUsuario($db, $email){
 }
 
 function dbPasswordVerify($db, $clave, $id){
-	$res = mysqli_query($db, "SELECT id
-														FROM usuarios WHERE clave1='".mysqli_real_escape_string($db,$clave)."'");
-	if ($res and mysqli_num_rows($res)==1)
-		return true;
+	$res = mysqli_query($db, "SELECT clave1
+														FROM usuarios WHERE id='".mysqli_real_escape_string($db,$id)."'");
+	if ($res and mysqli_num_rows($res)==1){
+		$pwd = mysqli_fetch_row($res);
+		if (password_verify($clave, ($pwd[0])))
+			return true;
+	}
 	else
 		return false;
 }

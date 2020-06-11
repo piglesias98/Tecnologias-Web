@@ -16,11 +16,11 @@ if (isset($params['confirmar'])){
     && $params['err_foto']==''){
   //Pedir confirmación
   $params['editable']=false;
-  $accion = 'confirmar';
+  $accion = 'Confirmar';
   showFormUsuario($params, $accion, false);
 }else{
   //Si no se han recibido parámetros o son incorrectos
-  showFormUsuario($params, 'enviar', true);
+  showFormUsuario($params, 'Registrarse', true);
 }
 
 

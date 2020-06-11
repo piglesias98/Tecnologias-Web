@@ -4,99 +4,119 @@ require_once('database/database.php');
 function formEditable($titulo, $usuario, $accion, $editable){
   echo "<div class='contenido'>";
   echo "<h3>".$titulo."</h3>";
-  echo "<h3>".$accion."</h3>";
   showFormUsuario($usuario, $accion, $editable);
   echo "</div>";
   echo "</div>";
 }
 
 function getParams($p, $f){
-  if (isset($p['nombre']) or isset($p['apellidos']) or isset($p['email']) or isset($p['clave1'])
-      or isset($p['clave2']) or isset($p['foto_perfil']) or isset($p['accion'])){
-    $result['enviado'] = true;
-    // Validación de resultados
-    if(!empty($p['accion'])){
-      $result['accion']=$p['accion'];
-    }
-    // -> nombre
-    $result['err_nombre'] = '';
-    if (empty($p['nombre'])){
-      $result['err_nombre'] = 'El nombre no puede estar vacío';
-    }else{
-      $result['nombre'] = $p['nombre'];
-    }
-    // -> apellidos
-    $result['err_apellidos'] = '';
-    if (empty($p['apellidos'])){
-      $result['err_apellidos'] = 'Los apellidos no pueden estar vacíos';
-    }else{
-      $result['apellidos'] = $p['apellidos'];
-    }
-    // -> email
-    $result['err_email'] = '';
-    if (empty($p['email'])){
-      $result['err_email'] = 'El email no puede estar vacío';
-    }
-    else if (!filter_var($p['email'], FILTER_VALIDATE_EMAIL)){
-      $result['err_email'] = 'Debe ser un email válido';
-    }else{
-      $result['email'] = $p['email'];
-    }
-    // -> contraseñas
-    $result['err_clave1'] = '';
-    if (empty($p['clave1'])){
-      $result['err_clave1'] = 'Debe introducir una contraseña';
-    }else{
-      $result['clave1'] = $p['clave1'];
-      // -> confirmar segunda contraseña
-      $result['err_clave2'] = '';
-      if (empty($p['clave2'])){
-        $result['err_clave2'] = 'Debe confirmar la contraseña';
-      }else if ($result['clave1'] != $p['clave2']){
-        $result['err_clave2'] = 'Las contraseñas deben coincidir';
-      }else{
-        $result['clave2'] = $p['clave2'];
-      }
-    }
-    // -> fotografía
-    $result['err_foto']='';
-    // Si ya hemos subido la imagen
-    if (isset($p['foto_perfil_src'])){
-      $result['foto_perfil_src'] = $p['foto_perfil_src'];
-    // Si no hemos subido ninguna imagen
-    }else if(empty($f['foto_perfil']['name'])){
-      $result['err_foto'] = 'Debe incluir una fotografía';
-    }else{
-      $name = $f['foto_perfil']['name'];
-      $target_dir = "uploads/";
-      $target_file = $target_dir . basename($f['foto_perfil']['name']);
-      // Tipo del archivo
-      $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-      $validExtensions = array('jpg', 'jpeg', 'png', 'gif');
-      // Comprobar que se trata de verdad de una imagen
-      if (!getimagesize($f['foto_perfil']['tmp_name'])){
-        $result['err_foto'] = "El archivo no es una fotografía";
-      // Comprobar el tamaño del archivo
-      }else if ($f['foto_perfil']["size"] > 500000){
-          $result['err_foto'] = 'Lo siento, el archivo es demasiado grande';
-      // Sólo permitimos JPG, JPEG y PNG
-      }else if (!in_array($imageFileType, $validExtensions)){
-        $result['err_foto'] = 'Lo siento, solo se permiten archivos PNG, JPG o JPEG';
-      }else{
-        // Guardamos la imagen
-        $result['foto_perfil'] = $f['foto_perfil']['tmp_name'];
-        $result['foto_perfil_src'] = $name;
-        move_uploaded_file($f['foto_perfil']['tmp_name'], $target_dir.$name);
-      }
-    }
+  echo "accion";
+  echo $p['accion'];
+  if(isset($p['id'])){
+    $result['id'] = $p['id'];
+  }
+  if(isset($p['accion'])){
+    $result['accion']=$p['accion'];
+  }
+  if (isset($p['form'])){
+    // FORMULARIO RECETA
+    if ($p['form'] == 'usuario'){
+      $result['form'] = 'usuario';
 
-    //confirmar
-    if(isset($p['confirmar'])){
-      $result['confirmar'] = true;
+      $result['enviado'] = true;
+      // Validación de resultados
+      if(!empty($p['accion'])){
+        $result['accion']=$p['accion'];
+      }
+      // -> nombre
+      $result['err_nombre'] = '';
+      if (empty($p['nombre'])){
+        $result['err_nombre'] = 'El nombre no puede estar vacío';
+      }else{
+        $result['nombre'] = $p['nombre'];
+      }
+      // -> apellidos
+      $result['err_apellidos'] = '';
+      if (empty($p['apellidos'])){
+        $result['err_apellidos'] = 'Los apellidos no pueden estar vacíos';
+      }else{
+        $result['apellidos'] = $p['apellidos'];
+      }
+      // -> email
+      $result['err_email'] = '';
+      if (empty($p['email'])){
+        $result['err_email'] = 'El email no puede estar vacío';
+      }
+      else if (!filter_var($p['email'], FILTER_VALIDATE_EMAIL)){
+        $result['err_email'] = 'Debe ser un email válido';
+      }else{
+        $result['email'] = $p['email'];
+      }
+      // -> contraseñas (no queremos que sean editables)
+      $result['err_clave1'] = '';
+      $result['err_clave2'] = '';
+      if ($result['accion']=='Editar' or $result['accion']=='Confirmar'){
+        if (isset($p['clave1']) and !empty($p['clave1'])){
+          $result['clave1'] = $p['clave1'];
+          // -> confirmar segunda contraseña
+          if (empty($p['clave2'])){
+            $result['err_clave2'] = 'Debe confirmar la contraseña';
+          }else if ($result['clave1'] != $p['clave2']){
+            $result['err_clave2'] = 'Las contraseñas deben coincidir';
+          }else{
+            $result['clave2'] = $p['clave2'];
+          }
+        }
+      }else if($result['accion']=='Registro'){
+        if (!isset($p['clave1'])){
+          $result['err_clave1'] = 'Debe introducir una contraseña';
+        }else{
+          $result['clave1'] = $p['clave1'];
+          // -> confirmar segunda contraseña
+          if (empty($p['clave2'])){
+            $result['err_clave2'] = 'Debe confirmar la contraseña';
+          }else if ($result['clave1'] != $p['clave2']){
+            $result['err_clave2'] = 'Las contraseñas deben coincidir';
+          }else{
+            $result['clave2'] = $p['clave2'];
+          }
+        }
+      }
+      // -> fotografía
+      $result['err_foto']='';
+      // Si ya hemos subido la imagen
+      if (isset($p['foto_perfil_src'])){
+        $result['foto_perfil_src'] = $p['foto_perfil_src'];
+      // Si no hemos subido ninguna imagen
+      }else if(empty($f['foto_perfil']['name'])){
+        $result['err_foto'] = 'Debe incluir una fotografía';
+      }else{
+        $name = uniqid();
+        $target_dir = "uploads/";
+        $target_file = $target_dir . basename($f['foto_perfil']['name']);
+        // Tipo del archivo
+        $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+        $validExtensions = array('jpg', 'jpeg', 'png', 'gif');
+        // Comprobar que se trata de verdad de una imagen
+        if (!getimagesize($f['foto_perfil']['tmp_name'])){
+          $result['err_foto'] = "El archivo no es una fotografía";
+        // Comprobar el tamaño del archivo
+        }else if ($f['foto_perfil']["size"] > 500000){
+            $result['err_foto'] = 'Lo siento, el archivo es demasiado grande';
+        // Sólo permitimos JPG, JPEG y PNG
+        }else if (!in_array($imageFileType, $validExtensions)){
+          $result['err_foto'] = 'Lo siento, solo se permiten archivos PNG, JPG o JPEG';
+        }else{
+          // Guardamos la imagen
+          $result['foto_perfil'] = $f['foto_perfil']['tmp_name'];
+          $result['foto_perfil_src'] = $name;
+          move_uploaded_file($f['foto_perfil']['tmp_name'], $target_dir.$name);
+        }
+      }
     }
  }else {
     //El formulario aún no ha sido enviado
-    $result['enviado'] = false;
+    $result['form'] = 'nada';
   }
   return $result;
 }
@@ -148,8 +168,9 @@ function showFormUsuario($params, $accion, $editable){
       <?php if (isset($params['clave2'])) echo " value='".$params['clave2']."'";?>/><br>
       <?php if (isset($params['err_clave2'])) echo "<p class = 'error'>".$params['err_clave2']."</p>";?>
     </label>
+    <input type="hidden" name = 'form' value='usuario'/>
     <?php if (isset($params['id'])) echo "<input type='hidden' name='id' value='".$params['id']."'/>";?>
-    <input type="submit" name = <?php echo $accion ?> value=<?php echo $accion ?> >
+    <input type="submit" name='accion' value=<?php echo $accion ?> >
   </form>
 <?php
 }
@@ -182,8 +203,13 @@ function showUsuario($usuario, $id){
     </div>
     <section class="navegacion_inferior">
       <?php
-      echo "<form action='index?p=perfil' method='POST'>
-            <input type='hidden' name='id' value='{$id}' />";
+      if (isset($_SESSION['admin'])){
+        echo "<form action='index.php?p=crud_usuarios&id=$id' method='POST'>";
+        echo "<input type='submit' name = 'accion' value='Borrar'/>";
+      }else{
+        echo "<form action='index?p=perfil' method='POST'>";
+      }
+      echo "<input type='hidden' name='id' value='{$id}' />";
       echo "<input type='submit' name = 'accion' value='Editar'/>";
       ?>
     </section>
