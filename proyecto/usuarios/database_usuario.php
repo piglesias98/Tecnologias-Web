@@ -66,7 +66,7 @@ function dbPasswordVerify($db, $clave, $id){
 
 function dbGetUsuario($db, $id){
 	$res = mysqli_query($db, "SELECT id, nombre, apellidos, email,
-														foto_perfil_src
+														foto_perfil_src, tipo
 														FROM usuarios WHERE id='".mysqli_real_escape_string($db,$id)."'");
 	if ($res && mysqli_num_rows($res)==1){
 		$usuario = mysqli_fetch_assoc($res);

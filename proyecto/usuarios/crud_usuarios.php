@@ -13,7 +13,7 @@ echo "hola";
 
 
 if (isset($_SESSION['identificado']) and $_SESSION['identificado'] == true){
-  if (isset($_SESSION['admin']) and $_SESSION['admin'] == true){
+  if (isset($_SESSION['admin']) and $_SESSION['admin'] == true and $_GET['p']!='perfil'){
       // Obtención de usuario y id
       $usuario = dbGetUsuario($db, $params['id']);
   }else{

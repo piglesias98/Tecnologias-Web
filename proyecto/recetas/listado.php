@@ -72,7 +72,8 @@ foreach ((array) $datos as $v){
     echo "<td>{$v['titulo']}</td>";
     echo "<td><form action='".$accion.'&id='.$v['id']."' method='POST'>
           <input type='submit' name = 'accion' value='Mostrar'/>";
-    if (isset($_SESSION['identificado'])){
+    if (isset($_SESSION['identificado']) and
+        (isset($_SESSION['admin']) or $v['idautor']==$_SESSION['id'])){
       echo "<input type='submit'  name = 'accion' value='Editar' />
             <input type='submit' name = 'accion' value='Borrar'/>";
     }

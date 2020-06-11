@@ -10,8 +10,6 @@ function formEditable($titulo, $usuario, $accion, $editable){
 }
 
 function getParams($p, $f){
-  echo "accion";
-  echo $p['accion'];
   if(isset($p['id'])){
     $result['id'] = $p['id'];
   }
@@ -196,6 +194,7 @@ function showUsuario($usuario, $id){
         <h1><?php echo $usuario['nombre'] ?></h1>
         <h2><?php echo $usuario['apellidos'] ?></h2>
         <p>Correo electrónico: <?php echo $usuario['email'] ?></p>
+        <p>Rol: <?php echo $usuario['tipo'] ?></p>
       </div>
       <div class="foto_perfil">
         <?php echo "<img src='uploads/".$usuario['foto_perfil_src']."' /><br>"; ?>

@@ -1,7 +1,7 @@
 <?php
 
 function dbGetRecetas($db, $cadena='', $orden=''){
-	$query = "SELECT id, titulo FROM recetas";
+	$query = "SELECT id, titulo, idautor FROM recetas";
 	$query = $cadena=='' ? $query : $query." WHERE ".$cadena;
 	$query = $orden=='' ? $query : $query." ORDER BY titulo ".$orden;
 	$res = mysqli_query($db, $query);
