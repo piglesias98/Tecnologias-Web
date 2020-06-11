@@ -346,12 +346,15 @@ function showReceta($receta, $id){
 function formBuscarReceta($titulo, $datos=false){
   $bTitulo = isset($datos['bTitulo']) ? " value='{$datos['bTitulo']}'":'bTitulo';
   $bCampo = isset($datos['bCampo']) ? " value='{$datos['bCampo']}'":'bCampo';
-  if (isset($datos['bAscDesc'])){
-    $bAsc = 'bAsc' === $datos['bAscDesc'] ? " checked ":'bAsc';
-    $bDesc = 'bDesc' === $datos['bAscDesc'] ? " checked ":'bDesc';
+  if (isset($datos['bOrdenar'])){
+    $bAlfabetico = 'bAlfabetico' === $datos['bOrdenar'] ? " checked ":'bAlfabetico';
+    echo $bAlfabetico;
+    $bComentadas = 'bComentadas' === $datos['bOrdenar'] ? " checked ":'bComentadas';
+    $bPuntuacion = 'bPuntuacion' === $datos['bOrdenar'] ? " checked ":'bPuntuacion';
   }else{
-    $bAsc = '';
-    $bDesc = '';
+    $bAlfabetico = '';
+    $bComentadas = '';
+    $bPuntuacion = '';
   }
   $accion =  basename($_SERVER['REQUEST_URI']);
   if (!strpos($accion, '?')) $accion = $_SERVER['SCRIPT_NAME'];
@@ -360,18 +363,21 @@ function formBuscarReceta($titulo, $datos=false){
   <form class="" action= <?php echo $accion;?> method="post">
     <label for="bTitulo">
       <p>Buscar en título:</p>
-      <input type="text" name="bTitulo" $bTitulo>
+      <input type="text" name="bTitulo" <?php echo $bTitulo ?>>
     </label>
     <label for="bTitulo">
       <p>Buscar en receta:</p>
-      <input type="text" name="bCampo" $bTitulo>
+      <input type="text" name="bCampo" <?php echo $bCampo ?>>
     </label>
-      <p>Orden</p>
-    <label for="bAsc">Ascendente
-      <input type="radio" name="bAscDesc" value = "bAsc" $bAsc>
+      <p>Ordenar por...</p>
+    <label for="bAlfabetico">Orden alfabético
+      <input type="radio" name="bOrdenar" value = "bAlfabetico" <?php echo $bAlfabetico ?>>
     </label>
-    <label for="bDesc">Descendente
-      <input type="radio" name="bAscDesc" value = "bDesc" $bDesc>
+    <label for="bComentadas">Más comentadas
+      <input type="radio" name="bOrdenar" value = "bComentadas" <?php echo $bComentadas ?>>
+    </label>
+    <label for="bPuntuacion">Mayor puntuación
+      <input type="radio" name="bOrdenar" value = "bPuntuacion" <?php echo $bPuntuacion ?>>
     </label>
     <label for="categorias">
       <p>Categorías:</p>

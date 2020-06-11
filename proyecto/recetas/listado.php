@@ -14,8 +14,8 @@ if (isset($_POST['accion'])){
     $results['bCampo'] = $_POST['bCampo'];
   if (isset($_POST['bCategoria']) and $_POST['bCategoria']!='')
     $results['bCategoria'] = $_POST['bCategoria'];
-  if (isset($_POST['bAscDesc']) and $_POST['bAscDesc']!='')
-    $results['bAscDesc']= $_POST['bAscDesc'];
+  if (isset($_POST['bOrdenar']) and $_POST['bOrdenar']!='')
+    $results['bOrdenar']= $_POST['bOrdenar'];
   if (isset($results) and count($results) > 0){
     $results['accion'] = 'Buscar';
   }
@@ -37,8 +37,8 @@ if (!is_string($db=dbConnection())){
   $orden = '';
   formBuscarReceta('Datos de la búsqueda', $results);
   $busc = dbArray2SQL($results);
-  if (isset($results['bAscDesc'])){
-    $orden =  strpos($results['bAscDesc'], 'Asc') !== false ? 'asc' : 'desc';
+  if(isset($results['bOrdenar'])){
+    $orden = $results['bOrdenar'];
   }
   $num_recetas = dbGetNumRecetas($db, $busc);
   if ($num_recetas>0){

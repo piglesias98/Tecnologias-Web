@@ -1,9 +1,21 @@
 <?php
 
 function dbGetRecetas($db, $cadena='', $orden=''){
-	$query = "SELECT id, titulo, idautor FROM recetas";
-	$query = $cadena=='' ? $query : $query." WHERE ".$cadena;
-	$query = $orden=='' ? $query : $query." ORDER BY titulo ".$orden;
+	$query_start = "SELECT id, titulo, idautor FROM recetas";
+	$query_end = '';
+	if ($orden=='bComentadas'){
+		$query_start = "SELECT r.id, r.titulo, r.idautor, count(c.id)
+							from recetas r join comentarios c on c.id_receta = r.id";
+		$query_end = " GROUP BY r.id ORDER BY count(c.id) DESC";
+	} else if ($orden=='bPuntuacion'){
+		$query_start = "SELECT r.id, r.titulo, r.idautor, avg(v.valoracion)
+							from recetas r join valoraciones v on v.id_receta = r.id";
+		$query_end = " GROUP BY r.id ORDER BY avg(v.valoracion) DESC";
+	} else if ($orden=='bAlfabetico'){
+		$query_end = " ORDER BY titulo";
+	}
+	$query = $cadena=='' ? $query_start : $query_start." WHERE ".$cadena;
+	$query = $query_end=='' ? $query_start : $query_start.$query_end;
 	$res = mysqli_query($db, $query);
 	if ($res){
 		if (mysqli_num_rows($res)>0){
