@@ -28,7 +28,7 @@ if (isset($_SESSION['admin'])){
     case 'listado': include "recetas/listado.php"; break;
     case 'contacto': include "contacto.php"; break;
     case 'crear': include "recetas/crud_recetas.php"; break;
-    case 'crud': include "recetas/crud_recetas.php"; break;
+    case 'crud_recetas': include "recetas/crud_recetas.php"; break;
     case 'perfil': include "usuarios/crud_usuarios.php"; break;
     case 'crud_usuarios': include "usuarios/crud_usuarios.php"; break;
     case 'mis_recetas': include "recetas/listado.php"; break;
@@ -42,7 +42,7 @@ if (isset($_SESSION['admin'])){
     case 'listado': include "recetas/listado.php"; break;
     case 'contacto': include "contacto.php"; break;
     case 'crear': include "recetas/crud_recetas.php"; break;
-    case 'crud': include "recetas/crud_recetas.php"; break;
+    case 'crud_recetas': include "recetas/crud_recetas.php"; break;
     case 'perfil': include "usuarios/crud_usuarios.php"; break;
     case 'mis_recetas': include "recetas/listado.php"; break;
   }
@@ -51,7 +51,7 @@ if (isset($_SESSION['admin'])){
     case 'index': include "inicio.php"; break;
     case 'listado': include "recetas/listado.php"; break;
     case 'contacto': include "contacto.php"; break;
-    case 'crud': include "recetas/crud.php"; break;
+    case 'crud_recetas': include "recetas/crud_recetas.php"; break;
     case 'crear': include "error.html"; break;
     case 'registro': include "usuarios/crud_usuarios.php"; break;
   }
