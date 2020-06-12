@@ -27,8 +27,6 @@ $params['id'] = $_GET['id'];
         }
         // hay que obtener de nuevo la receta porque ha sido actualizada
         $receta = dbGetReceta($db, $params['id']);
-        // El autor no cambia
-        $receta['autor']=$autor;
         showReceta($receta, $params['id']);
         break;
 

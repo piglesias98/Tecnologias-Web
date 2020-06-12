@@ -76,8 +76,11 @@ function dbCrearReceta($db, $params){
 	}
 	if (isset($info))
 		return $info;
-	else
+	else{
+		dbInsertLog($db, 'El usuario con email '.$_SESSION['email'].' ha creado la receta'.$params['titulo']);
 		return true;
+	}
+
 }
 
 
@@ -87,8 +90,10 @@ function dbBorrarReceta($db, $id){
 	$query = "DELETE FROM recetas WHERE id=$id";
 	echo $query;
 	mysqli_query($db, $query);
-	if (mysqli_affected_rows($db)==1)
+	if (mysqli_affected_rows($db)==1){
+		dbInsertLog($db, 'El usuario con email '.$_SESSION['email'].' ha borrado la receta con id'.$id);
 		return true;
+	}
 	else
 		return false;
 }
@@ -123,8 +128,10 @@ function dbModificarReceta($db, $id, $params){
 	}
 	if (isset($info))
 		return $info;
-	else
+	else{
+		dbInsertLog($db, 'El usuario con email '.$_SESSION['email'].' ha modificado la receta con título '.$params['titulo']);
 		return true;
+	}
 }
 
 function dbArray2SQL($query){
@@ -179,6 +186,8 @@ function dbInsertPicture($db, $id, $nombre){
 	if (!$res){
 		$info = " Error en la subida de imagen";
 		echo "<p class = 'error'> Error en la subida de imagen </p>".mysqli_error($db);
+	}else {
+		dbInsertLog($db, 'El usuario con email '.$_SESSION['email'].' ha insertado una foto a la receta con id '.$id);
 	}
 }
 
@@ -233,6 +242,8 @@ function dbInsertComment($db, $id, $comentario){
 		if (!$res){
 			$info = " Error en la asignación del autor";
 			echo "<p class = 'error'> Error en la asignación del autor </p>".mysqli_error($db);
+		}else{
+			dbInsertLog($db, 'El usuario con email '.$_SESSION['email'].' ha insertado un comentario a la receta con id '.$id);
 		}
 	}
 	return $res;
@@ -261,6 +272,8 @@ function dbInsertValoracion($db, $id, $valoracion){
 		if (!$res){
 			$info = " Error en la asignación del autor";
 			echo "<p class = 'error'> Error en la asignación del autor </p>".mysqli_error($db);
+		}else{
+			dbInsertLog($db, 'El usuario con email '.$_SESSION['email'].' ha hecho una valoración a la receta con id '.$id);
 		}
 	}
 

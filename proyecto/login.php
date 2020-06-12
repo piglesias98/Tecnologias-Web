@@ -26,9 +26,11 @@ if (isset($_POST['email_login']) or isset($_POST['clave_login'])){
       $_SESSION['id'] = $id;
       $_SESSION['email'] = $email;
       $_SESSION['nombre'] = $nombre;
+      dbInsertLog($db, 'El usuario con  email '.$email.' ha comenzado una nueva sesión');
       if($rol == 'admin'){
         echo 'es admin';
         $_SESSION['admin'] = true;
+        dbInsertLog($db, 'El usuario con email '.$email.' ha comenzado una sesión de administrador');
       }
     }else {
       $error = true;
@@ -81,6 +83,7 @@ function acabarSesion(){
   if (session_status()==PHP_SESSION_NONE){
     session_start();
   }
+  dbInsertLog($db, 'El usuario con email '.$email.' ha finalizado su sesión');
   //Borrar variables de sesión
   //$_SESSION = array()
   session_unset();

@@ -50,7 +50,7 @@ if (isset($_SESSION['admin'])){
   switch($opc) {
     case 'index': include "inicio.php"; break;
     case 'listado': include "recetas/listado.php"; break;
-    case 'contacto': include "usuarios/contacto.php"; break;
+    case 'contacto': include "contacto.php"; break;
     case 'crud': include "recetas/crud.php"; break;
     case 'crear': include "error.html"; break;
     case 'registro': include "usuarios/crud_usuarios.php"; break;

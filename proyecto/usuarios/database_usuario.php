@@ -18,8 +18,11 @@ function dbCrearUsuario($db, $params){
 	}
 	if (isset($info))
 		return $info;
-	else
+	else{
+		dbInsertLog($db, 'El usuario con email '.$params['email'].' ha sido creado');
 		return true;
+	}
+
 }
 
 
@@ -39,8 +42,10 @@ function dbModificarUsuario($db, $id, $params){
 	}
 	if (isset($info))
 		return $info;
-	else
+	else{
+		dbInsertLog($db, 'El usuario con email '.$params['email'].' ha sido creado');
 		return true;
+	}
 }
 
 function dbCheckUsuario($db, $email){
