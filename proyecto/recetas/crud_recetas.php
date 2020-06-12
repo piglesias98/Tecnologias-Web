@@ -16,7 +16,6 @@ if(isset($_GET['p']) and $_GET['p']=='crear'){
   $receta = dbGetReceta($db, $params['id']);
 }
 
-echo $params['accion'];
   // Según el formulario que estemos editando
   if (isset($params['accion'])){
     switch ($params['accion']) {
@@ -66,6 +65,7 @@ echo $params['accion'];
       case 'Borrar':
         formEditable('Borrar receta',$receta, 'Confirmar borrado', false);
         break;
+      case 'Borrar foto':
       case 'Borrar comentario':
       case 'Confirmar borrado':
         echo $params['form'];
@@ -83,6 +83,13 @@ echo $params['accion'];
             echo "COMENTARIO";
             $msg = dbBorrarComentario($db, $params['id_comentario']);
             showReceta($receta, $params['id']);
+          break;
+          case 'fotos':
+            echo "FTO";
+            $msg = dbBorrarFoto($db, $params['id_foto']);
+            // Solo se puede borrar foto cuando se está editando
+            formEditable('Edita la receta',$receta, 'Editar', true);
+            formFotos($receta, 'Editar');
           break;
         }
 

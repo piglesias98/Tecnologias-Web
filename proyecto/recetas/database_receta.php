@@ -180,9 +180,12 @@ function dbGetNumRecetas($db, $cadena=''){
 }
 
 function dbInsertPicture($db, $id, $nombre){
-	$res = mysqli_query($db, "INSERT INTO fotos (id_receta, ubicacion)
+	$query = "INSERT INTO fotos (id_receta, ubicacion)
 														VALUES ('".mysqli_real_escape_string($db, $id)."','"
-														.mysqli_real_escape_string($db, $nombre)."')");
+														.mysqli_real_escape_string($db, $nombre)."')";
+	echo $query;
+	$res = mysqli_query($db, $query);
+
 	if (!$res){
 		$info = " Error en la subida de imagen";
 		echo "<p class = 'error'> Error en la subida de imagen </p>".mysqli_error($db);
@@ -192,7 +195,7 @@ function dbInsertPicture($db, $id, $nombre){
 }
 
 function dbGetPictures($db, $id){
-	$query =   "SELECT ubicacion
+	$query =   "SELECT ubicacion, id
 		 					FROM fotos
 							WHERE id_receta = ".mysqli_real_escape_string($db, $id);
 	$res = mysqli_query($db, $query);
@@ -204,6 +207,18 @@ function dbGetPictures($db, $id){
 	}
 	mysqli_free_result($res);
 	return $fotos;
+}
+
+function dbBorrarFoto($db, $id){
+	$query = "DELETE FROM fotos WHERE id=$id";
+	echo $query;
+	mysqli_query($db, $query);
+	if (mysqli_affected_rows($db)==1){
+		dbInsertLog($db, 'El usuario con email '.$_SESSION['email'].' ha borrado la foto con id'.$id);
+		return true;
+	}
+	else
+		return false;
 }
 
 function dbGetComments($db, $id){

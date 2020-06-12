@@ -90,6 +90,9 @@ function getParams($p, $f){
           dbInsertPicture($db, $result['id'], $name);
         }
       }
+      if (isset($p['id_foto'])){
+        $result['id_foto'] = $p['id_foto'];
+      }
 
 
       // FORMULARIO COMENTARIO
@@ -314,7 +317,7 @@ function showReceta($receta, $id){
       if ($valoraciones != 0){
         echo $valoraciones[0];
       }
-      echo "<form action='index.php?p=crud&id=$id' method='POST'>";
+      echo "<form action='index.php?p=crud_recetas&id=$id' method='POST'>";
       echo "<input type='hidden' name='id' value='{$id}' />";
       ?>
         <p class="clasificacion">
@@ -338,7 +341,7 @@ function showReceta($receta, $id){
     <section class="navegacion_inferior">
       <?php
       if (isset($_SESSION['identificado'])){
-        echo "<form action='index.php?p=crud&id=$id' method='POST'>
+        echo "<form action='index.php?p=crud_recetas&id=$id' method='POST'>
               <input type='hidden' name='id' value='{$id}' />";
         echo "<input type='submit'  name = 'accion' value='Editar' />
               <input type='submit' name = 'accion' value='Borrar'/>";
@@ -433,6 +436,11 @@ function formFotos($params, $accion){
     echo print_r($fotos);
     foreach ((array) $fotos as $value) {
       echo "<img src='uploads/".$value['ubicacion']."'/><br>";
+      echo "<form action='index.php?p=crud_recetas&id=$id' method='POST'>";
+      echo "<input type='hidden' name='id_foto' value='{$value['id']}'/>";
+      echo "<input type='hidden' name = 'form' value='fotos'/>";
+      echo "<input type='submit' name = 'accion' value='Borrar foto'/>";
+      echo "</form>";
       echo "hola";
     }
 
