@@ -176,7 +176,7 @@ function showFormUsuario($params, $accion, $editable){
 
 function enviarFormulario($params){
   ?>
-  <p>Enhorabuena, <?php echo $params['nombre'] ?>!</p>
+  <p>El usuario <?php echo $params['nombre'] ?> ha quedado registrado en el sistema</p>
   <?php
   $params['editable']=false;
   $accion = 'confirmar';
@@ -184,6 +184,14 @@ function enviarFormulario($params){
   $db = dbConnection();
   dbCrearUsuario($db, $params);
   dbDisconnection($db);
+}
+
+function verificacionEmail($params){
+  ?>
+  <p>Muy bien <?php echo $params['nombre'] ?>!</p>
+  <p>Se ha enviado un correo a la dirección <?php echo $params['email'] ?>
+  donde debes verificar tu cuenta y podrás registrarte</p>
+  <?php
 }
 
 function showUsuario($usuario, $id){

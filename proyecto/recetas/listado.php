@@ -44,7 +44,7 @@ if (!is_string($db=dbConnection())){
   if ($num_recetas>0){
     $recetas = dbGetRecetas($db, $busc, $orden);
     if ($recetas!==false){
-      ver_listado($recetas, 'index.php?p=crud');
+      ver_listado($recetas, 'index.php?p=crud_usuarios');
     }else {
       echo "<p class='error'> Ha habido un error en la consulta a la BD</p>";
     }

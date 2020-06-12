@@ -1,9 +1,12 @@
 <div class="contenido">
-<h3>Listado de usuarios</h3>
+<h3>Gestión de usuarios</h3>
 <?php
 require_once('database/database.php');
 require_once('usuarios/formulario_usuario.php');
 
+echo "<h4>Crear un usuario</h4>";
+echo "<form action='index.php?p=crud_usuarios' method='POST'>";
+echo "<input type='submit' name = 'accion' value='Registro'/>";
 
 if (!is_string($db=dbConnection())){
   $busc='';
@@ -25,9 +28,11 @@ if (!is_string($db=dbConnection())){
 }
 
 
+
 function ver_listado($datos, $accion){
 echo <<<HTML
   <div class="listado">
+    <h4>Listado de usuarios</h4>
     <table>
       <tr>
         <th>Usuario</th>
