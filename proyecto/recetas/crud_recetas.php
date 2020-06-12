@@ -5,13 +5,18 @@ require_once('recetas/formulario_receta.php');
 
 //Obtener y validar parámetros
 $params = getParams($_POST, $_FILES);
-$params['id'] = $_GET['id'];
+// Conexión con DB
+$db = dbConnection();
 
-  // Conexión con DB y obtención de receta y id
-  $db = dbConnection();
+if(isset($_GET['p']) and $_GET['p']=='crear'){
+  if (!isset($params['accion']))
+    $params['accion']='Crear';
+}else{
+  $params['id'] = $_GET['id'];
   $receta = dbGetReceta($db, $params['id']);
+}
 
-
+echo $params['accion'];
   // Según el formulario que estemos editando
   if (isset($params['accion'])){
     switch ($params['accion']) {
@@ -41,10 +46,10 @@ $params['id'] = $_GET['id'];
                   && $params['err_ingredientes']=='' && $params['err_preparacion'] ==''){
                 //Pedir confirmación
                 $params['editable']=false;
-                showFormReceta($params, 'Confirmar', false);
+                formEditable('Confirma la edición', $params, 'Confirmar', false);
               // si hemos editado pero hay algún error
               }else{
-                showFormReceta($params, 'Editar', true);
+                formEditable('Edita la receta',$params, 'Editar', true);
               }
               break;
             case 'fotos':
@@ -62,7 +67,6 @@ $params['id'] = $_GET['id'];
         formEditable('Borrar receta',$receta, 'Confirmar borrado', false);
         break;
       case 'Confirmar borrado':
-        echo $params['id'];
         $msg = dbBorrarReceta($db, $params['id']);
         if ($msg == true){
           $message = "<p>La receta ".$params['titulo']." ha sido borrada</p>";
@@ -71,15 +75,33 @@ $params['id'] = $_GET['id'];
         }
         showMessage($message);
         break;
+      case 'Crear':
+        switch ($params['form']) {
+          case 'receta':
+            // si no hay errores
+            if ($params['err_titulo']=='' && $params['err_descripcion']==''
+                && $params['err_ingredientes']=='' && $params['err_preparacion'] ==''){
+              //Pedir confirmación
+              $params['editable']=false;
+              formEditable('Confirmar creación',$params, 'Confirmar creación', false);
+            // si hemos editado pero hay algún error
+            }else{
+              formEditable('Crea una receta',$params, 'Crear', true);
+            }
+            break;
+            default:
+              echo "entra en default";
+              formEditable('Crea una receta',$params, 'Crear', true);
+            break;
+        }
+      break;
+      case 'Confirmar creación':
+        echo "estoy aqui";
+        enviarFormulario($params);
+      break;
       case 'Mostrar':
-        showReceta($receta, $params['id']);
-      break;
       case 'Comenta':
-        showReceta($receta, $params['id']);
-      break;
       case 'Califica':
-        echo "califica";
-        // echo $receta['valoracion'];
         showReceta($receta, $params['id']);
       break;
     }

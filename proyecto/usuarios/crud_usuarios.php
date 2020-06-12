@@ -9,7 +9,6 @@ if (isset($_GET['id']))
   $params['id'] = $_GET['id'];
 
 $db = dbConnection();
-echo "hola";
 
 
 if (isset($_SESSION['identificado']) and $_SESSION['identificado'] == true){

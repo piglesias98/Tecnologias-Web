@@ -2,6 +2,7 @@
 require_once('database/database.php');
 
 function formEditable($titulo, $receta, $accion, $editable){
+  echo $accion;
   echo "<div class='contenido'>";
   echo "<h3>".$titulo."</h3>";
   showFormReceta($receta, $accion, $editable);

@@ -152,7 +152,7 @@ function showFormReceta($params, $accion, $editable){
       if (isset($params['err_fotografia'])) echo "<p class = 'error'>".$params['err_fotografia']."</p><br>";?>
     </label>
     <?php if (isset($params['id'])) echo "<input type='hidden' name='id' value='".$params['id']."'/>";?>
-    <input type="submit" name = <?php echo $accion ?> value=<?php echo $accion ?> >
+    <input type="submit" name = 'accion' value=<?php echo $accion ?> >
   </form>
 <?php
 }
