@@ -116,4 +116,14 @@ function dbGetUsuarios($db, $cadena='', $orden=''){
 	return $tabla;
 }
 
+function dbCheckEmail($db, $email){
+	$query = "SELECT COUNT(1) FROM usuarios WHERE email = '$email'";
+	$res = mysqli_query($db, $query);
+	$res = mysqli_query($db, $query);
+	$num = mysqli_fetch_row($res)[0];
+	$num = (int)$num;
+	mysqli_free_result($res);
+	return $num;
+}
+
  ?>

@@ -44,11 +44,17 @@ function getParams($p, $f){
       $result['err_email'] = '';
       if (empty($p['email'])){
         $result['err_email'] = 'El email no puede estar vacío';
-      }
-      else if (!filter_var($p['email'], FILTER_VALIDATE_EMAIL)){
+      }else if (!filter_var($p['email'], FILTER_VALIDATE_EMAIL)){
         $result['err_email'] = 'Debe ser un email válido';
       }else{
-        $result['email'] = $p['email'];
+        $db = dbConnection();
+        $en_uso = dbCheckEmail($db, $p['email']);
+        dbDisconnection($db);
+        if ($en_uso){
+          $result['err_email'] = 'Ese email ya está en uso, introduce otro, por favor';
+        }else{
+          $result['email'] = $p['email'];
+        }
       }
       // -> contraseñas (no queremos que sean editables)
       $result['err_clave1'] = '';
