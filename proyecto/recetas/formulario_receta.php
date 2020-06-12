@@ -103,6 +103,9 @@ function getParams($p, $f){
         $db = dbConnection();
         dbInsertComment($db, $result['id'], $result['comentario']);
       }
+      if (isset($p['id_comentario'])){
+        $result['id_comentario'] = $p['id_comentario'];
+      }
 
     // FORMULARIO VALORACIÓN
   }else if($p['form']=='valoracion'){
@@ -281,12 +284,19 @@ function showReceta($receta, $id){
           echo "<p>".$value['fecha']."</p><br>";
           echo "<p>".$autor."</p><br>";
           echo "<p>".$value['comentario']."</p><br>";
+          if (isset($_SESSION['admin']) and $_SESSION['admin']==true){
+            echo "<form action='index.php?p=crud_recetas&id=$id' method='POST'>";
+            echo "<input type='hidden' name='id_comentario' value='{$value['id']}'/>";
+            echo "<input type='hidden' name = 'form' value='comentario'/>";
+            echo "<input type='submit' name = 'accion' value='Borrar comentario'/>";
+            echo "</form>";
+          }
         }
       }
       ?>
       <h4>Añade un comentario</h4>
       <?php
-      echo "<form action='index.php?p=crud&id=$id' method='POST'>";
+      echo "<form action='index.php?p=crud_recetas&id=$id' method='POST'>";
       echo "<input type='hidden' name='id' value='{$id}' />";
         ?>
         <textarea name="comentario" rows="2" cols="70" placeholder="Mmm... qué rica!"></textarea>

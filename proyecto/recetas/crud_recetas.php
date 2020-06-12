@@ -66,14 +66,26 @@ echo $params['accion'];
       case 'Borrar':
         formEditable('Borrar receta',$receta, 'Confirmar borrado', false);
         break;
+      case 'Borrar comentario':
       case 'Confirmar borrado':
-        $msg = dbBorrarReceta($db, $params['id']);
-        if ($msg == true){
-          $message = "<p>La receta ".$params['titulo']." ha sido borrada</p>";
-        }else{
-          $message= "<p class='error'> La receta no se ha podido borrar </p>";
+        echo $params['form'];
+        switch ($params['form']) {
+          case 'receta':
+            $msg = dbBorrarReceta($db, $params['id']);
+            if ($msg == true){
+              $message = "<p>La receta ".$params['titulo']." ha sido borrada</p>";
+            }else{
+              $message= "<p class='error'> La receta no se ha podido borrar </p>";
+            }
+            showMessage($message);
+          break;
+          case 'comentario':
+            echo "COMENTARIO";
+            $msg = dbBorrarComentario($db, $params['id_comentario']);
+            showReceta($receta, $params['id']);
+          break;
         }
-        showMessage($message);
+
         break;
       case 'Crear':
         switch ($params['form']) {

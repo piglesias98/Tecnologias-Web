@@ -207,7 +207,7 @@ function dbGetPictures($db, $id){
 }
 
 function dbGetComments($db, $id){
-	$query =   "SELECT comentario, fecha, id_usuario
+	$query =   "SELECT id, comentario, fecha, id_usuario
 		 					FROM comentarios
 							WHERE id_receta = ".mysqli_real_escape_string($db, $id);
 	$res = mysqli_query($db, $query);
@@ -219,6 +219,18 @@ function dbGetComments($db, $id){
 	}
 	mysqli_free_result($res);
 	return $comentarios;
+}
+
+function dbBorrarComentario($db, $id){
+	$query = "DELETE FROM comentarios WHERE id=$id";
+	echo $query;
+	mysqli_query($db, $query);
+	if (mysqli_affected_rows($db)==1){
+		dbInsertLog($db, 'El usuario con email '.$_SESSION['email'].' ha borrado el comentario con id'.$id);
+		return true;
+	}
+	else
+		return false;
 }
 
 function dbInsertComment($db, $id, $comentario){
