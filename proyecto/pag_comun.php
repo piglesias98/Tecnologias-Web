@@ -37,7 +37,7 @@ echo <<<HTML
 HTML;
 include 'login.php';
 include 'count.php';
-include 'fixed_widgets.html';
+include 'valoradas.php';
 
 echo <<<HTML
   </div>

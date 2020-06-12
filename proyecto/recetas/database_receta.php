@@ -296,6 +296,19 @@ function dbGetValoracion($db, $id){
 	return $valoraciones;
 }
 
-
+function dbGetValoradas($db){
+	$query =   "SELECT r.titulo as 'titulo', avg(v.valoracion) as 'media'
+							from recetas r join valoraciones v on v.id_receta = r.id
+							GROUP BY r.id ORDER BY avg(v.valoracion) DESC limit 3";
+	$res = mysqli_query($db, $query);
+	if ($res && mysqli_num_rows($res)>0){
+		$valoraciones = mysqli_fetch_all($res, MYSQLI_ASSOC);
+	}
+	else{
+		$valoraciones = 0;
+	}
+	mysqli_free_result($res);
+	return $valoraciones;
+}
 
  ?>
