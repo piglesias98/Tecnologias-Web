@@ -1,5 +1,5 @@
 <div class="contenido">
-<h3>Gestión de usuarios</h3>
+<h3>Gestión</h3>
 <?php
 require_once('database/database.php');
 require_once('usuarios/formulario_usuario.php');
@@ -7,12 +7,13 @@ require('database/dbbackup.php');
 
 
 // ".$_SERVER['REQUEST_URI'],"
-echo "<p> Copia de seguridad</p>";
-echo "<a href='backup.php?download'> Pulse aquí </a> para
+echo "<h4>Gestión de la base de datos</h4>";
+echo "<a href='backup.php?download'>Pulse aquí</a> para
 descargar un fichero con los datos de la copia de seguidad";
 
 
-echo "<h4>Crear un usuario</h4>";
+echo "<h4>Gestión de los usuarios</h4>";
+echo "<h5>Crear un usuario</h5>";
 echo "<form action='index.php?p=crud_usuarios' method='POST'>";
 echo "<input type='submit' name = 'accion' value='Registro'/>";
 
@@ -39,11 +40,11 @@ if (!is_string($db=dbConnection())){
 
 function ver_listado($datos, $accion){
 echo <<<HTML
-  <div class="listado">
-    <h4>Listado de usuarios</h4>
+    <h5>Listado de usuarios</h5>
     <table>
       <tr>
-        <th>Usuario</th>
+        <th>Nombre</th>
+        <th>Apellidos</th>
       </tr>
 HTML;
 
@@ -61,7 +62,6 @@ foreach ((array) $datos as $v){
 }
 echo <<<HTML
 </table>
-</div>
 HTML;
 }
 ?>
