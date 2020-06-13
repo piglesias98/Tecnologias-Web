@@ -57,6 +57,26 @@ function dbRestore($db, $fichero){
   mysqli_query($db, 'SET FOREIGN_KEY_CHECKS=1');
 }
 
+function dbBorradoCompleto($db){
+  // Procedemos a la restauración de la Base de Datos
+  // Deshabilitamos las restricciones de las claves externas
+  mysqli_query($db, 'DROP ');
+  // Borramos la base de datos
+  $result = mysqli_query($db, 'SHOW TABLES');
+  while($row = mysqli_fetch_row($result))
+    mysqli_query($db, 'DELETE * FROM '.$row[0]);
+
+  $error='';
+  $sql = file_get_contents($fichero);
+  $queries = explode(';',$sql);
+  foreach ($queries as $q){
+    if(!mysqli_query($db, $q))
+      $error .= mysqli_error($db);
+  }
+
+  mysqli_query($db, 'SET FOREIGN_KEY_CHECKS=1');
+}
+
 
 
  ?>

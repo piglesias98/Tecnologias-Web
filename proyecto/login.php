@@ -9,7 +9,7 @@ if (!strpos($url, '?')) $url = $_SERVER['SCRIPT_NAME'];
 $error = false;
 if (isset($_POST['email_login']) or isset($_POST['clave_login'])){
   // Comprobar que exista el usuario
-  $email = $_POST['email_login'];
+  $email = strip_tags($_POST['email_login']);
   $db = dbConnection();
   $res = dbCheckUsuario($db, $email);
   if ($res === false){

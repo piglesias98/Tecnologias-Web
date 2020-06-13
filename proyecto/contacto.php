@@ -21,7 +21,7 @@ function getParams($p){
     if (empty($p['nombre'])){
       $result['err_nombre'] = 'El nombre no puede estar vacío';
     }else{
-      $result['nombre'] = $p['nombre'];
+      $result['nombre'] = strip_tags($p['nombre']);
     }
     // -> email
     $result['err_email'] = '';
@@ -31,7 +31,7 @@ function getParams($p){
     else if (!filter_var($p['email'], FILTER_VALIDATE_EMAIL)){
       $result['err_email'] = 'Debe ser un email válido';
     }else{
-      $result['email'] = $p['email'];
+      $result['email'] = strip_tags($p['email']);
     }
     // -> teléfono
     $result['err_tel'] = '';
@@ -39,7 +39,7 @@ function getParams($p){
       if (!preg_match('/^\+?(?:[0-9] ?){6,14}[0-9]$/', filter_var($p['telefono'], FILTER_SANITIZE_NUMBER_INT))){
         $result['err_tel'] = 'Debe ser un teléfono válido';
       }else{
-        $result['telefono'] = $p['telefono'];
+        $result['telefono'] = strip_tags($p['telefono']);
       }
     }
     // -> comentario
@@ -47,7 +47,7 @@ function getParams($p){
     if (empty($p['comentario'])){
       $result['err_com'] = 'El comentario no puede estar vacío';
     }else{
-      $result['comentario'] = $p['comentario'];
+      $result['comentario'] = strip_tags($p['comentario']);
     }
   }else{
     //El formulario aún no ha sido enviado

@@ -11,34 +11,30 @@ function formEditable($titulo, $usuario, $accion, $editable){
 
 function getParams($p, $f){
   if(isset($p['id'])){
-    $result['id'] = $p['id'];
+    $result['id'] = strip_tags($p['id']);
   }
   if(isset($p['accion'])){
-    $result['accion']=$p['accion'];
+    $result['accion']=strip_tags($p['accion']);
   }
   if (isset($p['form'])){
     // FORMULARIO RECETA
     if ($p['form'] == 'usuario'){
       $result['form'] = 'usuario';
 
-      $result['enviado'] = true;
       // Validación de resultados
-      if(!empty($p['accion'])){
-        $result['accion']=$p['accion'];
-      }
       // -> nombre
       $result['err_nombre'] = '';
       if (empty($p['nombre'])){
         $result['err_nombre'] = 'El nombre no puede estar vacío';
       }else{
-        $result['nombre'] = $p['nombre'];
+        $result['nombre'] = strip_tags($p['nombre']);
       }
       // -> apellidos
       $result['err_apellidos'] = '';
       if (empty($p['apellidos'])){
         $result['err_apellidos'] = 'Los apellidos no pueden estar vacíos';
       }else{
-        $result['apellidos'] = $p['apellidos'];
+        $result['apellidos'] = strip_tags($p['apellidos']);
       }
       // -> email
       $result['err_email'] = '';
@@ -53,7 +49,7 @@ function getParams($p, $f){
         if ($en_uso){
           $result['err_email'] = 'Ese email ya está en uso, introduce otro, por favor';
         }else{
-          $result['email'] = $p['email'];
+          $result['email'] = strip_tags($p['email']);
         }
       }
       // -> contraseñas (no queremos que sean editables)
@@ -61,28 +57,28 @@ function getParams($p, $f){
       $result['err_clave2'] = '';
       if ($result['accion']=='Editar' or $result['accion']=='Confirmar'){
         if (isset($p['clave1']) and !empty($p['clave1'])){
-          $result['clave1'] = $p['clave1'];
+          $result['clave1'] = strip_tags($p['clave1']);
           // -> confirmar segunda contraseña
           if (empty($p['clave2'])){
             $result['err_clave2'] = 'Debe confirmar la contraseña';
-          }else if ($result['clave1'] != $p['clave2']){
+          }else if ($result['clave1'] != strip_tags($p['clave2'])){
             $result['err_clave2'] = 'Las contraseñas deben coincidir';
           }else{
-            $result['clave2'] = $p['clave2'];
+            $result['clave2'] = strip_tags($p['clave2']);
           }
         }
       }else if($result['accion']=='Registro'){
         if (!isset($p['clave1'])){
           $result['err_clave1'] = 'Debe introducir una contraseña';
         }else{
-          $result['clave1'] = $p['clave1'];
+          $result['clave1'] = strip_tags($p['clave1']);
           // -> confirmar segunda contraseña
           if (empty($p['clave2'])){
             $result['err_clave2'] = 'Debe confirmar la contraseña';
           }else if ($result['clave1'] != $p['clave2']){
             $result['err_clave2'] = 'Las contraseñas deben coincidir';
           }else{
-            $result['clave2'] = $p['clave2'];
+            $result['clave2'] = strip_tags($p['clave2']);
           }
         }
       }
@@ -90,7 +86,7 @@ function getParams($p, $f){
       $result['err_foto']='';
       // Si ya hemos subido la imagen
       if (isset($p['foto_perfil_src'])){
-        $result['foto_perfil_src'] = $p['foto_perfil_src'];
+        $result['foto_perfil_src'] = strip_tags($p['foto_perfil_src']);
       // Si no hemos subido ninguna imagen
       }else if(empty($f['foto_perfil']['name'])){
         $result['err_foto'] = 'Debe incluir una fotografía';

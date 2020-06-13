@@ -43,9 +43,26 @@ echo "<input type='file' name='bbdd'>";
 echo "<input type='submit' name = 'accion' value= 'Restaurar' >";
 echo "</form>";
 
+echo "<h5>Borrado completo de la base de datos</h5>";
 
-
-
+if(isset($_POST['accion']) and $_POST['accion']=='Borrado completo'){
+  $db = dbConnection();
+  //$error = dbBorradoCompleto($db);
+  echo "aquí restauraría la db";
+  dbDisconnection($db);
+  if (isset($error)){
+    echo "<p class='error'>".$error."</p>";
+  }else{
+    echo "<p>Base de datos restaurada correctamente</p>";
+  }
+}
+//formulario restaurarrrrrrrrrrr
+// Restaurar BD
+echo "<form action=".$_SERVER['REQUEST_URI']." enctype='multipart/form-data' method='post'>";
+echo "Adjunta el fichero sql";
+echo "<input type='file' name='bbdd'>";
+echo "<input type='submit' name = 'accion' value= 'Restaurar' >";
+echo "</form>";
 
 echo "<h4>Gestión de los usuarios</h4>";
 echo "<h5>Crear un usuario</h5>";

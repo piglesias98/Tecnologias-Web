@@ -13,48 +13,48 @@ function formEditable($titulo, $receta, $accion, $editable){
 
 function getParams($p, $f){
   if(isset($p['id'])){
-    $result['id'] = $p['id'];
+    $result['id'] = strip_tags($p['id']);
   }
   if(isset($p['accion'])){
-    $result['accion']=$p['accion'];
+    $result['accion']=strip_tags($p['accion']);
   }
   if (isset($p['form'])){
 
     // FORMULARIO RECETA
     if ($p['form'] == 'receta'){
-      $result['form'] = 'receta';
+      $result['form'] = strip_tags('receta');
       // Validación de resultados
       // -> titulo
       $result['err_titulo'] = '';
       if (empty($p['titulo'])){
         $result['err_titulo'] = 'El título no puede estar vacío';
       }else{
-        $result['titulo'] = $p['titulo'];
+        $result['titulo'] = strip_tags($p['titulo']);
       }
       // -> categoría
       if (isset($p['categoria']) and !empty($p['categoria'])){
-        $result['categoria'] = $p['categoria'] ;
+        $result['categoria'] = strip_tags($p['categoria']) ;
       }
 
       $result['err_descripcion'] = '';
       if (empty($p['descripcion'])){
         $result['err_descripcion'] = 'La descripción no puede estar vacía';
       }else{
-        $result['descripcion'] = $p['descripcion'];
+        $result['descripcion'] = strip_tags($p['descripcion']);
       }
       // -> ingredientes
       $result['err_ingredientes'] = '';
       if (empty($p['ingredientes'])){
         $result['err_ingredientes'] = 'Los ingredientes no pueden estar vacíos';
       }else{
-        $result['ingredientes'] = $p['ingredientes'];
+        $result['ingredientes'] = strip_tags($p['ingredientes']);
       }
       // -> preparacion
       $result['err_preparacion'] = '';
       if (empty($p['preparacion'])){
         $result['err_preparacion'] = 'La preparación no puede estar vacía';
       }else{
-        $result['preparacion'] = $p['preparacion'];
+        $result['preparacion'] = strip_tags($p['preparacion']);
       }
 
 
@@ -91,7 +91,7 @@ function getParams($p, $f){
         }
       }
       if (isset($p['id_foto'])){
-        $result['id_foto'] = $p['id_foto'];
+        $result['id_foto'] = strip_tags($p['id_foto']);
       }
 
 
@@ -102,23 +102,22 @@ function getParams($p, $f){
       if (!isset($p['comentario']) or empty($p['comentario'])){
         $result['err_comentario']='No ha escrito ningún comentario';
       }else{
-        $result['comentario']=$p['comentario'];
+        $result['comentario']=strip_tags($p['comentario']);
         $db = dbConnection();
         dbInsertComment($db, $result['id'], $result['comentario']);
       }
       if (isset($p['id_comentario'])){
-        $result['id_comentario'] = $p['id_comentario'];
+        $result['id_comentario'] = strip_tags($p['id_comentario']);
       }
 
     // FORMULARIO VALORACIÓN
   }else if($p['form']=='valoracion'){
-    echo "formvaloracionnnnnnnnnnnn";
     $result['form']='valoracion';
     $result['err_valoracion']='';
     if (!isset($p['valoracion']) or empty($p['valoracion'])){
       $result['err_valoracion']='Debe seleccionar una puntuación';
     }else{
-      $result['valoracion']=$p['valoracion'];
+      $result['valoracion']=strip_tags($p['valoracion']);
       echo "VALORACION";
       echo $result['valoracion'];
       $db = dbConnection();
