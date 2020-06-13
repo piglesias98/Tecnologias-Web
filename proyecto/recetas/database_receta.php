@@ -32,7 +32,7 @@ function dbGetRecetas($db, $cadena='', $orden=''){
 }
 
 function dbGetReceta($db, $id){
-	$res = mysqli_query($db, "SELECT id, titulo, idautor, categoria, descripcion,
+	$res = mysqli_query($db, "SELECT id, titulo, idautor, descripcion,
 														ingredientes, preparacion
 														FROM recetas WHERE id='".mysqli_real_escape_string($db,$id)."'");
 	if ($res && mysqli_num_rows($res)==1){
@@ -61,11 +61,10 @@ function dbCrearReceta($db, $params){
 				$categorias = $categorias.$value.',';
 			}
 		}
-		$res = mysqli_query($db, "INSERT INTO recetas (titulo, idautor, categoria, descripcion,
+		$res = mysqli_query($db, "INSERT INTO recetas (titulo, idautor, descripcion,
 																									ingredientes, preparacion)
 															VALUES ('".mysqli_real_escape_string($db, $params['titulo'])."','"
 															.mysqli_real_escape_string($db, $idautor)."','"
-															.mysqli_real_escape_string($db, $categorias)."','"
 															.mysqli_real_escape_string($db, $params['descripcion'])."','"
 															.mysqli_real_escape_string($db, $params['ingredientes'])."','"
 															.mysqli_real_escape_string($db, $params['preparacion'])."')");
@@ -114,7 +113,6 @@ function dbModificarReceta($db, $id, $params){
 		  }
 		}
 		$query = "UPDATE recetas SET titulo = '".mysqli_real_escape_string($db, $params['titulo'])."',
-													categoria = '".mysqli_real_escape_string($db, $categorias)."',
 					                descripcion = '".mysqli_real_escape_string($db, $params['descripcion'])."',
 					                ingredientes = '".mysqli_real_escape_string($db, $params['ingredientes'])."',
 					                preparacion = '".mysqli_real_escape_string($db, $params['preparacion'])."'
@@ -327,6 +325,21 @@ function dbGetValoradas($db){
 	$query =   "SELECT r.titulo as 'titulo', avg(v.valoracion) as 'media'
 							from recetas r join valoraciones v on v.id_receta = r.id
 							GROUP BY r.id ORDER BY avg(v.valoracion) DESC limit 3";
+	$res = mysqli_query($db, $query);
+	if ($res && mysqli_num_rows($res)>0){
+		$valoraciones = mysqli_fetch_all($res, MYSQLI_ASSOC);
+	}
+	else{
+		$valoraciones = 0;
+	}
+	mysqli_free_result($res);
+	return $valoraciones;
+}
+
+function dbGetCategorias($db, $id){
+	$query =   "SELECT l.nombre as 'nombre'
+							FROM categorias c join lista_categorias l on c.categorias_id = l.id
+							WHERE c.receta_id = $id";
 	$res = mysqli_query($db, $query);
 	if ($res && mysqli_num_rows($res)>0){
 		$valoraciones = mysqli_fetch_all($res, MYSQLI_ASSOC);

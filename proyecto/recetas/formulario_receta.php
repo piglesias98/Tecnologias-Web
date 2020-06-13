@@ -33,7 +33,7 @@ function getParams($p, $f){
       }
       // -> categoría
       if (isset($p['categoria']) and !empty($p['categoria'])){
-        $result['categoria'] = strip_tags($p['categoria']) ;
+        $result['categoria'] = $p['categoria'] ;
       }
 
       $result['err_descripcion'] = '';
@@ -175,31 +175,29 @@ function showFormReceta($params, $accion, $editable){
       <?php if (isset($params['err_preparacion'])) echo "<p class = 'error'>".$params['err_preparacion']."</p>";?>
     </label>
     <label for="categorias">Categorías:<br>
-      Tipo de comida:
-      <input type="checkbox" name="categoria[]" value="carnes"
-      <?php if (isset($params['categoria']) && in_array('carnes',$categorias))
-              echo ' checked';?>/>Carnes
-      <input type="checkbox" name="categoria[]" value="verduras"
-      <?php if (isset($params['categoria']) && in_array('verduras',$categorias))
-              echo ' checked';?>/>Verduras
-      <input type="checkbox" name="categoria[]" value="pescado"
-      <?php if (isset($params['categoria']) && in_array('pescado',$categorias))
-              echo ' checked';?>/>Pescado
-      <input type="checkbox" name="categoria[]" value="arroz"
-      <?php if (isset($params['categoria']) && in_array('arroz',$categorias))
-              echo ' checked';?>/>Arroz
-      <input type="checkbox" name="categoria[]" value="sopa"
-      <?php if (isset($params['categoria']) && in_array('sopa',$categorias))
-              echo ' checked';?>/>Sopa
+      <?php
+      $db = dbConnection();
+      // Vemos si la receta ya tiene categorías
+      $comprobar = false;
+      if (isset($params['id'])){
+        $categorias_receta = dbGetCategorias($db, $params['id']);
+        if ($categorias_receta != 0){
+          $comprobar = true;
+        }
+      }
+      $lista_categorias = dbGetListaCategorias($db);
+      dbDisconnection($db);
+      foreach ($lista_categorias as $categoria) {
+        echo '<input type="checkbox" name="categoria[]"';
+        echo "value='{$categoria['nombre']}'";
+        if (isset($params['categoria']) && in_array($categoria['nombre'],$categorias)
+            or $comprobar and in_array($categoria['nombre'],$categorias_receta))
+               echo ' checked';
+        echo ">{$categoria['nombre']}";
+      }
+      ?>
+    </label>
       <br>
-      Dificultad:
-      <input type="checkbox" name="categoria[]" value="facil"
-      <?php if (isset($params['categoria']) && in_array('facil',$categorias))
-              echo ' checked';?>/>Fácil
-      <input type="checkbox" name="categoria[]" value="dificil"
-      <?php if (isset($params['categoria']) && in_array('dificil',$categorias))
-              echo ' checked';?>/>Difícil
-    </label><br>
     <?php if (isset($params['id'])) echo "<input type='hidden' name='id' value='".$params['id']."'/>";?>
     <input type="hidden" name = 'form' value='receta'/>
     <input type="submit" name = 'accion' value='<?php echo $accion ?>' >
@@ -267,6 +265,17 @@ function showReceta($receta, $id){
       }
       ?>
     </section>
+    <!-- // CATEGORÍAS  -->
+    <section class='categorias'>
+      <?php
+      $db = dbConnection();
+      $categorias = dbGetCategorias($db, $id);
+      foreach ($categorias as $categoria) {
+        echo "<p>{$categoria['nombre']}'</p>";
+      }
+      ?>
+    </section>
+
 
     <!-- COMENTARIOS- -->
     <section class="comentarios">
