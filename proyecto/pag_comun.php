@@ -8,16 +8,16 @@ HTML;
 
 if (isset($_SESSION['admin'])){
   $items = ['index'=>'Inicio', 'listado'=>'Listado de recetas',
-            'contacto'=> 'Página de contacto', 'crear'=>'Receta nueva',
+            'crear'=>'Receta nueva',
             'perfil'=>'Mi perfil', 'mis_recetas' =>'Mis recetas',
             'gestion'=>'Gestión', 'log'=>'Log'];
 }else if (isset($_SESSION['identificado'])){
   $items = ['index'=>'Inicio', 'listado'=>'Listado de recetas',
-            'contacto'=> 'Página de contacto', 'crear'=>'Receta nueva',
+            'crear'=>'Receta nueva',
             'perfil'=>'Mi perfil', 'mis_recetas' =>'Mis recetas'];
 }else{
   $items = ['index'=>'Inicio', 'listado'=>'Listado de recetas',
-            'contacto'=> 'Página de contacto', 'registro' => 'Regístrate'];
+            'registro' => 'Regístrate'];
 }
 
 foreach ($items as $key => $value)
