@@ -22,7 +22,6 @@ function dbInsertLog($db, $descripcion){
 	$date = date('Y-m-d H:i:s');
 	$query = "INSERT INTO log (descripcion, fecha)
 														VALUES ('$descripcion', '$date')";
-	echo $query;
 	$res = mysqli_query($db, $query);
 	if (!$res){
 		$info = " Error en la inserción del log";
