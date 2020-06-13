@@ -35,7 +35,7 @@ if(isset($_POST['accion']) and $_POST['accion']=='Restaurar'){
     echo "<p>Base de datos restaurada correctamente</p>";
   }
 }
-//formulario restaurarrrrrrrrrrr
+//formulario restaurar
 // Restaurar BD
 echo "<form action=".$_SERVER['REQUEST_URI']." enctype='multipart/form-data' method='post'>";
 echo "Adjunta el fichero sql";
@@ -56,13 +56,65 @@ if(isset($_POST['accion']) and $_POST['accion']=='Borrado completo'){
     echo "<p>Base de datos restaurada correctamente</p>";
   }
 }
-//formulario restaurarrrrrrrrrrr
+//formulario restaurar
 // Restaurar BD
 echo "<form action=".$_SERVER['REQUEST_URI']." enctype='multipart/form-data' method='post'>";
 echo "Adjunta el fichero sql";
 echo "<input type='file' name='bbdd'>";
 echo "<input type='submit' name = 'accion' value= 'Restaurar' >";
 echo "</form>";
+
+
+echo "<h4>Gestión de categorías</h4>";
+
+if(isset($_POST['form']) and $_POST['form']=='categoria'){
+  if (isset($_POST['accion'])){
+    switch ($_POST['accion']) {
+      case 'Editar':
+        if (!isset($_POST['categoria']) or empty($_POST['categoria'])){
+          $error_categoria = "No ha editado la categoria";
+        }else{
+          $db = dbConnection();
+          dbEditarCategoria($db, $_POST['id'], strip_tags($_POST['categoria']));
+          dbDisconnection($db);
+        }
+      break;
+      case 'Borrar':
+        $db = dbConnection();
+        dbBorrarCategoria($db, $_POST['id']);
+        dbDisconnection($db);
+      break;
+      case 'Añadir categoría':
+        if (!isset($_POST['nueva_categoria']) or empty($_POST['nueva_categoria'])){
+          $error_categoria = "No ha escrito ninguna categoria";
+        }else{
+          $db = dbConnection();
+          dbInsertCategoria($db, strip_tags($_POST['nueva_categoria']));
+          dbDisconnection($db);
+        }
+      break;
+    }
+  }
+
+}
+$db = dbConnection();
+$lista_categorias = dbGetListaCategorias($db);
+if(isset($error_categoria))
+  echo "<p class='error'>".$error_categoria."</p>";
+echo "<form action=".$_SERVER['REQUEST_URI']." method='post'>";
+echo "<input type='hidden' name='form' value='categoria'>";
+foreach ($lista_categorias as $categoria) {
+  echo '<tr>';
+  echo "<td><input type='text' name='categoria' value='{$categoria['nombre']}'></td>";
+  echo "<td><input type='hidden' name='id' value='{$categoria['id']}'></td>";
+  echo "<input type='submit'  name = 'accion' value='Editar' >
+        <input type='submit' name = 'accion' value='Borrar'>";
+}
+echo "<input type='text' name='nueva_categoria'>";
+echo "<input type='submit' name='accion' value='Añadir categoría'>";
+echo "</form></td>";
+echo "</tr>";
+
 
 echo "<h4>Gestión de los usuarios</h4>";
 echo "<h5>Crear un usuario</h5>";

@@ -56,5 +56,65 @@ function dbGetLogs($db){
 }
 
 
+function dbGetListaCategorias($db){
+	$query = "SELECT id, nombre FROM lista_categorias";
+	$res = mysqli_query($db, $query);
+	if ($res){
+		if (mysqli_num_rows($res)>0){
+			$tabla = mysqli_fetch_all($res, MYSQLI_ASSOC);
+		}else{
+			$tabla = [];
+		}
+		// Libero la memoria de la consulta
+		mysqli_free_result($res);
+	}else{
+		$tabla = false;
+	}
+	return $tabla;
+}
+
+function dbEditarCategoria($db, $id, $nombre){
+	$query = "UPDATE lista_categorias
+						SET nombre = '".mysqli_real_escape_string($db, $nombre)."'
+	 					WHERE id=$id";
+	$res = mysqli_query($db, $query);
+	if (!$res){
+		$info = " Error en la actualización de la categoría";
+		echo "<p class = 'error'> Error en la actualización de la categoría </p>".mysqli_error($db);
+		dbInsertLog($db, 'El usuario con email '.$_SESSION['email'].' ha tenido un error
+								en la actualización de la categoría'.mysqli_error($db));
+	}else{
+		dbInsertLog($db, 'El usuario con email '.$_SESSION['email'].' ha actualizado la categoría'.$id);
+	}
+	return $res;
+}
+
+function dbBorrarCategoria($db, $id){
+	$query = "DELETE FROM lista_categorias WHERE id=$id";
+	mysqli_query($db, $query);
+	if (mysqli_affected_rows($db)==1){
+		dbInsertLog($db, 'El usuario con email '.$_SESSION['email'].' ha borrado la categoría con id'.$id);
+		return true;
+	}
+	else
+		return false;
+}
+
+
+function dbInsertCategoria($db, $categoria){
+	$query = "INSERT INTO lista_categorias (nombre)
+														VALUES ('".mysqli_real_escape_string($db, $categoria)."')";
+	echo $query;
+	$res = mysqli_query($db, $query);
+
+	if (!$res){
+		$info = " Error en la inserción de la categoría";
+		echo "<p class = 'error'> Error en la inserción de la categoría </p>".mysqli_error($db);
+	}else {
+		dbInsertLog($db, 'El usuario con email '.$_SESSION['email'].' ha insertado una categoría');
+	}
+}
+
+
 
 ?>
