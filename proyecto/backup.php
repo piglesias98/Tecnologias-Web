@@ -10,10 +10,9 @@ if(isset($_SESSION['admin']) and $_SESSION['admin']==true){
       header('Content-Disposition: attachment; filename="db_backup.sql"');
       echo dbBackup($db);
       dbDisconnection($db);
-      exit();
     }
   }else{
-    echo "<p class='error'> Debe rellenar el parámetro error</p>";
+    echo "<p class='error'> Debe mandar un parámetro GET</p>";
   }
 }else{
   echo "<p class='error'> No estás autorizado para acceder a esta página</p>";

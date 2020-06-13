@@ -8,8 +8,37 @@ require('database/dbbackup.php');
 
 // ".$_SERVER['REQUEST_URI'],"
 echo "<h4>Gestión de la base de datos</h4>";
+// Copia de seguridad
 echo "<a href='backup.php?download'>Pulse aquí</a> para
-descargar un fichero con los datos de la copia de seguidad";
+descargar un fichero con los datos de la <strong>copia de seguidad</strong>";
+
+
+if(isset($_POST['accion']) and $_POST['accion']=='Restaurar'){
+  // Comprobar se ha subido algún fichero
+  if (sizeof($_FILES)==0 or array_key_exists('bbdd', $_FILES)){
+    $result['err_bbdd']='No se ha podido subir el fichero';
+  }else if (!is_uploaded_file($_FILES['bbdd']['tmp_name'])){
+    $result['err_bbdd']='Fichero no subido, código de error: '.$_FILES['bbdd']['error'];
+  }else if (strtolower(pathinfo($_FILES['bbdd']['name'],PATHINFO_EXTENSION)) != 'sql'){
+    $result['err_bbdd'] = 'El archivo debe tener la extensión .sql';
+  }else{
+    $db = dbConnection();
+    $error = dbRestore($db, $_FILES['bbdd']['tmp_name']);
+    dbDisconnection();
+  }
+  if (isset($error)){
+    echo "<p class='error'>".$error."</p>";
+  }
+}else{
+  //formulario restaurarrrrrrrrrrr
+  // Restaurar BD
+  echo "<form action=".$_SERVER['PHP_SELF']." enctype='multipart/form-data' method='post'>";
+  echo "Adjunta el fichero sql<input type='file' name='bbdd'>";
+  echo "<input type='submit' name = 'accion' value= 'Restaurar' >";
+  echo "</form>";
+}
+
+
 
 
 echo "<h4>Gestión de los usuarios</h4>";
