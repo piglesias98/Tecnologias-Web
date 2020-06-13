@@ -3,6 +3,14 @@
 <?php
 require_once('database/database.php');
 require_once('usuarios/formulario_usuario.php');
+require('database/dbbackup.php');
+
+
+// ".$_SERVER['REQUEST_URI'],"
+echo "<p> Copia de seguridad</p>";
+echo "<a href='backup.php?download'> Pulse aquí </a> para
+descargar un fichero con los datos de la copia de seguidad";
+
 
 echo "<h4>Crear un usuario</h4>";
 echo "<form action='index.php?p=crud_usuarios' method='POST'>";

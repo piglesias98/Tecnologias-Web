@@ -32,9 +32,8 @@ if (isset($_SESSION['admin'])){
     case 'perfil': include "usuarios/crud_usuarios.php"; break;
     case 'crud_usuarios': include "usuarios/crud_usuarios.php"; break;
     case 'mis_recetas': include "recetas/listado.php"; break;
-    case 'gestion': include "usuarios/gestion.php"; break;
-    case 'log': include "log.php"; break;
-    case 'bbdd': include "bbdd.php"; break;
+    case 'gestion': include "admin/gestion.php"; break;
+    case 'log': include "admin/log.php"; break;
   }
 }else if (isset($_SESSION['identificado'])){
   switch($opc) {
@@ -45,6 +44,8 @@ if (isset($_SESSION['admin'])){
     case 'crud_recetas': include "recetas/crud_recetas.php"; break;
     case 'perfil': include "usuarios/crud_usuarios.php"; break;
     case 'mis_recetas': include "recetas/listado.php"; break;
+    case 'gestion': include "error.html"; break;
+    case 'log': include "error.html"; break;
   }
 }else{
   switch($opc) {
@@ -52,8 +53,12 @@ if (isset($_SESSION['admin'])){
     case 'listado': include "recetas/listado.php"; break;
     case 'contacto': include "contacto.php"; break;
     case 'crud_recetas': include "recetas/crud_recetas.php"; break;
-    case 'crear': include "error.html"; break;
     case 'registro': include "usuarios/crud_usuarios.php"; break;
+    case 'perfil': include "error.html"; break;
+    case 'crear': include "error.html"; break;
+    case 'mis_recetas': include "error.html"; break;
+    case 'gestion': include "error.html"; break;
+    case 'log': include "error.html"; break;
   }
 }
 

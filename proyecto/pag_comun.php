@@ -10,8 +10,7 @@ if (isset($_SESSION['admin'])){
   $items = ['index'=>'Inicio', 'listado'=>'Listado de recetas',
             'contacto'=> 'Página de contacto', 'crear'=>'Receta nueva',
             'perfil'=>'Mi perfil', 'mis_recetas' =>'Mis recetas',
-            'gestion'=>'Gestión de Usuarios', 'log'=>'Log',
-            'bbdd' => 'Gestión de la BD'];
+            'gestion'=>'Gestión', 'log'=>'Log'];
 }else if (isset($_SESSION['identificado'])){
   $items = ['index'=>'Inicio', 'listado'=>'Listado de recetas',
             'contacto'=> 'Página de contacto', 'crear'=>'Receta nueva',
