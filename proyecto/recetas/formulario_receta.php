@@ -2,7 +2,6 @@
 require_once('database/database.php');
 
 function formEditable($titulo, $receta, $accion, $editable){
-  echo $accion;
   echo "<div class='contenido_formulario'>";
   echo "<h3>".$titulo."</h3>";
   showFormReceta($receta, $accion, $editable);
@@ -391,7 +390,6 @@ function formBuscarReceta($titulo, $datos=false){
   $bCampo = isset($datos['bCampo']) ? " value='{$datos['bCampo']}'":'bCampo';
   if (isset($datos['bOrdenar'])){
     $bAlfabetico = 'bAlfabetico' === $datos['bOrdenar'] ? " checked ":'bAlfabetico';
-    echo $bAlfabetico;
     $bComentadas = 'bComentadas' === $datos['bOrdenar'] ? " checked ":'bComentadas';
     $bPuntuacion = 'bPuntuacion' === $datos['bOrdenar'] ? " checked ":'bPuntuacion';
   }else{

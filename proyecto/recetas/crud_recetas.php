@@ -37,7 +37,6 @@ if(isset($_GET['p']) and $_GET['p']=='crear'){
           //Si le hemos pulsado el botón de editar recuperamos los datos de $usuario
           //y ponemos un form editable
       case 'Editar':
-        echo $params['form'];
           switch ($params['form']) {
             case 'receta':
             // si no hay errores

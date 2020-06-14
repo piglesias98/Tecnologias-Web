@@ -359,6 +359,10 @@ aside form * {
   grid-area: contenido;
 }
 
+.contenido_usuario img{
+  width: 150px;
+}
+
 .contenido_gestion {
   grid-area: contenido;
   display: flex;
@@ -370,13 +374,13 @@ aside form * {
   margin:5px;
 }
 
-.contenido_gestion .agrupar_fil {
+.agrupar_fil {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
 }
 
-.contenido_gestion .agrupar_col {
+.agrupar_col {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -478,9 +482,11 @@ footer p {
 
   .login form {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    align-items: center;
     padding: 2px;
   }
+
 
   .valoradas ol, li{
     margin: auto;

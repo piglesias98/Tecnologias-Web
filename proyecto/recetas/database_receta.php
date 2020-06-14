@@ -15,7 +15,7 @@ function dbGetRecetas($db, $cadena='', $orden=''){
 		$query_end = " ORDER BY titulo";
 	}
 	$query = $cadena=='' ? $query_start : $query_start." WHERE ".$cadena;
-	$query = $query_end=='' ? $query_start : $query_start.$query_end;
+	$query = $query_end=='' ? $query : $query.$query_end;
 	$res = mysqli_query($db, $query);
 	if ($res){
 		if (mysqli_num_rows($res)>0){
@@ -75,7 +75,6 @@ function dbCrearReceta($db, $params){
 		if (isset($params['categoria'])){
 			$id_receta = mysqli_insert_id($db);
 			foreach ($params['categoria'] as $value) {
-				echo $value;
 				dbInsertCategoriaReceta($db, $id_receta, $value);
 			}
 		dbInsertLog($db, 'El usuario con email '.$_SESSION['email'].' ha creado la receta'.$params['titulo']);
@@ -90,7 +89,6 @@ function dbCrearReceta($db, $params){
 
 function dbBorrarReceta($db, $id){
 	$query = "DELETE FROM recetas WHERE id=$id";
-	echo $query;
 	mysqli_query($db, $query);
 	if (mysqli_affected_rows($db)==1){
 		dbInsertLog($db, 'El usuario con email '.$_SESSION['email'].' ha borrado la receta con id'.$id);
@@ -184,7 +182,6 @@ function dbInsertPicture($db, $id, $nombre){
 	$query = "INSERT INTO fotos (id_receta, ubicacion)
 														VALUES ('".mysqli_real_escape_string($db, $id)."','"
 														.mysqli_real_escape_string($db, $nombre)."')";
-	echo $query;
 	$res = mysqli_query($db, $query);
 
 	if (!$res){
@@ -212,7 +209,6 @@ function dbGetPictures($db, $id){
 
 function dbBorrarFoto($db, $id){
 	$query = "DELETE FROM fotos WHERE id=$id";
-	echo $query;
 	mysqli_query($db, $query);
 	if (mysqli_affected_rows($db)==1){
 		dbInsertLog($db, 'El usuario con email '.$_SESSION['email'].' ha borrado la foto con id'.$id);
@@ -239,7 +235,6 @@ function dbGetComments($db, $id){
 
 function dbBorrarComentario($db, $id){
 	$query = "DELETE FROM comentarios WHERE id=$id";
-	echo $query;
 	mysqli_query($db, $query);
 	if (mysqli_affected_rows($db)==1){
 		dbInsertLog($db, 'El usuario con email '.$_SESSION['email'].' ha borrado el comentario con id'.$id);
@@ -280,7 +275,6 @@ function dbInsertComment($db, $id, $comentario){
 
 
 function dbInsertValoracion($db, $id, $valoracion){
-	echo $valoracion;
 	$query = "INSERT INTO valoraciones (id_receta, valoracion)
 														VALUES ($id, $valoracion)";
 	$res = mysqli_query($db, $query);
