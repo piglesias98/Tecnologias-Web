@@ -2,7 +2,7 @@
 require_once('database/database.php');
 
 function formEditable($titulo, $usuario, $accion, $editable){
-  echo "<div class='contenido_usuario'>";
+  echo "<div class='contenido_formulario'>";
   echo "<h3>".$titulo."</h3>";
   showFormUsuario($usuario, $accion, $editable);
   echo "</div>";
@@ -139,7 +139,7 @@ function showFormUsuario($params, $accion, $editable){
         echo " value='".$params['foto_perfil_src']."'/><br>";
         echo "<input type='hidden' name='foto_perfil_src' value='".$params['foto_perfil_src']."'/>";
         echo "<img src='uploads/".$params['foto_perfil_src']."' /><br>";
-        echo "<p> ESTA FOTO PERFIL SRC</p>";?>
+        ?>
       <?php }else echo "/><br>";
       if (isset($params['err_foto'])) echo "<p class = 'error'>".$params['err_foto']."</p><br>";?>
     </label>
@@ -178,7 +178,9 @@ function showFormUsuario($params, $accion, $editable){
 
 function enviarFormulario($params){
   ?>
-  <p>El usuario <?php echo $params['nombre'] ?> ha quedado registrado en el sistema</p>
+  <div class="mensaje_simple">
+    <p>El usuario <?php echo $params['nombre'] ?> ha quedado registrado en el sistema</p>
+  </div>
   <?php
   $params['editable']=false;
   $accion = 'confirmar';
@@ -190,9 +192,11 @@ function enviarFormulario($params){
 
 function verificacionEmail($params){
   ?>
-  <p>Muy bien <?php echo $params['nombre'] ?>!</p>
-  <p>Se ha enviado un correo a la dirección <?php echo $params['email'] ?>
-  donde debes verificar tu cuenta y podrás registrarte</p>
+  <div class="mensaje_simple">
+    <p>Muy bien <?php echo $params['nombre'] ?>!</p>
+    <p>Se ha enviado un correo a la dirección <?php echo $params['email'] ?>
+    donde debes verificar tu cuenta y podrás registrarte</p>
+  </div>
   <?php
 }
 

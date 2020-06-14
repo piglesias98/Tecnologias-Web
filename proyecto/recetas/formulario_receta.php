@@ -222,9 +222,11 @@ function showFormReceta($params, $accion, $editable){
 
 function enviarFormulario($params){
   ?>
-  <p>Muchas gracias, <?php echo $_SESSION['nombre'] ?></p>
-  <p>Tu receta <?php echo $params['titulo']?> ya está en nuestra base de datos
-      y pronto podrás verla en la página web :)</p>
+  <div class="mensaje_simple">
+    <p>Muchas gracias, <?php echo $_SESSION['nombre'] ?></p>
+    <p>Tu receta <?php echo $params['titulo']?> ya está en nuestra base de datos
+        y pronto podrás verla en la página web :)</p>
+  </div>
   <?php
   $db = dbConnection();
   dbCrearReceta($db, $params);
@@ -453,31 +455,32 @@ function formFotos($params, $accion){
   $db = dbConnection();
   $fotos = dbGetPictures($db, $id);
   ?>
-  <h3>Fotografías adjuntas</h3>
-  <?php if(is_array($fotos)){
-    echo print_r($fotos);
-    foreach ((array) $fotos as $value) {
-      echo "<img src='uploads/".$value['ubicacion']."'/><br>";
-      echo "<form action='index.php?p=crud_recetas&id=$id' method='POST'>";
-      echo "<input type='hidden' name='id_foto' value='{$value['id']}'/>";
-      echo "<input type='hidden' name = 'form' value='fotos'/>";
-      echo "<input type='submit' name = 'accion' value='Borrar foto'/>";
-      echo "</form>";
-      echo "hola";
-    }
+  <div class="contenido_foto">
+    <h3>Fotografías adjuntas</h3>
+    <?php if(is_array($fotos)){
+      foreach ((array) $fotos as $value) {
+        echo "<img src='uploads/".$value['ubicacion']."'/><br>";
+        echo "<form action='index.php?p=crud_recetas&id=$id' method='POST'>";
+        echo "<input type='hidden' name='id_foto' value='{$value['id']}'/>";
+        echo "<input type='hidden' name = 'form' value='fotos'/>";
+        echo "<input type='submit' name = 'accion' value='Borrar foto'/>";
+        echo "</form>";
+      }
 
-  }
-  ?>
-  <form class="login_form" action="<?php $_SERVER['PHP_SELF']?>" enctype="multipart/form-data" method="post">
-    <label for="fotografia">Añade una imagen:
-      <input type="file" name="fotografia">
-      <?php if (isset($params['err_fotografia'])) echo "<p class = 'error'>".$params['err_fotografia']."</p>";?>
-    </label>
-    <?php if (isset($params['id'])) echo "<input type='hidden' name='id' value='".$params['id']."'/>";?>
-    <input type="hidden" name = 'form' value='fotos'/>
-    <input type="hidden" name="accion" value='Editar'>
-    <input type="submit" name = 'enviar' value= 'Añadir fotografía' >
-  </form>
+    }
+    ?>
+    <form class="agrupar_col" action="<?php $_SERVER['PHP_SELF']?>" enctype="multipart/form-data" method="post">
+      <label for="fotografia">Añade una imagen:
+        <input type="file" name="fotografia">
+        <?php if (isset($params['err_fotografia'])) echo "<p class = 'error'>".$params['err_fotografia']."</p>";?>
+      </label>
+      <?php if (isset($params['id'])) echo "<input type='hidden' name='id' value='".$params['id']."'/>";?>
+      <input type="hidden" name = 'form' value='fotos'/>
+      <input type="hidden" name="accion" value='Editar'>
+      <input type="submit" name = 'enviar' value= 'Añadir fotografía' >
+    </form>
+  </div>
+
 <?php
 }
 

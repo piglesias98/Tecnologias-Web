@@ -112,7 +112,6 @@ if (isset($id) and isset($usuario)){
     # Si no se ha enviado ninguna acción (esto ocurre cuando accede el visitante
     # por primera vez), le presentaremos el formulario de registro
     }else{
-      echo "else";
       formEditable('Registro', $params, 'Registro', true);
     }
 }
