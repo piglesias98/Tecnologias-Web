@@ -303,7 +303,7 @@ function dbInsertValoracion($db, $id, $valoracion){
 }
 
 function dbGetValoracion($db, $id){
-	$query =   "SELECT AVG(valoracion)
+	$query =   "SELECT ROUND(AVG(valoracion),2)
 		 					FROM valoraciones
 							WHERE id_receta = ".mysqli_real_escape_string($db, $id);
 	$res = mysqli_query($db, $query);
@@ -318,7 +318,7 @@ function dbGetValoracion($db, $id){
 }
 
 function dbGetValoradas($db){
-	$query =   "SELECT r.titulo as 'titulo', avg(v.valoracion) as 'media'
+	$query =   "SELECT r.titulo as 'titulo', round(avg(v.valoracion),2) as 'media'
 							from recetas r join valoraciones v on v.id_receta = r.id
 							GROUP BY r.id ORDER BY avg(v.valoracion) DESC limit 3";
 	$res = mysqli_query($db, $query);

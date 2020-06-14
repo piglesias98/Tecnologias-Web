@@ -10,8 +10,10 @@ $valoradas = dbGetValoradas($db)
     <?php
     foreach ((array) $valoradas as $v){
         echo "<li>";
-        echo $v['titulo'];
-        echo $v['media'];
+        echo "<div class='agrupar_fil'>";
+        echo "<p>".$v['titulo']."</p>";
+        echo "<p>".$v['media']."</p>";
+        echo "</div>";
         echo "</li>";
     }
     ?>
