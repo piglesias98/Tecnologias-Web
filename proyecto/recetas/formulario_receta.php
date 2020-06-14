@@ -270,8 +270,10 @@ function showReceta($receta, $id){
       <?php
       $db = dbConnection();
       $categorias = dbGetCategorias($db, $id);
-      foreach ($categorias as $categoria) {
-        echo "<p>{$categoria['nombre']}'</p>";
+      if ($categorias != 0){
+        foreach ($categorias as $categoria) {
+          echo "<p>{$categoria['nombre']}'</p>";
+        }
       }
       ?>
     </section>

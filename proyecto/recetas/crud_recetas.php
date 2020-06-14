@@ -115,7 +115,6 @@ if(isset($_GET['p']) and $_GET['p']=='crear'){
         }
       break;
       case 'Confirmar creación':
-        echo "estoy aqui";
         enviarFormulario($params);
       break;
       case 'Mostrar':
@@ -125,7 +124,6 @@ if(isset($_GET['p']) and $_GET['p']=='crear'){
       break;
     }
   }else{
-    echo "showReceta";
     showReceta($receta, $params['id']);
   }
 

@@ -116,5 +116,19 @@ function dbInsertCategoria($db, $categoria){
 }
 
 
+function dbInsertCategoriaReceta($db, $id, $categoria){
+	$query = "INSERT INTO categorias (receta_id, categorias_id)
+							VALUES($id, (SELECT id FROM lista_categorias WHERE '$categoria' = nombre))";
+	echo $query;
+	$res = mysqli_query($db, $query);
+
+	if (!$res){
+		$info = " Error en la inserción de la categoría";
+		echo "<p class = 'error'> Error en la inserción de la categoría </p>".mysqli_error($db);
+	}else {
+		dbInsertLog($db, 'El usuario con email '.$_SESSION['email'].' ha insertado una categoría');
+	}
+}
+
 
 ?>

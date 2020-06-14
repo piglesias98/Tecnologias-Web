@@ -51,16 +51,10 @@ function dbCrearReceta($db, $params){
 	$num = mysqli_fetch_assoc($res);
 	mysqli_free_result($res);
 	if ($num>0){
+		$info = "Ya existe una receta con ese título";
 		echo "<p class = 'error'> Ya existe una receta con ese título </p>";
-	}
-	else{
+	}else{
 		$idautor = $_SESSION['id'];
-		$categorias='';
-		if (isset($params['categoria'])){
-			foreach ($params['categoria'] as $value) {
-				$categorias = $categorias.$value.',';
-			}
-		}
 		$res = mysqli_query($db, "INSERT INTO recetas (titulo, idautor, descripcion,
 																									ingredientes, preparacion)
 															VALUES ('".mysqli_real_escape_string($db, $params['titulo'])."','"
@@ -73,12 +67,21 @@ function dbCrearReceta($db, $params){
 			echo "<p class = 'error'> Error en la creacion de la receta </p>".mysqli_error($db);
 		}
 	}
+
 	if (isset($info))
 		return $info;
 	else{
+		// Insertar categorías
+		if (isset($params['categoria'])){
+			$id_receta = mysqli_insert_id($db);
+			foreach ($params['categoria'] as $value) {
+				echo $value;
+				dbInsertCategoriaReceta($db, $id_receta, $value);
+			}
 		dbInsertLog($db, 'El usuario con email '.$_SESSION['email'].' ha creado la receta'.$params['titulo']);
 		return true;
 	}
+}
 
 }
 
