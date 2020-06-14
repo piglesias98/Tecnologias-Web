@@ -72,7 +72,8 @@ if (isset($_SESSION['identificado'])){
       <input type="submit" value="Login">
     </form>
     <?php $registro_url = strval($_SERVER['PHP_SELF']) . "?p=registro";?>
-    <p>¿No tienes cuenta aún? <a href=<?php echo $registro_url?>>Regístrate</a></p>
+    <p>¿No tienes cuenta aún?</p>
+    <p><a href=<?php echo $registro_url?>>Regístrate</a></p>
   </aside>
 <?php
 }

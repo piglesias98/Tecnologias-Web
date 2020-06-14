@@ -1,4 +1,4 @@
-<div class="contenido">
+<div class="contenido_formulario">
 <h3>Listado de recetas</h3>
 <?php
 require_once('database/database.php');
@@ -23,12 +23,10 @@ if (isset($_POST['accion'])){
 
 if (isset($_GET['p']) and $_GET['p'] == 'mis_recetas'){
   $results['autor_id']=$_SESSION['id'];
-  echo $results['autor_id'];
 }
 
 if (isset($_GET['id'])){
   $results['id']=$_GET['id'];
-  echo $results['id'];
 }
 
 

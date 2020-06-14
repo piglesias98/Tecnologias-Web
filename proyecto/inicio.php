@@ -13,8 +13,6 @@ if (isset($_COOKIE['ultima_receta'])){
 $receta = dbGetReceta($db, $id);
  ?>
 
-<div class="contenido">
-<h3>Bienvenido!</h3>
+
 <?php showReceta($receta, $id);?>
-</div>
 </div>

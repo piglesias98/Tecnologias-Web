@@ -2,12 +2,16 @@ img.boton{
   width: 15px;
 }
 
-header, .navegacion_inferior, .nombre_receta {
-  background-color: #cfe660;
+header, div.contenido_receta, div.contenido_formulario, div.contenido_usuario {
+  background-color: #F1F1F1;
+}
+
+body {
+  font-family: Georgia;
 }
 
 h1, h2, h3, h4 {
-  font-family: Arial;
+  font-family: Lucida sans-serif;
 }
 
 header {
@@ -39,7 +43,13 @@ header h1 {
 }
 
 nav, footer {
-  background-color: #e7ed93;
+  background-color: #333;
+}
+
+.menu {
+  grid-area: menu;
+  overflow: hidden;
+  background-color: #333;
 }
 
 nav {
@@ -47,15 +57,25 @@ nav {
   justify-content: flex-start;
   padding-left: 10px;
   margin-top: 0.5px;
+  background-color: #333;
 }
 
 nav a {
-  font-weight: bold;
+  text-align: center;
   width: 200px;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+nav a:hover{
+  background-color: #ddd;
+  color: black;
 }
 
 .activo:link {
-  color: yellow;
+  font-weight: bold;
 }
 
 .error{
@@ -63,11 +83,6 @@ nav a {
   font-weight: bold;
 }
 
-div, .contenido {
-  border: solid;
-  border-width: 2px;
-  border-color: #cfe660;
-}
 
 .pagina {
   display: grid;
@@ -79,147 +94,103 @@ div, .contenido {
   "contenido lateral"
 }
 
-.menu {
-  grid-area: menu;
-}
-
-.contenido {
-  grid-area: contenido;
-  background-color: #f3ffc9;
-}
-
-.lateral {
-  grid-area: lateral;
-}
-
-.nombre_receta {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-left: 2px;
-  padding-right: 2px;
+.pagina div {
   margin: 5px;
 }
 
-.nombre_receta h1 {
+.contenido_receta {
+  grid-area: contenido;
+  display: grid;
+  grid-template-columns: 33% 33% 33%;
+  grid-template-rows: auto;
+  grid-template-areas:
+  "superior superior superior"
+  "descripcion descripcion descripcion"
+  "ingredientes preparacion preparacion"
+  "categorias categorias categorias"
+  "fotos fotos fotos"
+  "comentarios comentarios calificacion"
+  "navegacion_inferior navegacion_inferior navegacion_inferior"
+}
+
+.contenido_formulario {
+  grid-area: contenido;
+  display: flex;
+  align-items: center;
+  flex-flow: column wrap;
+  align-content: center;
+}
+
+.contenido_usuario {
+  grid-area: contenido;
+}
+
+.contenido_formulario h3, .contenido_usuario h3{
   font-size: 200%;
   margin: 1%;
-}
-
-.nombre_receta img {
-  width: 20%;
-  padding: 2px;
-}
-
-.detalles {
-  display: flex;
-  justify-content: space-between;
-  padding: 0px 20px 0px 10px;
-}
-
-.detalles p {
-  margin-top: 0px;
-  font-style: italic;
-  font-weight: bold;
-}
-
-.descripcion {
-  display: flex;
-  align-items: center;
-  background-color: #e7ed93;
-  padding: 10px;
-  margin: 10px;
-}
-
-.descripcion img {
-  width: 40%;
-  margin-left: px;
-}
-
-.ingredientes {
-  float: right;
-  margin: 10px;
-  background-color: #c7e9ff;
-  padding: 1%;
-}
-
-.ingredientes p {
-  margin: 0px;
-}
-
-
-.pasos {
-  width: 70%;
-  display: flex;
-  flex-wrap: wrap;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.pasos * {
-  box-sizing: border-box;
-  width: 20%;
-  padding: 5px;
-}
-
-.comentarios {
-  margin: 5px;
-}
-
-.navegacion_inferior {
-  margin: 5px;
-  margin-top: 10px;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-}
-
-.navegacion_inferior > * {
-  width: 50px;
-  margin: 3px;
-}
-
-.navegacion_inferior div {
-  border-radius: 50%;
-  padding: 10px;
-  background-color: #edd040;
-  margin: 3px;
   text-align: center;
 }
 
-.comentario {
-  background-color: #ffddc7;
-  margin-bottom: 5px;
-  padding: 1px;
+
+.form_busqueda{
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  border: 2px dotted #8B1233;
+  align-items: center;
+  text-align: center;
 }
 
-.comentario p {
+.form_busqueda .buscar_en, .orden, .categorias{
+  flex-grow: 1;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.contenido_formulario form * {
+  margin: 5px;
+}
+
+.listado td form{
+  display: flex;
+  flex-direction: row;
+}
+
+/* Los laterales */
+
+.lateral {
+  grid-area: lateral;
   margin: 0px;
-  margin-left: 5px;
+  padding: 0px;
 }
 
-.comentarista {
-  color: #8835ab;
+.lateral aside {
+  padding: 0px;
+  margin-bottom: 10px;
+  background-color: #F1F1F1;
 }
 
 
 aside {
-  background-color: #fff2b0;
-  margin: 2px;
-  margin-bottom: 10px;
   padding: 3px;
+  margin-bottom: 5px;
 }
 
 aside h3 {
-  background-color: #ffe47a;
-  margin: 5px;
+  background-color: #333;
+  text-align: center;
+  margin: 0px;
   padding: 5px;
-  padding-left: 10px;
+  color: #f2f2f2;
+  font-family: Georgia;
+  font-size: 16px;
+  font-weight: normal;
 }
 
 aside p {
   padding: 5px;
   margin: 0px;
+  text-align: center;
 }
 
 aside form * {
@@ -227,14 +198,25 @@ aside form * {
   margin-right: auto;
 }
 
-.login form {
+/* .login form {
   display: flex;
   flex-direction: column;
   padding: 2px;
 }
 
-.login form * {
+.login form .field {
   padding: 3px;
+  margin-left: auto;
+  margin-right: auto;
+} */
+
+.field * {
+  display: block;
+  width: 90%;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 3px;
 }
 
 .valoradas {
@@ -252,16 +234,172 @@ aside form * {
 
 .n_recetas p {
   padding: 10px;
+  text-align: center;
 }
 
-footer {
-  margin-top: 5px;
+/* Título receta */
+.superior {
+  grid-area: superior;
+}
+
+.nombre_receta {
+  padding-left: 2px;
+  padding-right: 2px;
+  margin: 5px;
+}
+
+.nombre_receta h1 {
+  font-size: 200%;
+  margin: 1%;
+  text-align: center;
+}
+
+.detalles {
+  padding: 0px 20px 0px 10px;
+}
+
+.detalles p {
+  margin-top: 0px;
+  font-style: italic;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* Elementos de la receta */
+
+.descripcion {
+  display: flex;
+  align-items: center;
+  border: 2px dotted #8B1233;
   padding: 10px;
+  margin: 10px;
+  grid-area: descripcion;
+}
+
+.descripcion img {
+  width: 40%;
+  margin-left: px;
+}
+
+.ingredientes {
+  margin: 10px;
+  border: 2px dotted #8B1233;
+  padding: 1%;;
+  grid-area: ingredientes
+}
+
+.preparacion {
+  margin: 10px;
+  border: 2px dotted #8B1233;
+  padding: 1%;
+  grid-area: preparacion;
+}
+
+.ingredientes ul {
+  padding: 3px;
+  padding-left: 10px;
+  margin: 7px;
+}
+
+.categorias {
+  grid-area: categorias;
+  margin: auto;
+  padding: 1%;
   display: flex;
 }
 
+.fotos {
+  grid-area: fotos;
+  width: 70%;
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.fotos * {
+  box-sizing: border-box;
+  width: 20%;
+  padding: 5px;
+}
+
+.comentarios {
+  grid-area: comentarios;
+  margin: 5px;
+}
+.comentarios form {
+  display: flex;
+}
+.comentarios textarea {
+  width: 80%;
+}
+
+.calificacion {
+  grid-area: calificacion;
+  position: relative;
+}
+
+.calificacion form {
+  margin: auto;
+  vertical-align: middle;
+  position: absolute;
+   top: 50%;
+   left: 50%;
+   margin-right: -50%;
+   transform: translate(-50%, -50%);
+   display: flex;
+   flex-direction: column;
+}
+
+.calificacion form * {
+  margin: auto;
+}
+.calificacion p {
+  margin: 0px;
+}
+
+.navegacion_inferior {
+  margin: 5px;
+  margin-top: 10px;
+  grid-area: navegacion_inferior;
+}
+
+.navegacion_inferior form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+.comentario {
+  background-color: #ffddc7;
+  margin-bottom: 5px;
+  padding: 1px;
+}
+
+.comentario p {
+  margin: 0px;
+  margin-left: 5px;
+}
+
+.comentarista {
+  color: #8835ab;
+}
+
+
+
+footer {
+  margin-top: 5px;
+  display: flex;
+  justify-content: center;
+}
+
 footer p {
-  margin-left: 10px;
+  text-align: center;
+  color: #f2f2f2;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
 .logo {
@@ -295,14 +433,6 @@ footer p {
     width: 90%;
   }
 
-  .valoradas {
-    display: none;
-  }
-
-  .n_recetas {
-    display: none;
-  }
-
   .pagina {
     display: flex;
     flex-direction: column;
@@ -320,10 +450,10 @@ footer p {
     padding: 2px;
   }
 
-  .login h3 {
-    display: none;
+  .valoradas ol, li{
+    margin: auto;
+    text-align: center;
   }
-
   .receta {
     width: 100%;
     display: flex;
@@ -342,7 +472,6 @@ footer p {
   }
 
   .superior {
-    background-color: #cfe660;
     display: flex;
     justify-content: space-between;
     margin: 5px;
@@ -383,6 +512,8 @@ footer p {
   .nombre_receta {
     flex-grow: 1;
   }
+
+
 
   .detalles p {
     margin: 0px;

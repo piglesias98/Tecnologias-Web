@@ -2,7 +2,7 @@
 require_once('database/database.php');
 
 function formEditable($titulo, $usuario, $accion, $editable){
-  echo "<div class='contenido'>";
+  echo "<div class='contenido_usuario'>";
   echo "<h3>".$titulo."</h3>";
   showFormUsuario($usuario, $accion, $editable);
   echo "</div>";
@@ -198,7 +198,7 @@ function verificacionEmail($params){
 
 function showUsuario($usuario, $id){
   ?>
-  <div class="contenido">
+  <div class="contenido_usuario">
     <div class="superior">
       <div class="datos">
         <h1><?php echo $usuario['nombre'] ?></h1>

@@ -3,7 +3,7 @@ require_once('database/database.php');
 
 function formEditable($titulo, $receta, $accion, $editable){
   echo $accion;
-  echo "<div class='contenido'>";
+  echo "<div class='contenido_formulario'>";
   echo "<h3>".$titulo."</h3>";
   showFormReceta($receta, $accion, $editable);
   echo "</div>";
@@ -230,33 +230,40 @@ function showReceta($receta, $id){
   }
   $receta['autor']=$autor;
   ?>
-  <div class="contenido">
-    <div class="superior">
+  <div class="contenido_receta">
+    <section class="superior">
       <div class="nombre_receta">
         <h1><?php echo $receta['titulo'] ?></h1>
-        <img src="images/estrellas.png" alt="estrellas">
       </div>
       <div class="detalles">
         <p>Autor: <?php echo $receta['autor'] ?></p>
       </div>
-    </div>
+    </section>
     <section class="descripcion">
       <div class="texto">
-        <?php echo $receta['descripcion'] ?>
+        <?php echo "<p style='white-space: pre-line'>".$receta['descripcion']."</p>";?>
       </div>
-      <!-- <img src="uploads/<?php echo $receta['fotografia_src'] ?>"> -->
     </section>
     <section class="ingredientes">
-      <p><?php echo $receta['ingredientes'] ?></p>
+      <ul>
+      <?php
+      $ingredientes= preg_split("/\\r\\n|\\r|\\n/", $receta['ingredientes']);
+      foreach ($ingredientes as $ing) {
+        echo "<li>".$ing."</li>";
+      }
+      ?>
+      </ul>
     </section>
     <section class="preparacion">
-      <p><?php echo $receta['preparacion'] ?></p>
+      <?php
+      echo "<p style='white-space: pre-line'>".$receta['preparacion']."</p>";
+      ?>
     </section>
-    <section class='pasos'>
+    <section class='fotos'>
       <?php
       $db = dbConnection();
-      echo $id;
       $fotos = dbGetPictures($db, $id);
+      dbDisconnection($db);
       ?>
       <?php if(is_array($fotos)){
         foreach ($fotos as $value) {
@@ -283,7 +290,6 @@ function showReceta($receta, $id){
     <section class="comentarios">
       <?php
       $db = dbConnection();
-      echo $id;
       $comentarios = dbGetComments($db, $id);
       ?>
       <?php if(is_array($comentarios)){
@@ -319,10 +325,9 @@ function showReceta($receta, $id){
     </section>
 
     <!-- // PUNTUACIÓN  -->
-    <section>
+    <section class='calificacion'>
       <?php
       $db = dbConnection();
-      echo $id;
       $valoraciones = dbGetValoracion($db, $id);
       if ($valoraciones != 0){
         echo $valoraciones[0];
@@ -344,7 +349,7 @@ function showReceta($receta, $id){
         </p>
         <input type="hidden" name="form" value="valoracion">
         <input type="submit" name="accion" value="Califica">
-  </form>
+      </form>
     </section>
 
 
@@ -384,50 +389,45 @@ function formBuscarReceta($titulo, $datos=false){
   if (!strpos($accion, '?')) $accion = $_SERVER['SCRIPT_NAME'];
 
 ?>
-  <form class="" action= <?php echo $accion;?> method="post">
-    <label for="bTitulo">
-      <p>Buscar en título:</p>
-      <input type="text" name="bTitulo" <?php echo $bTitulo ?>>
-    </label>
-    <label for="bTitulo">
-      <p>Buscar en receta:</p>
-      <input type="text" name="bCampo" <?php echo $bCampo ?>>
-    </label>
-      <p>Ordenar por...</p>
-    <label for="bAlfabetico">Orden alfabético
-      <input type="radio" name="bOrdenar" value = "bAlfabetico" <?php echo $bAlfabetico ?>>
-    </label>
-    <label for="bComentadas">Más comentadas
-      <input type="radio" name="bOrdenar" value = "bComentadas" <?php echo $bComentadas ?>>
-    </label>
-    <label for="bPuntuacion">Mayor puntuación
-      <input type="radio" name="bOrdenar" value = "bPuntuacion" <?php echo $bPuntuacion ?>>
-    </label>
+  <form class="form_busqueda" action= <?php echo $accion;?> method="post">
+    <div class="buscar_en">
+      <label for="bTitulo">
+        <p>Buscar en título:</p>
+        <input type="text" name="bTitulo" <?php echo $bTitulo ?>>
+      </label>
+      <label for="bTitulo">
+        <p>Buscar en receta:</p>
+        <input type="text" name="bCampo" <?php echo $bCampo ?>>
+      </label>
+    </div>
+    <p>Ordenar por...</p>
+    <div class="orden">
+      <label for="bAlfabetico">Orden alfabético
+        <input type="radio" name="bOrdenar" value = "bAlfabetico" <?php echo $bAlfabetico ?>>
+      </label>
+      <label for="bComentadas">Más comentadas
+        <input type="radio" name="bOrdenar" value = "bComentadas" <?php echo $bComentadas ?>>
+      </label>
+      <label for="bPuntuacion">Mayor puntuación
+        <input type="radio" name="bOrdenar" value = "bPuntuacion" <?php echo $bPuntuacion ?>>
+      </label>
+    </div>
     <label for="categorias">
       <p>Categorías:</p>
-      <p>Tipo de comida:</p>
-      <input type='checkbox' name='bCategoria[]' value='carnes'
-      <?php if (isset($datos['bCategoria']) && in_array('carnes',$datos['bCategoria']))
-              echo ' checked';?>> Carnes
-      <input type="checkbox" name="bCategoria[]" value="verduras"
-      <?php if (isset($datos['bCategoria']) && in_array('verduras',$datos['bCategoria']))
-              echo ' checked';?>>Verduras
-      <input type="checkbox" name="bCategoria[]" value="pescado"
-      <?php if (isset($datos['bCategoria']) && in_array('pescado',$datos['bCategoria']))
-              echo ' checked';?>>Pescado
-      <input type="checkbox" name="bCategoria[]" value="arroz"
-      <?php if (isset($datos['bCategoria']) && in_array('arroz',$datos['bCategoria']))
-              echo ' checked';?>>Arroz
-      <input type="checkbox" name="bCategoria[]" value="sopa"
-      <?php if (isset($datos['bCategoria']) && in_array('sopa',$datos['bCategoria']))
-              echo ' checked';?>>Sopa
-      <p>Dificultad:</p>
-      <input type="checkbox" name="bCategoria[]" value="facil"
-      <?php if (isset($datos['bCategoria']) && in_array('facil',$datos['bCategoria']))
-              echo ' checked';?>>Fácil
-      <input type="checkbox" name="bCategoria[]" value="dificil"
-      <?php if (isset($datos['bCategoria']) && in_array('dificil',$datos['bCategoria']))
-              echo ' checked';?>>Difícil
+      <div class="categorias">
+        <?php
+        $db = dbConnection();
+        $lista_categorias = dbGetListaCategorias($db);
+        dbDisconnection($db);
+        foreach ($lista_categorias as $categoria) {
+          echo '<input type="checkbox" name="categoria[]"';
+          echo "value='{$categoria['nombre']}'";
+          if (isset($params['categoria']) && in_array($categoria['nombre'],$categorias))
+                 echo ' checked';
+          echo ">{$categoria['nombre']}";
+        }
+        ?>
+      </div>
     </label><br>
     <input type="submit" name="accion" value="Buscar">
   </form>

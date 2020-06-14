@@ -1,4 +1,4 @@
-<div class="contenido">
+<div class="contenido_formulario">
 <h3>Gestión</h3>
 <?php
 require_once('database/database.php');
