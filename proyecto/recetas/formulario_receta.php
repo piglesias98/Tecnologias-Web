@@ -117,8 +117,6 @@ function getParams($p, $f){
       $result['err_valoracion']='Debe seleccionar una puntuación';
     }else{
       $result['valoracion']=strip_tags($p['valoracion']);
-      echo "VALORACION";
-      echo $result['valoracion'];
       $db = dbConnection();
       dbInsertValoracion($db, $result['id'], $result['valoracion']);
     }
@@ -351,15 +349,15 @@ function showReceta($receta, $id){
       echo "<input type='hidden' name='id' value='{$id}' />";
       ?>
         <p class="clasificacion">
-          <input id="radio1" type="radio" name="valoracion" value="5">
+          <input id="radio1" type="radio" name="valoracion" value="1">
             <label for="radio1">★</label>
-            <input id="radio2" type="radio" name="valoracion" value="4">
+            <input id="radio2" type="radio" name="valoracion" value="2">
             <label for="radio2">★</label>
             <input id="radio3" type="radio" name="valoracion" value="3">
             <label for="radio3">★</label>
-            <input id="radio4" type="radio" name="valoracion" value="2">
+            <input id="radio4" type="radio" name="valoracion" value="4">
             <label for="radio4">★</label>
-            <input id="radio5" type="radio" name="valoracion" value="1">
+            <input id="radio5" type="radio" name="valoracion" value="5">
             <label for="radio5">★</label>
         </p>
         <input type="hidden" name="form" value="valoracion">
