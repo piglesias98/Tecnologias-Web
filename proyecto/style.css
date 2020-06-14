@@ -329,14 +329,21 @@ aside form * {
 
 
 .comentario {
-  background-color: #ffddc7;
-  margin-bottom: 5px;
+  background-color: white;
+  border-radius: 25px;
   padding: 1px;
+  box-shadow: 1px 5px 10px #888888;
 }
 
 .comentario p {
-  margin: 0px;
-  margin-left: 5px;
+  margin: 3px;
+  text-align: center;
+}
+
+.info_comentario{
+  display: flex;
+  align-items: flex-start;
+  font-size: 12px;
 }
 
 .comentarista {

@@ -313,9 +313,13 @@ function showReceta($receta, $id){
             $usuario = dbGetUsuario($db, $value['id_usuario']);
             $autor = $usuario['nombre']." ".$usuario['apellidos'];
           }
-          echo "<p>".$value['fecha']."</p><br>";
-          echo "<p>".$autor."</p><br>";
-          echo "<p>".$value['comentario']."</p><br>";
+          echo "<div class='comentario'>";
+          echo "<div class='info_comentario'>";
+          echo "<p>".$value['fecha']."</p>";
+          echo "<p class='comentarista'>".$autor."</p>";
+          echo "</div>";
+          echo "<p>".$value['comentario']."</p>";
+          echo "</div>";
           if (isset($_SESSION['admin']) and $_SESSION['admin']==true){
             echo "<form action='index.php?p=crud_recetas&id=$id' method='POST'>";
             echo "<input type='hidden' name='id_comentario' value='{$value['id']}'/>";
