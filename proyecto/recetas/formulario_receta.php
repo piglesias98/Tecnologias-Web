@@ -294,7 +294,7 @@ function showReceta($receta, $id){
       $categorias = dbGetCategorias($db, $id);
       if ($categorias != 0){
         foreach ($categorias as $categoria) {
-          echo "<p>{$categoria['nombre']}'</p>";
+          echo "<p>{$categoria['nombre']}</p>";
         }
       }
       ?>

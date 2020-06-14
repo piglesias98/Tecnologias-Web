@@ -107,12 +107,6 @@ function dbModificarReceta($db, $id, $params){
 		$info =  'Ya hay una receta con ese mismo título';
 		echo "<p class='error'>Ya hay una receta con ese mismo título</p>";
 	}else{
-		$categorias = '';
-		if (isset($params['categoria'])){
-			foreach ($params['categoria'] as $value) {
-		    $categorias = $categorias.$value.',';
-		  }
-		}
 		$query = "UPDATE recetas SET titulo = '".mysqli_real_escape_string($db, $params['titulo'])."',
 					                descripcion = '".mysqli_real_escape_string($db, $params['descripcion'])."',
 					                ingredientes = '".mysqli_real_escape_string($db, $params['ingredientes'])."',
@@ -122,15 +116,20 @@ function dbModificarReceta($db, $id, $params){
 		if (!$res){
 			$info =  'Error al actualizar'.mysqli_error($db);
 			echo "<p class='error'> Error al actualizar".mysqli_error($db)."</p>";
-
 		}
 	}
 	if (isset($info))
 		return $info;
 	else{
+		// Insertar categorías
+		if (isset($params['categoria'])){
+			foreach ($params['categoria'] as $value) {
+				dbUpdateCategoriaReceta($db, $id, $value);
+			}
 		dbInsertLog($db, 'El usuario con email '.$_SESSION['email'].' ha modificado la receta con título '.$params['titulo']);
 		return true;
 	}
+}
 }
 
 function dbArray2SQL($query){

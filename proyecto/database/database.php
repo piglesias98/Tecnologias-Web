@@ -130,5 +130,18 @@ function dbInsertCategoriaReceta($db, $id, $categoria){
 	}
 }
 
+function dbUpdateCategoriaReceta($db, $id, $categoria){
+	# Primero obtenemos el id que queremos actualizar
+	$query = "UPDATE categorias set categorias_id =
+					(SELECT id FROM lista_categorias WHERE lista_categorias.nombre = '$categoria')
+					where receta_id = $id";
+	$res = mysqli_query($db, $query);
 
+	if (!$res){
+		$info = " Error en la inserción de la categoría";
+		echo "<p class = 'error'> Error en la inserción de la categoría </p>".mysqli_error($db);
+	}else {
+		dbInsertLog($db, 'El usuario con email '.$_SESSION['email'].' ha actualizado una categoría');
+	}
+}
 ?>
