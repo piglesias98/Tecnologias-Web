@@ -204,7 +204,7 @@ function showFormReceta($params, $accion, $editable){
         echo '<input type="checkbox" name="categoria[]"';
         echo "value='{$categoria['nombre']}'";
         if (isset($params['categoria']) && in_array($categoria['nombre'],$categorias)
-            or $comprobar and in_array($categoria['nombre'],$categorias_receta))
+            or $comprobar and in_array_r($categoria['nombre'],$categorias_receta))
                echo ' checked';
         echo ">{$categoria['nombre']}";
       }
@@ -482,6 +482,17 @@ function formFotos($params, $accion){
   </div>
 
 <?php
+}
+
+// Función para buscar en un array recursivo
+function in_array_r($needle, $haystack, $strict = false) {
+    foreach ($haystack as $item) {
+        if (($strict ? $item === $needle : $item == $needle) || (is_array($item) && in_array_r($needle, $item, $strict))) {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 ?>
