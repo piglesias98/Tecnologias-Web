@@ -2,7 +2,7 @@ img.boton{
   width: 15px;
 }
 
-header, div.contenido_receta, div.contenido_formulario, div.contenido_usuario {
+header, div.contenido_receta, div.contenido_formulario, div.contenido_usuario, div.contenido_gestion {
   background-color: #F1F1F1;
 }
 
@@ -113,48 +113,6 @@ nav a:hover{
   "navegacion_inferior navegacion_inferior navegacion_inferior"
 }
 
-.contenido_formulario {
-  grid-area: contenido;
-  display: flex;
-  align-items: center;
-  flex-flow: column wrap;
-  align-content: center;
-}
-
-.contenido_usuario {
-  grid-area: contenido;
-}
-
-.contenido_formulario h3, .contenido_usuario h3{
-  font-size: 200%;
-  margin: 1%;
-  text-align: center;
-}
-
-
-.form_busqueda{
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: column;
-  border: 2px dotted #8B1233;
-  align-items: center;
-  text-align: center;
-}
-
-.form_busqueda .buscar_en, .orden, .categorias{
-  flex-grow: 1;
-  display: flex;
-  justify-content: space-evenly;
-}
-
-.contenido_formulario form * {
-  margin: 5px;
-}
-
-.listado td form{
-  display: flex;
-  flex-direction: row;
-}
 
 /* Los laterales */
 
@@ -387,8 +345,82 @@ aside form * {
   color: #8835ab;
 }
 
+/* Contenido formularios */
+
+.contenido_formulario {
+  grid-area: contenido;
+  display: flex;
+  align-items: center;
+  flex-flow: column wrap;
+  align-content: center;
+}
+
+.contenido_usuario {
+  grid-area: contenido;
+}
+
+.contenido_gestion {
+  grid-area: contenido;
+  display: flex;
+  flex-flow: column wrap;
+  align-items: center;
+}
+
+.contenido_gestion h4, h5{
+  margin:5px;
+}
+
+.contenido_gestion .agrupar_fil {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.contenido_gestion .agrupar_col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.contenido_gestion .agrupar .agrupar form{
+  display: flex;
+  flex-direction: column;
+}
+
+.contenido_formulario h3, .contenido_usuario h3, .contenido_gestion h3{
+  font-size: 200%;
+  margin: 1%;
+  text-align: center;
+}
 
 
+.formulario{
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  border: 2px dotted #8B1233;
+  align-items: center;
+  text-align: center;
+}
+
+.formulario .agrupar {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-direction: row;
+}
+
+
+.contenido_formulario form * {
+  margin: 5px;
+}
+
+.listado td form{
+  display: flex;
+  flex-direction: row;
+}
+
+
+/* Footer */
 footer {
   margin-top: 5px;
   display: flex;

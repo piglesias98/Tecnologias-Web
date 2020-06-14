@@ -1,4 +1,4 @@
-<div class="contenido_formulario">
+<div class="contenido_gestion">
 <h3>Gestión</h3>
 <?php
 require_once('database/database.php');
@@ -9,10 +9,15 @@ require('database/dbbackup.php');
 // ".$_SERVER['REQUEST_URI'],"
 echo "<h4>Gestión de la base de datos</h4>";
 // Copia de seguridad
+echo "<div class='agrupar_col'>";
 echo "<h5>Copia de seguridad</h5>";
+echo "<p>";
 echo "<a href='backup.php?download'>Pulse aquí</a> para
 descargar un fichero con los datos de la <strong>copia de seguidad</strong>";
-
+echo "</p>";
+echo "</div>";
+echo "<div class='agrupar_fil'>";
+echo "<div class='agrupar_col'>";
 echo "<h5>Restauración de la base de datos</h5>";
 
 if(isset($_POST['accion']) and $_POST['accion']=='Restaurar'){
@@ -37,12 +42,14 @@ if(isset($_POST['accion']) and $_POST['accion']=='Restaurar'){
 }
 //formulario restaurar
 // Restaurar BD
-echo "<form action=".$_SERVER['REQUEST_URI']." enctype='multipart/form-data' method='post'>";
+echo "<form class='agrupar_col' action=".$_SERVER['REQUEST_URI']." enctype='multipart/form-data' method='post'>";
 echo "Adjunta el fichero sql";
 echo "<input type='file' name='bbdd'>";
 echo "<input type='submit' name = 'accion' value= 'Restaurar' >";
 echo "</form>";
+echo "</div>";
 
+echo "<div class='agrupar_col'>";
 echo "<h5>Borrado completo de la base de datos</h5>";
 
 if(isset($_POST['accion']) and $_POST['accion']=='Borrado completo'){
@@ -58,11 +65,13 @@ if(isset($_POST['accion']) and $_POST['accion']=='Borrado completo'){
 }
 //formulario restaurar
 // Restaurar BD
-echo "<form action=".$_SERVER['REQUEST_URI']." enctype='multipart/form-data' method='post'>";
+echo "<form class='agrupar_col' action=".$_SERVER['REQUEST_URI']." enctype='multipart/form-data' method='post'>";
 echo "Adjunta el fichero sql";
 echo "<input type='file' name='bbdd'>";
 echo "<input type='submit' name = 'accion' value= 'Restaurar' >";
 echo "</form>";
+echo "</div>";
+echo "</div>";
 
 
 echo "<h4>Gestión de categorías</h4>";
@@ -101,25 +110,31 @@ $db = dbConnection();
 $lista_categorias = dbGetListaCategorias($db);
 if(isset($error_categoria))
   echo "<p class='error'>".$error_categoria."</p>";
-echo "<form action=".$_SERVER['REQUEST_URI']." method='post'>";
+echo "<form class='agrupar_col' action=".$_SERVER['REQUEST_URI']." method='post'>";
 echo "<input type='hidden' name='form' value='categoria'>";
 foreach ($lista_categorias as $categoria) {
   echo '<tr>';
+  echo "<div class='agrupar_fil'>";
   echo "<td><input type='text' name='categoria' value='{$categoria['nombre']}'></td>";
   echo "<td><input type='hidden' name='id' value='{$categoria['id']}'></td>";
   echo "<input type='submit'  name = 'accion' value='Editar' >
         <input type='submit' name = 'accion' value='Borrar'>";
+  echo "</div>";
 }
+echo "<div class='agrupar_fil'>";
 echo "<input type='text' name='nueva_categoria'>";
 echo "<input type='submit' name='accion' value='Añadir categoría'>";
+echo "</div>";
 echo "</form></td>";
 echo "</tr>";
 
 
 echo "<h4>Gestión de los usuarios</h4>";
+echo "<div class='agrupar_fil'>";
 echo "<h5>Crear un usuario</h5>";
 echo "<form action='index.php?p=crud_usuarios' method='POST'>";
 echo "<input type='submit' name = 'accion' value='Registro'/>";
+echo "</div>";
 
 if (!is_string($db=dbConnection())){
   $busc='';

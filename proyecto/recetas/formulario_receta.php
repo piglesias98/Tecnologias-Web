@@ -150,31 +150,45 @@ function showFormReceta($params, $accion, $editable){
     }
   }
   ?>
-  <form class="login_form" action="<?php $_SERVER['PHP_SELF']?>" enctype="multipart/form-data" method="post">
-    <label for="titulo">Título de la receta:
-      <input type="text" name="titulo" <?php echo $disabled ?>
-      <?php if (isset($params['titulo'])) echo " value='".$params['titulo']."'";?>><br>
-      <?php if (isset($params['err_titulo'])) echo "<p class = 'error'>".$params['err_titulo']."</p>";?><br>
+  <form class="formulario" action="<?php $_SERVER['PHP_SELF']?>" enctype="multipart/form-data" method="post">
+    <label for="titulo">
+      <div class="agrupar">
+        <p>Título de la receta:</p>
+        <input type="text" name="titulo" <?php echo $disabled ?>
+        <?php if (isset($params['titulo'])) echo " value='".$params['titulo']."'";?>><br>
+        <?php if (isset($params['err_titulo'])) echo "<p class = 'error'>".$params['err_titulo']."</p>";?>
+      </div>
     </label>
-    <label for="descripcion">Descripción:
-      <textarea name="descripcion" <?php echo $disabled ?>>
-      <?php if (isset($params['descripcion'])) echo $params['descripcion'];?>
-      </textarea><br>
+    <label for="descripcion">
+      <div class="agrupar">
+        <p>Descripción:</p>
+        <textarea name="descripcion" <?php echo $disabled ?>>
+        <?php if (isset($params['descripcion'])) echo $params['descripcion'];?>
+        </textarea>
+      </div>
+
       <?php if (isset($params['err_descripcion'])) echo "<p class = 'error'>".$params['err_descripcion']."</p>";?>
     </label>
-    <label for="ingredientes">Ingredientes:
+    <label for="ingredientes">
+      <div class="agrupar">
+      <p>Ingredientes:</p>
       <textarea  name="ingredientes" <?php echo $disabled ?>>
       <?php if (isset($params['ingredientes'])) echo $params['ingredientes'];?>
-      </textarea><br>
+      </textarea>
+    </div>
       <?php if (isset($params['err_ingredientes'])) echo "<p class = 'error'>".$params['err_ingredientes']."</p>";?>
     </label>
-    <label for="preparacion">Preparación:
-      <textarea name="preparacion" <?php echo $disabled ?>>
-      <?php if (isset($params['preparacion'])) echo $params['preparacion'];?>
-      </textarea><br>
+    <label for="preparacion">
+      <div class="agrupar">
+        Preparación:
+        <textarea name="preparacion" <?php echo $disabled ?>>
+        <?php if (isset($params['preparacion'])) echo $params['preparacion'];?>
+        </textarea>
+      </div>
       <?php if (isset($params['err_preparacion'])) echo "<p class = 'error'>".$params['err_preparacion']."</p>";?>
     </label>
-    <label for="categorias">Categorías:<br>
+    <label for="categorias">
+      <p>Categorías:</p>
       <?php
       $db = dbConnection();
       // Vemos si la receta ya tiene categorías
@@ -389,8 +403,8 @@ function formBuscarReceta($titulo, $datos=false){
   if (!strpos($accion, '?')) $accion = $_SERVER['SCRIPT_NAME'];
 
 ?>
-  <form class="form_busqueda" action= <?php echo $accion;?> method="post">
-    <div class="buscar_en">
+  <form class="formulario" action= <?php echo $accion;?> method="post">
+    <div class="agrupar">
       <label for="bTitulo">
         <p>Buscar en título:</p>
         <input type="text" name="bTitulo" <?php echo $bTitulo ?>>
@@ -401,7 +415,7 @@ function formBuscarReceta($titulo, $datos=false){
       </label>
     </div>
     <p>Ordenar por...</p>
-    <div class="orden">
+    <div class="agrupar">
       <label for="bAlfabetico">Orden alfabético
         <input type="radio" name="bOrdenar" value = "bAlfabetico" <?php echo $bAlfabetico ?>>
       </label>
@@ -414,7 +428,7 @@ function formBuscarReceta($titulo, $datos=false){
     </div>
     <label for="categorias">
       <p>Categorías:</p>
-      <div class="categorias">
+      <div class="agrupar">
         <?php
         $db = dbConnection();
         $lista_categorias = dbGetListaCategorias($db);
