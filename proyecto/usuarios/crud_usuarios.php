@@ -34,7 +34,9 @@ if (isset($id) and isset($usuario)){
           //Si ya tenemos la confirmación modificar usuario y mostrar final
           $msg = dbModificarUsuario($db, $params['id'], $params);
           if ($msg == true){
+            echo "<div class='mensaje_simple'>";
             echo "<p>El usuario ".$params['nombre']." ha sido atualizado</p>";
+            echo "</div>";
           }else{
             echo "<p class='error'> El usuario no se ha podido actualizar </p>";
           }
@@ -54,14 +56,13 @@ if (isset($id) and isset($usuario)){
                     && $params['err_clave2']=='' && $params['err_foto']==''){
                 //Pedir confirmación
                 $params['editable']=false;
-                showFormUsuario($params, 'Confirmar', false);
+                formEditable('Confirma la edición',$params, 'Confirmar', false);
               // si hemos editado pero hay algún error
               }else{
                 formEditable('Edita el usuario',$params, 'Editar', true);
               }
             break;
             default:
-              echo "entra en default";
               formEditable('Edita el usuario',$usuario, 'Editar', true);
             break;
           }

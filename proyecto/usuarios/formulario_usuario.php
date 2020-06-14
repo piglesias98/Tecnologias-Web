@@ -46,7 +46,7 @@ function getParams($p, $f){
         $db = dbConnection();
         $en_uso = dbCheckEmail($db, $p['email']);
         dbDisconnection($db);
-        if ($en_uso){
+        if ($en_uso and $result['accion']=='Crear'){
           $result['err_email'] = 'Ese email ya está en uso, introduce otro, por favor';
         }else{
           $result['email'] = strip_tags($p['email']);
@@ -132,7 +132,7 @@ function showFormUsuario($params, $accion, $editable){
     $disabledPic = '';
   }
   ?>
-  <form class="login_form" action="<?php $_SERVER['PHP_SELF']?>" enctype="multipart/form-data" method="post">
+  <form class="formulario" action="<?php $_SERVER['PHP_SELF']?>" enctype="multipart/form-data" method="post">
     <label for="imagen">Foto de perfil:
       <input type="file" name="foto_perfil" <?php echo $disabledPic ?>
       <?php if (isset($params['foto_perfil_src'])){
