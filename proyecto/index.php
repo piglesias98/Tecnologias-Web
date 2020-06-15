@@ -1,4 +1,8 @@
 <?php
+
+DEFINE('DESPLIEGUE', 'void');
+// DEFINE('DESPLIEGUE', 'local');
+
 session_start();
 
 ini_set("display_errors", "1");

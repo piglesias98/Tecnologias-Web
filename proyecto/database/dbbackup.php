@@ -67,10 +67,12 @@ function dbBorradoCompleto($db){
   while($row = mysqli_fetch_row($result)){
     // Tenemos cuidado con no borrar a los usuarios colaboradores
     if ($row[0] == 'usuarios'){
-      mysqli_query($db, 'DELETE * FROM '.$row[0].' WHERE tipo=colaborador');
+      $query = "DELETE FROM ".$row[0]." WHERE tipo='colaborador'";
     }else{
-      mysqli_query($db, 'DELETE * FROM '.$row[0]);
+      $query = 'DELETE FROM '.$row[0];
+
     }
+    mysqli_query($db, $query);
   }
 
   mysqli_query($db, 'SET FOREIGN_KEY_CHECKS=1');
