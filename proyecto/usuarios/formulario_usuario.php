@@ -1,5 +1,6 @@
 <?php
 require_once('database/database.php');
+require_once('mail/enviar.php');
 
 function formEditable($titulo, $usuario, $accion, $editable){
   echo "<div class='contenido_formulario'>";
@@ -194,6 +195,9 @@ function verificacionEmail($params){
   ?>
   <div class="mensaje_simple">
     <p>Muy bien <?php echo $params['nombre'] ?>!</p>
+    <?php
+    enviarEmail($params['email']);
+    ?>
     <p>Se ha enviado un correo a la dirección <?php echo $params['email'] ?>
     donde debes verificar tu cuenta y podrás registrarte</p>
   </div>

@@ -313,6 +313,7 @@ function showReceta($receta, $id){
             $usuario = dbGetUsuario($db, $value['id_usuario']);
             $autor = $usuario['nombre']." ".$usuario['apellidos'];
           }
+          echo "<div class='caja_comentario'>";
           echo "<div class='comentario'>";
           echo "<div class='info_comentario'>";
           echo "<p>".$value['fecha']."</p>";
@@ -327,6 +328,7 @@ function showReceta($receta, $id){
             echo "<input type='submit' name = 'accion' value='Borrar comentario'/>";
             echo "</form>";
           }
+          echo "</div>";
         }
       }
       ?>

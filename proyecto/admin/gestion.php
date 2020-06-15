@@ -30,8 +30,7 @@ if(isset($_POST['accion']) and $_POST['accion']=='Restaurar'){
     $error = 'El archivo debe tener la extensión .sql';
   }else{
     $db = dbConnection();
-    //$error = dbRestore($db, $_FILES['bbdd']['tmp_name']);
-    echo "aquí restauraría la db";
+    $error = dbRestore($db, $_FILES['bbdd']['tmp_name']);
     dbDisconnection($db);
   }
   if (isset($error)){
@@ -55,12 +54,11 @@ echo "<h5>Borrado completo de la base de datos</h5>";
 if(isset($_POST['accion']) and $_POST['accion']=='Borrado completo'){
   $db = dbConnection();
   //$error = dbBorradoCompleto($db);
-  echo "aquí restauraría la db";
   dbDisconnection($db);
   if (isset($error)){
     echo "<p class='error'>".$error."</p>";
   }else{
-    echo "<p>Base de datos restaurada correctamente</p>";
+    echo "<p>Base de datos borrada correctamente</p>";
   }
 }
 //formulario restaurar
