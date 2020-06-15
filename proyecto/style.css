@@ -2,7 +2,9 @@ img.boton{
   width: 15px;
 }
 
-
+.contenido_formulario .paginador {
+  width: 100%;
+}
 header, div.contenido_receta, div.contenido_formulario, div.contenido_usuario,
 div.contenido_gestion, div.mensaje_simple, div.contenido_foto, div.error {
   background-color: #F1F1F1;

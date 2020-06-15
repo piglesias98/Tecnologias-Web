@@ -45,8 +45,13 @@ function dbGetNumLog($db){
 	return $num;
 }
 
-function dbGetLogs($db){
-	$query = "SELECT fecha, descripcion FROM log ORDER BY fecha DESC";
+function dbGetLogs($db, $primero=0, $num_items=0){
+	if ($num_items<=0)
+		$rango='';
+	else {
+		$rango = 'LIMIT '.(int)($num_items).' OFFSET '.abs($primero);
+	}
+	$query = "SELECT fecha, descripcion FROM log ORDER BY fecha DESC $rango";
 	$res = mysqli_query($db, $query);
 	if ($res){
 		if (mysqli_num_rows($res)>0){
