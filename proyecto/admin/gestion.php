@@ -39,7 +39,7 @@ if(isset($_POST['accion']) and $_POST['accion']=='Restaurar'){
     echo "<p>Base de datos restaurada correctamente</p>";
   }
 }
-//formulario restaurar
+//formulario RESTAURAR
 // Restaurar BD
 echo "<form class='agrupar_col' action=".$_SERVER['REQUEST_URI']." enctype='multipart/form-data' method='post'>";
 echo "Adjunta el fichero sql";
@@ -53,7 +53,7 @@ echo "<h5>Borrado completo de la base de datos</h5>";
 
 if(isset($_POST['accion']) and $_POST['accion']=='Borrado completo'){
   $db = dbConnection();
-  //$error = dbBorradoCompleto($db);
+  $error = dbBorradoCompleto($db);
   dbDisconnection($db);
   if (isset($error)){
     echo "<p class='error'>".$error."</p>";
@@ -61,12 +61,10 @@ if(isset($_POST['accion']) and $_POST['accion']=='Borrado completo'){
     echo "<p>Base de datos borrada correctamente</p>";
   }
 }
-//formulario restaurar
-// Restaurar BD
-echo "<form class='agrupar_col' action=".$_SERVER['REQUEST_URI']." enctype='multipart/form-data' method='post'>";
-echo "Adjunta el fichero sql";
-echo "<input type='file' name='bbdd'>";
-echo "<input type='submit' name = 'accion' value= 'Restaurar' >";
+//formulario BORRAR
+// Borrar BD
+echo "<form class='agrupar_col' action=".$_SERVER['REQUEST_URI']." method='post'>";
+echo "<input type='submit' name = 'accion' value= 'Borrado completo' >";
 echo "</form>";
 echo "</div>";
 echo "</div>";
