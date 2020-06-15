@@ -84,6 +84,15 @@ function dbCheckFirstTime($db){
   $result_array = mysqli_fetch_all($result);
   if (sizeof($result_array) == 0){
     echo "<p> No hay tablas, se procede a la autoinstalación</p>";
+    mysqli_query($db, 'SET FOREIGN_KEY_CHECKS=0');
+    $sql = file_get_contents('database/initial_db.sql');
+    $queries = explode(';',$sql);
+    foreach ($queries as $q){
+      if(!mysqli_query($db, $q))
+        $error .= mysqli_error($db);
+    }
+
+    mysqli_query($db, 'SET FOREIGN_KEY_CHECKS=1');
   }
 
 }
