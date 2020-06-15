@@ -283,10 +283,17 @@ aside form * {
 }
 .comentarios form {
   display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
 }
+
+
 .comentarios textarea {
   width: 80%;
 }
+
+
 
 .calificacion {
   grid-area: calificacion;
@@ -336,9 +343,14 @@ aside form * {
   box-shadow: 1px 5px 10px #888888;
 }
 
+.caja_comentario form{
+  margin-top: 7px;
+}
+
 .comentario p {
-  margin: 3px;
+  margin: 5px;
   text-align: center;
+  padding: 2px;
 }
 
 .info_comentario{
@@ -346,6 +358,7 @@ aside form * {
   align-items: flex-start;
   font-size: 12px;
 }
+
 
 .comentarista {
   color: #8835ab;
