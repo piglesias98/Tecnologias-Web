@@ -240,6 +240,7 @@ function showReceta($receta, $id){
     $db = dbConnection();
     $usuario = dbGetUsuario($db, $receta['idautor']);
     $autor = $usuario['nombre']." ".$usuario['apellidos'];
+    dbDisconnection($db);
   }
   $receta['autor']=$autor;
   ?>

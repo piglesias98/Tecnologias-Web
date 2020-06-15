@@ -36,15 +36,21 @@ function dbGetRecetas($db, $cadena='', $orden=''){
 }
 
 function dbGetReceta($db, $id){
-	$res = mysqli_query($db, "SELECT id, titulo, autor, categoria, descripcion,
+	$query = "SELECT id, titulo, autor, categoria, descripcion,
 														ingredientes, preparacion, fotografia_src
-														FROM receta WHERE id='".mysqli_real_escape_string($db,$id)."'");
+														FROM receta WHERE id='".mysqli_real_escape_string($db,$id)."'";
+	echo $query;
+	$res = mysqli_query($db, $query);
+
 	if ($res && mysqli_num_rows($res)==1){
 		$receta = mysqli_fetch_assoc($res);
+		echo "receta rodo bien";
+	}else{
+		$receta = -1;
+		echo "todo mal";
+		echo $receta;
 	}
-	else{
-		$receta = false;
-	}
+	echo $receta;
 	mysqli_free_result($res);
 	return $receta;
 }

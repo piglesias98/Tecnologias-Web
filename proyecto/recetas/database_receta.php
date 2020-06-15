@@ -39,7 +39,7 @@ function dbGetReceta($db, $id){
 		$receta = mysqli_fetch_assoc($res);
 	}
 	else{
-		$receta = false;
+		$receta = -1;
 	}
 	mysqli_free_result($res);
 	return $receta;
@@ -173,8 +173,25 @@ function dbGetNumRecetas($db, $cadena=''){
 	$res = mysqli_query($db, $query);
 	$num = mysqli_fetch_row($res)[0];
 	$num = (int)$num;
+	echo $num;
 	mysqli_free_result($res);
 	return $num;
+}
+
+function dbGetIdsReceta ($db){
+	$query = "SELECT id FROM recetas";
+	$res = mysqli_query($db, $query);
+	if ($res){
+		$id_array = mysqli_fetch_all($res, MYSQLI_ASSOC);
+		foreach ($id_array as $key => $value) {
+			$ids[] = $value['id'];
+		}
+	}
+	else{
+		$ids = -1;
+	}
+	mysqli_free_result($res);
+	return $ids;
 }
 
 function dbInsertPicture($db, $id, $nombre){
