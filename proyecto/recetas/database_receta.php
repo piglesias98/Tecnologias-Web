@@ -173,7 +173,6 @@ function dbGetNumRecetas($db, $cadena=''){
 	$res = mysqli_query($db, $query);
 	$num = mysqli_fetch_row($res)[0];
 	$num = (int)$num;
-	echo $num;
 	mysqli_free_result($res);
 	return $num;
 }
@@ -332,6 +331,16 @@ function dbGetValoracion($db, $id){
 	}
 	mysqli_free_result($res);
 	return $valoraciones;
+}
+
+
+function dbValoracionesUsuario($db, $id_receta, $id_usuario){
+	$query =  "SELECT COUNT(*) FROM valoraciones WHERE id_receta=$id_receta and id_usuario=$id_usuario";
+	$res = mysqli_query($db, $query);
+	$num_valoraciones = mysqli_fetch_row($res)[0];
+	$num_valoraciones = (int)$num_valoraciones;
+	mysqli_free_result($res);
+	return $num_valoraciones;
 }
 
 function dbGetValoradas($db){

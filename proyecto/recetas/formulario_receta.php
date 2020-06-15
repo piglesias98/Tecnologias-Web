@@ -350,26 +350,32 @@ function showReceta($receta, $id){
       $db = dbConnection();
       $valoraciones = dbGetValoracion($db, $id);
       if ($valoraciones != 0){
+        echo "<p> Puntuación</p>";
         echo $valoraciones[0];
       }
-      echo "<form action='index.php?p=crud_recetas&id=$id' method='POST'>";
-      echo "<input type='hidden' name='id' value='{$id}' />";
-      ?>
-        <p class="clasificacion">
-          <input id="radio1" type="radio" name="valoracion" value="1">
-            <label for="radio1">★</label>
-            <input id="radio2" type="radio" name="valoracion" value="2">
-            <label for="radio2">★</label>
-            <input id="radio3" type="radio" name="valoracion" value="3">
-            <label for="radio3">★</label>
-            <input id="radio4" type="radio" name="valoracion" value="4">
-            <label for="radio4">★</label>
-            <input id="radio5" type="radio" name="valoracion" value="5">
-            <label for="radio5">★</label>
-        </p>
-        <input type="hidden" name="form" value="valoracion">
-        <input type="submit" name="accion" value="Califica">
-      </form>
+      // Solo mostrar el formulario de inserción de puntuación si el usuario
+      // está identificado y no ha valorado esa receta todavía
+      if (isset($_SESSION['identificado']) and dbValoracionesUsuario($db, $id, $_SESSION['id']) == 0){
+        echo "<form action='index.php?p=crud_recetas&id=$id' method='POST'>";
+        echo "<input type='hidden' name='id' value='{$id}' />";
+        ?>
+          <p class="clasificacion">
+            <input id="radio1" type="radio" name="valoracion" value="1">
+              <label for="radio1">★</label>
+              <input id="radio2" type="radio" name="valoracion" value="2">
+              <label for="radio2">★</label>
+              <input id="radio3" type="radio" name="valoracion" value="3">
+              <label for="radio3">★</label>
+              <input id="radio4" type="radio" name="valoracion" value="4">
+              <label for="radio4">★</label>
+              <input id="radio5" type="radio" name="valoracion" value="5">
+              <label for="radio5">★</label>
+          </p>
+          <input type="hidden" name="form" value="valoracion">
+          <input type="submit" name="accion" value="Califica">
+        </form>
+        <?php
+      }?>
     </section>
 
 
