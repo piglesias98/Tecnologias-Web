@@ -78,6 +78,16 @@ function dbBorradoCompleto($db){
   mysqli_query($db, 'SET FOREIGN_KEY_CHECKS=1');
 }
 
+function dbCheckFirstTime($db){
+  // Veamos si hay tablas
+  $result = mysqli_query($db, 'SHOW TABLES');
+  $result_array = mysqli_fetch_all($result);
+  if (sizeof($result_array) == 0){
+    echo "<p> No hay tablas, se procede a la autoinstalación</p>";
+  }
+
+}
+
 
 
  ?>

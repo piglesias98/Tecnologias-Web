@@ -189,7 +189,7 @@ function enviarFormulario($params){
   $db = dbConnection();
   $id_usuario = dbCrearUsuario($db, $params);
   // Al ser creado por el admin es verificado directamente
-  dbSetVerificado($dv, $id_usuario, 1);
+  dbSetVerificado($db, $id_usuario, 1);
   dbDisconnection($db);
 }
 

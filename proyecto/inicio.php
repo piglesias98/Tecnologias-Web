@@ -2,6 +2,11 @@
 require_once 'database/database.php';
 require_once 'recetas/database_receta.php';
 require_once 'recetas/formulario_receta.php';
+require_once 'database/dbbackup.php';
+
+$db = dbConnection();
+dbCheckFirstTime($db);
+dbDisconnection($db);
 
 
 if (isset($_COOKIE['ultima_receta'])){

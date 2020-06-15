@@ -64,7 +64,6 @@ function getParams($p, $f){
       if (!isset($f['fotografia']) or empty($f['fotografia']['name'])){
         $result['err_fotografia']='No ha incluido ninguna fotografía';
       }else{
-        echo "fotografia isset";
         $name = uniqid();
         $target_dir = "uploads/";
         $target_file = $target_dir . basename($f['fotografia']['name']); ;

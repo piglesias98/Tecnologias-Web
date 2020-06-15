@@ -39,7 +39,7 @@ function dbGetNumLog($db){
 }
 
 function dbGetLogs($db){
-	$query = "SELECT fecha, descripcion FROM log ORDER BY fecha";
+	$query = "SELECT fecha, descripcion FROM log ORDER BY fecha DESC";
 	$res = mysqli_query($db, $query);
 	if ($res){
 		if (mysqli_num_rows($res)>0){
@@ -104,7 +104,6 @@ function dbBorrarCategoria($db, $id){
 function dbInsertCategoria($db, $categoria){
 	$query = "INSERT INTO lista_categorias (nombre)
 														VALUES ('".mysqli_real_escape_string($db, $categoria)."')";
-	echo $query;
 	$res = mysqli_query($db, $query);
 
 	if (!$res){
@@ -119,7 +118,6 @@ function dbInsertCategoria($db, $categoria){
 function dbInsertCategoriaReceta($db, $id, $categoria){
 	$query = "INSERT INTO categorias (receta_id, categorias_id)
 							VALUES($id, (SELECT id FROM lista_categorias WHERE '$categoria' = nombre))";
-	echo $query;
 	$res = mysqli_query($db, $query);
 
 	if (!$res){

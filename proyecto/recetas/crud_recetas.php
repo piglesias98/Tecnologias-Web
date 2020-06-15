@@ -123,7 +123,7 @@ if(isset($_GET['p']) and $_GET['p']=='crear'){
 
 
 function showMessage($message){
-  echo "<div class='contenido'>";
+  echo "<div class='mensaje_simple'>";
   echo "<h3>".$message."</h3>";
   echo "</div>";
   echo "</div>";

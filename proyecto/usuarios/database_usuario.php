@@ -164,7 +164,6 @@ function dbCheckVerificacion($db, $vkey){
 
 function dbSetVerificado($db, $id, $verificado){
 	$query = "UPDATE usuarios SET verificado = $verificado WHERE id=$id";
-	echo $query;
 	$res = mysqli_query($db, $query);
 	if (!$res){
 		$info =  'Error al añadir verificar usuario'.mysqli_error($db);
