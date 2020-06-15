@@ -1,6 +1,11 @@
 <div class="contenido_formulario">
 <h3>Log de la aplicación</h3>
 <?php
+
+/*
+En log.php se encuentra el log del sistema ordenado de manera cronológica inversa
+*/
+
 require_once('database/database.php');
 
 if (isset($_SESSION['admin'])){

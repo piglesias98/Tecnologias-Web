@@ -1,4 +1,12 @@
 <?php
+
+/*
+En formulario_usuarios.php encontramos las funciones relativas a los formularios de
+los usuarios, como showUsuario (que simplemente muestra el usuario) o showFormUsuario,
+que es parametrizable en su edición y muestra un formulario para crea/editar/borrar un usuario.
+*/
+
+
 require_once('database/database.php');
 require_once('mail/enviar.php');
 

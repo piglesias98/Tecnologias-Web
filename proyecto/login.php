@@ -1,4 +1,11 @@
 <?php
+
+/*
+Gestiona el login de los usuarios y también tiene un enlace al registro si no se está
+identificado. Establece las variables de sesión que controlarán el acceso a las distintas
+partes del sitio web.
+*/
+
 // El formulario ha sido enviado si exist
 // alguna de las dos variables usuario o contraseña
 require_once('database/database.php');

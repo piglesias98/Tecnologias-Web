@@ -3,6 +3,13 @@ require_once('database/database.php');
 require_once('recetas/database_receta.php');
 require_once('recetas/formulario_receta.php');
 
+
+/*
+En crud_recetas.php se gestionan todas las operaciones CRUD de las recetas dependiendo
+de con que parámetros(tanto de post y get) se llame a este fichero.
+*/
+
+
 //Obtener y validar parámetros
 $params = getParams($_POST, $_FILES);
 // Conexión con DB

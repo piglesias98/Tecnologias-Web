@@ -1,5 +1,11 @@
 <?php
 
+/*
+Fichero principal que gestiona las distintas partes de la página web en función
+ del parámetro GET p y del tipo de usuario, identificado, no identificado o admin.
+*/
+
+
 DEFINE('DESPLIEGUE', 'void');
 // DEFINE('DESPLIEGUE', 'local');
 

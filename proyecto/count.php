@@ -1,4 +1,9 @@
 <?php
+
+/*
+Widget count
+*/
+
 require_once 'database/database.php';
 require_once 'recetas/database_receta.php';
 $db = dbConnection();

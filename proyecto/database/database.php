@@ -1,6 +1,13 @@
 <?php
 require_once('dbcredenciales.php');
 
+/*
+En database.php encontramos las funciones relativas a la base de datos,
+entre ellas las más básicas como la conexión y desconexión y las que no son propias
+de usuarios o recetas, que se encuentran en sus ficheros correspondientes.
+*/
+
+
 function dbConnection(){
 	$db = mysqli_connect(DB_HOST, DB_USER, DB_PASSWD, DB_NAME);
 	if ($db) {

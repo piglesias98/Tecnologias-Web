@@ -1,4 +1,9 @@
 <?php
+
+/*
+Widget que muestra las recetas mejor valoradas de la base de datos y su puntuación
+*/
+
 require_once 'database/database.php';
 require_once 'recetas/database_receta.php';
 $db = dbConnection();

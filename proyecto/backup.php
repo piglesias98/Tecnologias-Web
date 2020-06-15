@@ -1,4 +1,10 @@
 <?php
+
+/*
+backup.php genera una copia de seguridad de la base de datos,
+ha de estar en un fichero aparte para que no genere código html
+*/
+
 session_start();
 require_once('database/database.php');
 require_once('database/dbbackup.php');

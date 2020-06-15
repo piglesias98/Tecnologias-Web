@@ -1,6 +1,14 @@
 <?php
-// Import PHPMailer classes into the global namespace
-// These must be at the top of your script, not inside a function
+
+/*
+En enviar.php se utilizan las clases de PHPMailer para mandar un correo de confirmación
+a los usuarios invitados que se registran en el sistema.
+Se ha utilizado una cuenta de gmail creada exclusivamente para este fin:
+pauladesarrolladora@gmail.com y se han desactivado algunas opciones de seguridad en gmail
+para poder utilizarla.
+*/
+
+
 require_once('mail/PHPMailer.php') ;
 require_once('mail/SMTP.php');
 require_once('mail/Exception.php');

@@ -1,5 +1,11 @@
 <?php
 
+/*
+En database_receta.php encontramos las funciones relativas a la base de datos
+que gestionan la tabla recetas y algunos de sus atributos
+*/
+
+
 function dbGetRecetas($db, $cadena='', $orden=''){
 	$query_start = "SELECT id, titulo, idautor FROM recetas";
 	$query_end = '';

@@ -1,5 +1,12 @@
 <?php
 
+/*
+En database_usuario.php encontramos las funciones relativas a la base de datos
+que gestionan la tabla usuarios y algunos de sus atributos
+*/
+
+
+
 function dbCrearUsuario($db, $params){
 	$rol = 'colaborador';
 	$query = "INSERT INTO usuarios (nombre, apellidos, email, clave1, tipo,

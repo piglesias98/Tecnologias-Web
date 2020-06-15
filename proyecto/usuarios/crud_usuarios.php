@@ -3,6 +3,14 @@ require_once('database/database.php');
 require_once('usuarios/database_usuario.php');
 require_once('usuarios/formulario_usuario.php');
 
+
+/*
+En crud_usuarios.php se gestionan todas las operaciones CRUD de los usuarios dependiendo
+de con que parámetros(tanto de post y get) se llame a este fichero.
+*/
+
+
+
 //Obtener y validar parámetros
 $params = getParams($_POST, $_FILES);
 $db = dbConnection();

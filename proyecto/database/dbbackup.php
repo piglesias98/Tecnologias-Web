@@ -1,5 +1,12 @@
 <?php
 
+/*
+En backup.php se encuentran las funciones relativas a las copias de seguridad y
+restaurado de la base de datos, a las que tiene acceso el administrador,
+excepto la última que se ejecuta de manera automática si no hay tablas en la BBDD.
+*/
+
+
 function dbBackup($db){
   $tablas = array();
   $result = mysqli_query($db, 'SHOW TABLES');

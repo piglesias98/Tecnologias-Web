@@ -1,5 +1,10 @@
 <?php
 
+/*
+Funciones que generan dinámicamente partes comunes de la página web, el menú
+de navegación y los widgets.
+*/
+
 function HTMLnav($activo){
 echo <<<HTML
   <div class="menu">

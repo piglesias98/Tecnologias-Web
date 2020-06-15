@@ -1,4 +1,11 @@
 <?php
+
+/*
+En formulario_receta.php encontramos las funciones relativas a los formularios de
+las recetas, tanto showReceta (que simplemente muestra la receta) hasta showFormReceta,
+que es parametrizable en su edición y muestra un formulario para crea/editar/borrar una receta.
+*/
+
 require_once('database/database.php');
 
 function formEditable($titulo, $receta, $accion, $editable){

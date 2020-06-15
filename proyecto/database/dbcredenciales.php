@@ -1,4 +1,11 @@
 <?php
+
+/*
+En dbcredenciales.php se encuentran definidas las constantes con las credenciales,
+comentadas están las de mi servidor local, y descomentadas las de void.
+*/
+
+
 DEFINE('DB_HOST', 'localhost');
 DEFINE('DB_PORT', '3306');
 DEFINE('DB_USER', 'root');

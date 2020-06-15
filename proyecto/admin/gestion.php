@@ -1,6 +1,19 @@
 <div class="contenido_gestion">
 <h3>Gestión</h3>
 <?php
+
+/*
+En gestion.php se encuentran las funciones a las que tiene acceso el administrador
+Una primera parte donde ponemos gestionar la base de datos:
+- Copia de seguridad (descargamos una copia)
+- Restauración de la base de datos
+- Borrado completo de la base de datos (dejando un usuario admin)
+También encontramos la gestión de categorías, donde se pueden editar añadir o borrar,
+así como la gestión de usuarios, con las mismas funciones.
+*/
+
+
+
 require_once('database/database.php');
 require_once('usuarios/formulario_usuario.php');
 require('database/dbbackup.php');
