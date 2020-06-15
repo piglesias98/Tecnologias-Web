@@ -10,13 +10,13 @@ use PHPMailer\PHPMailer\Exception;
 
 // require_once "mail/autoload.php";
 
-function enviarEmail($enviar_a){
+function enviarEmail($enviar_a, $vkey){
   // Instantiation and passing `true` enables exceptions
   $mail = new PHPMailer(true);
 
   try {
       //Server settings
-      $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      // Enable verbose debug output
+      // $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      // Enable verbose debug output
       $mail->isSMTP();                                            // Send using SMTP
       $mail->Host       = 'smtp.gmail.com';                    // Set the SMTP server to send through
       $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
@@ -34,12 +34,13 @@ function enviarEmail($enviar_a){
       // Content
       $mail->isHTML(true);                                  // Set email format to HTML
       $mail->Subject = 'Activa tu cuenta en delicias sencillas';
-      $mail->Body    = 'Estás a solo un paso de tener una cuenta en <b>Delicias sencillas</b>
-                        Tan solo tienes que acceder a este enlace para acceder<a>http://localhost/tw/proyecto/index.php?p=confirmacion</a>';
+      $mail->Body    = "Estás a solo un paso de tener una cuenta en <b>Delicias sencillas</b>
+                        Tan solo tienes que acceder a este enlace para acceder
+                        <a href='http://localhost/tw/proyecto/index.php?p=confirmacion&vkey=$vkey'>Confirmar cuenta</a>";
       $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
       $mail->send();
-      echo 'Message has been sent';
+      echo 'El correo ha sido enviado correctamente';
   } catch (Exception $e) {
-      echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+      echo "El correo no ha podido ser enviado: {$mail->ErrorInfo}";
   }
 }

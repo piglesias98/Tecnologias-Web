@@ -3,7 +3,7 @@ img.boton{
 }
 
 header, div.contenido_receta, div.contenido_formulario, div.contenido_usuario,
-div.contenido_gestion, div.mensaje_simple, div.contenido_foto {
+div.contenido_gestion, div.mensaje_simple, div.contenido_foto, div.error {
   background-color: #F1F1F1;
 }
 

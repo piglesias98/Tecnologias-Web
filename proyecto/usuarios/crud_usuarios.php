@@ -24,9 +24,27 @@ if (isset($_GET['p']) and $_GET['p'] == 'perfil' and
   $usuario = dbGetUsuario($db, $params['id']);
 }
 
+
+
+// Si se quiere verificar el Email
+if (isset($_GET['p']) and $_GET['p']=='confirmacion' and isset($_GET['vkey'])){
+  $vkey = $_GET['vkey'];
+  // Comprobamos la clave de verificación
+  $id = dbCheckVerificacion($db, $vkey);
+  if ($id != -1){
+    // La clave de verificación está bien
+    // Verificamos el usuario
+    dbSetVerificado($db, $id, 1);
+    echo "<div class='mensaje_simple'>";
+    echo "<p>Enhorabuena! Ahora puedes logearte en el sistema</p>";
+    echo "</div>";
+  }else{
+    include "error.html";
+  }
+}
 # Si hemos obtenido un usuario (para lo que teníamos que estar identificados)
 # podemos realizar operaciones CRUD sobre este
-if (isset($id) and isset($usuario)){
+else if (isset($id) and isset($usuario)){
     // Según el formulario que estemos editando
     if (isset($params['accion'])){
       switch ($params['accion']) {

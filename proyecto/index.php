@@ -56,6 +56,7 @@ if (isset($_SESSION['admin'])){
     case 'mis_recetas': include "error.html"; break;
     case 'gestion': include "error.html"; break;
     case 'log': include "error.html"; break;
+    case 'confirmacion': include "usuarios/crud_usuarios.php"; break;
   }
 }
 

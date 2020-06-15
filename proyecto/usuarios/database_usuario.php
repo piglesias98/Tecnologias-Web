@@ -1,7 +1,6 @@
 <?php
 
 function dbCrearUsuario($db, $params){
-	echo $params['foto_perfil_src'];
 	$rol = 'colaborador';
 	$query = "INSERT INTO usuarios (nombre, apellidos, email, clave1, tipo,
 																								foto_perfil_src)
@@ -19,8 +18,9 @@ function dbCrearUsuario($db, $params){
 	if (isset($info))
 		return $info;
 	else{
+		$id_usuario = mysqli_insert_id($db);
 		dbInsertLog($db, 'El usuario con email '.$params['email'].' ha sido creado');
-		return true;
+		return $id_usuario;
 	}
 
 }
@@ -124,6 +124,58 @@ function dbCheckEmail($db, $email){
 	$num = (int)$num;
 	mysqli_free_result($res);
 	return $num;
+}
+
+
+function dbInsertarVerificacion($db, $id, $verificacion){
+	$query = "UPDATE usuarios SET vkey = '".mysqli_real_escape_string($db, $verificacion)."'
+												WHERE id=$id";
+	$res = mysqli_query($db, $query );
+	if (!$res){
+		$info =  'Error al añadir la clave de verificación'.mysqli_error($db);
+		echo "<p class='error'> Error al añadir la clave de verificación".mysqli_error($db)."</p>";
+	}
+	if (isset($info))
+		return $info;
+	else{
+		dbInsertLog($db, 'Ha sido añadida una clave de verificación');
+		return true;
+	}
+}
+
+
+function dbCheckVerificacion($db, $vkey){
+	$query = "SELECT id FROM usuarios WHERE vkey = '".mysqli_real_escape_string($db, $vkey)."'
+																				and verificado = 0";
+	$res = mysqli_query($db, $query);
+	if ($res){
+		if (mysqli_num_rows($res)>0){
+			$verif = mysqli_fetch_row($res)[0];
+		}else{
+			$verif = -1;
+		}
+		// Libero la memoria de la consulta
+		mysqli_free_result($res);
+	}else{
+		$verif = -1;
+	}
+	return $verif;
+}
+
+function dbSetVerificado($db, $id, $verificado){
+	$query = "UPDATE usuarios SET verificado = $verificado WHERE id=$id";
+	echo $query;
+	$res = mysqli_query($db, $query);
+	if (!$res){
+		$info =  'Error al añadir verificar usuario'.mysqli_error($db);
+		echo "<p class='error'> Error al añadir verificar usuario".mysqli_error($db)."</p>";
+	}
+	if (isset($info))
+		return $info;
+	else{
+		dbInsertLog($db, 'El usuario con id '.$id.' ha sido verificado');
+		return true;
+	}
 }
 
  ?>

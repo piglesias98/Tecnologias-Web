@@ -187,7 +187,9 @@ function enviarFormulario($params){
   $accion = 'confirmar';
   // showFormUsuario($params, $accion, false);
   $db = dbConnection();
-  dbCrearUsuario($db, $params);
+  $id_usuario = dbCrearUsuario($db, $params);
+  // Al ser creado por el admin es verificado directamente
+  dbSetVerificado($dv, $id_usuario, 1);
   dbDisconnection($db);
 }
 
@@ -196,7 +198,15 @@ function verificacionEmail($params){
   <div class="mensaje_simple">
     <p>Muy bien <?php echo $params['nombre'] ?>!</p>
     <?php
-    enviarEmail($params['email']);
+    // Creamos el usuario, que por defecto estará sin verificar
+    // Debemos generar la clave de verificación
+    $db = dbConnection();
+    $id_usuario = dbCrearUsuario($db, $params);
+    $vkey = md5(time().$params['nombre']);
+    dbInsertarVerificacion($db, $id_usuario, $vkey);
+    // Insertamos la clave de verificación
+    dbDisconnection($db);
+    enviarEmail($params['email'], $vkey);
     ?>
     <p>Se ha enviado un correo a la dirección <?php echo $params['email'] ?>
     donde debes verificar tu cuenta y podrás registrarte</p>
